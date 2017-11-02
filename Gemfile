@@ -4,15 +4,11 @@ source 'https://rubygems.org'
 
 gemspec
 
-group :test do
-  gem 'rspec', '~> 3.1'
-  # gem 'codeclimate-test-reporter', require: false
-  gem 'inflecto'
-end
-
-group :tools do
+group :ide do
   gem 'guard'
+  gem 'guard-bundler'
+  gem 'guard-rake'
   gem 'guard-rspec'
   gem 'guard-rubocop'
-  gem 'rubocop', '~> 0.28'
+  gem 'terminal-notifier-guard'
 end

@@ -5,6 +5,7 @@ inherit_from: .rubocop_todo.yml
 AllCops:
   Exclude:
   - tmp/**/*
+  - bin/*
 
 # The enforced style doesn’t match Vim’s defaults
 Layout/AlignParameters:
