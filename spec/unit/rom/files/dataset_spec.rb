@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-require 'rom/lint/spec'
-
 require 'rom/files/dataset'
+require 'rom/lint/spec'
+require 'shared/media_files'
 
 RSpec.describe ROM::Files::Dataset do
   include_context 'media files'

@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'shared/media_files'
+
 RSpec.describe 'Reading relations' do
   include_context 'media files'
 
@@ -20,9 +22,9 @@ RSpec.describe 'Reading relations' do
     paths = media.to_a.map { |file| file[:path] }
 
     expect(paths).to eql([
-                           TMP_TEST_DIR.join('media/some_file.txt'),
-                           TMP_TEST_DIR.join('media/some_image.png'),
-                           TMP_TEST_DIR.join('media/some_markdown.md')
+                           uri.join('media/some_file.txt'),
+                           uri.join('media/some_image.png'),
+                           uri.join('media/some_markdown.md')
                          ])
   end
 

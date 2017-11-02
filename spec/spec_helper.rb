@@ -10,17 +10,10 @@ end
 
 require 'rom-files'
 
-root = Pathname(__FILE__).dirname
-TMP_PATH = root.join('../tmp')
-TMP_TEST_DIR = TMP_PATH.join('test')
-
-Dir[root.join('shared/*.rb').to_s].each { |f| require f }
+SPEC_ROOT = Pathname(__FILE__).dirname
 
 RSpec.configure do |config|
   config.before do
-    FileUtils.rm_r(TMP_TEST_DIR) if File.exist?(TMP_TEST_DIR)
-    FileUtils.mkdir_p(TMP_TEST_DIR)
-
     @constants = Object.constants
   end
 

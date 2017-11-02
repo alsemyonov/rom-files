@@ -1,10 +1,12 @@
 # frozen_string_literal: true
 
+require 'shared/gateway_setup'
+
 RSpec.shared_context 'media files' do
   include_context 'gateway setup'
 
   let(:dir) { 'media' }
-  let(:path) { TMP_TEST_DIR.join(dir) }
+  let(:path) { uri.join(dir) }
   let(:tree) do
     {
       'some_image.png' => '',
