@@ -3,11 +3,23 @@
 RSpec.shared_context 'media files' do
   include_context 'gateway setup'
 
+  let(:dir) { 'media' }
+  let(:path) { TMP_TEST_DIR.join(dir) }
+  let(:tree) do
+    {
+      'some_image.png' => '',
+      'some_file.txt' => 'some content',
+      'some_markdown.md' => 'some **markdown** file'
+    }
+  end
+  let(:data) do
+    tree.map do |file, _|
+      { name: file, path: path.join(file) }
+    end
+  end
+
   before :each do
-    media_dir = TMP_TEST_DIR.join('media')
-    media_dir.mkpath
-    media_dir.join('some_file.txt').write('some content')
-    media_dir.join('some_markdown.md').write('some markdown file')
-    media_dir.join('some_image.png').write('')
+    path.mkpath
+    tree.each { |file, tree| path.join(file).write(tree) }
   end
 end
