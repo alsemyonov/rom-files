@@ -25,12 +25,20 @@ gem 'rom-files'
 
 And then execute:
 
-    $ bundle
+```bash
+bundle
+```
 
 Or install it yourself as:
 
-    $ gem install rom-files
+```bash
+gem install rom-files
+```
+
+## Changelog
+
+See {file:CHANGELOG.md}.
 
 ## License
 
-See `LICENSE` file.
+See {file:LICENSE.md}.

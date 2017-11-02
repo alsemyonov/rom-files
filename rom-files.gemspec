@@ -22,9 +22,18 @@ Gem::Specification.new do |spec|
 
   spec.add_runtime_dependency 'rom', '~> 4.0.0'
 
+  # Dependencies
   spec.add_development_dependency 'bundler'
+
+  # Pipeline
   spec.add_development_dependency 'rake', '~> 12.2'
+
+  # Testing
   spec.add_development_dependency 'rspec', '~> 3.7'
   spec.add_development_dependency 'rubocop', '~> 0.51'
+
+  # Documentation
+  spec.add_development_dependency 'redcarpet'
   spec.add_development_dependency 'yard', '~> 0.9'
+  spec.add_development_dependency 'yard-junk'
 end

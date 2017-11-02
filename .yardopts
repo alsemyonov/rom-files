@@ -1,0 +1,6 @@
+--plugin junk
+--title 'rom-files'
+--markup markdown
+--readme README.md
+--files *.md
+lib/**/*.rb
