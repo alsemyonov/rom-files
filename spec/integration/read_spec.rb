@@ -5,7 +5,6 @@ describe 'Reading relations' do
 
   before :each do
     configuration.relation(:media) do
-      register_as :media
       dataset { sort }
 
       def text_files
@@ -14,7 +13,7 @@ describe 'Reading relations' do
     end
   end
 
-  let(:media) { container.relation(:media) }
+  let(:media) { container.relations[:media] }
 
   it 'lists file paths' do
     paths = media.to_a.map { |file| file[:path] }
