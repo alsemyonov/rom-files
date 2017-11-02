@@ -7,6 +7,7 @@ RSpec.describe 'Reading relations' do
     configuration.relation(:media) do
       dataset { sort }
 
+      # @return [ROM::Files::Relation]
       def text_files
         select('*.txt')
       end
