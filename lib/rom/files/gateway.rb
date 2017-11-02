@@ -23,7 +23,7 @@ module ROM
 
       # @param root [Pathname, #to_s]
       def initialize(root)
-        @connection = Connection.new(File.absolute_path(root))
+        @connection = Connection.new(root)
       end
 
       # @return [Object] default logger

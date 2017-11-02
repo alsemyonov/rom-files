@@ -10,7 +10,7 @@ module ROM
 
       # @param path [Pathname, #to_s]
       def initialize(path)
-        @path = Pathname(path)
+        @path = Pathname(path).expand_path
         @data = Concurrent::Hash.new
       end
 
