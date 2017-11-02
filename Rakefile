@@ -1,20 +1,18 @@
 # frozen_string_literal: true
 
 require 'rspec/core/rake_task'
-
 RSpec::Core::RakeTask.new(:spec)
-task default: [:ci]
+
+require 'rubocop/rake_task'
+RuboCop::RakeTask.new(:style) do |task|
+  task.options << '--display-cop-names'
+end
+
+require 'yard'
+require 'yard/rake/yardoc_task'
+YARD::Rake::YardocTask.new(:doc)
 
 desc 'Run CI tasks'
-task ci: [:spec]
+task ci: %i[spec style doc]
 
-begin
-  require 'rubocop/rake_task'
-
-  Rake::Task[:default].enhance [:rubocop]
-
-  RuboCop::RakeTask.new do |task|
-    task.options << '--display-cop-names'
-  end
-rescue LoadError
-end
+task default: :ci
