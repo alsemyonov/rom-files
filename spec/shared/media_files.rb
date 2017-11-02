@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-shared_context 'media files' do
+RSpec.shared_context 'media files' do
   include_context 'database setup'
 
   before :each do

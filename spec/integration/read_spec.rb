@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
-describe 'Reading relations' do
+RSpec.describe 'Reading relations' do
   include_context 'media files'
 
   before :each do
