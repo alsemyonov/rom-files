@@ -3,35 +3,38 @@
 module ROM
   module Files
     class Dataset
-      def initialize(dir, options = {})
-        @dir = dir
+      # @param [Pathname] path
+      # @param [Hash] options
+      # @option options [Array<String>] :select (['*'])
+      # @option options [Bool] :sort
+      def initialize(path, options = {})
+        @path = path
         @options = options
-
         @options[:select] ||= ['*']
       end
 
-      def select(*args)
-        self.class.new(@dir, @options.merge(select: args))
+      # @return [Dataset]
+      def select(*patterns)
+        self.class.new(@path, @options.merge(select: patterns))
       end
 
+      # @return [Dataset]
       def sort
-        self.class.new(@dir, @options.merge(sort: true))
+        self.class.new(@path, @options.merge(sort: true))
       end
 
       def each(&block)
         to_a.each(&block)
       end
 
+      # @return [Array<Hash{Symbol => Pathname, String}>]
       def to_a
-        root = Pathname.new(@dir.path)
-        paths = @options[:select].map { |filter| "#{root}/#{filter}" }
-
-        matches = Dir[*paths].reject { |f| f == '.' || f == '..' }
+        matches = @options[:select].reduce([]) do |result, path|
+          result + Pathname.glob(@path.join(path))
+        end
         matches = matches.sort if @options[:sort]
 
-        matches.map do |filename|
-          path = root.join(filename)
-
+        matches.map do |path|
           {
             name: path.basename.to_s,
             path: path

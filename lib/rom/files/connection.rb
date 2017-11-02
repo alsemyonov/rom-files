@@ -39,7 +39,7 @@ module ROM
 
       # @return [Dataset]
       def create_dataset(name)
-        @data[name] = Dataset.new(Dir.new(path_for(name)))
+        @data[name] = Dataset.new(path_for(name))
       end
 
       # @return [Boolean]
