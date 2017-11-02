@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.shared_context 'media files' do
-  include_context 'database setup'
+  include_context 'gateway setup'
 
   before :each do
     media_dir = TMP_TEST_DIR.join('media')
