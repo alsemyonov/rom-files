@@ -1,7 +1,7 @@
 module ROM
-  module Filesystem
+  module Files
     class Relation < ROM::Relation
-      adapter :filesystem
+      adapter :files
 
       forward :select, :sort
     end

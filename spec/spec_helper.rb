@@ -8,7 +8,7 @@ if RUBY_ENGINE == 'rbx'
   CodeClimate::TestReporter.start
 end
 
-require 'rom-filesystem'
+require 'rom-files'
 
 root = Pathname(__FILE__).dirname
 TMP_PATH = root.join('../tmp')

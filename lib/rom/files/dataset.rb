@@ -1,5 +1,5 @@
 module ROM
-  module Filesystem
+  module Files
     class Dataset
       def initialize(dir, options = {})
         @dir = dir

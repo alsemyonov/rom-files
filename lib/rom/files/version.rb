@@ -1,5 +1,5 @@
-module Rom
-  module Filesystem
+module ROM
+  module Files
     VERSION = '0.1.1'.freeze
   end
 end

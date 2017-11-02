@@ -1,7 +1,7 @@
-require 'rom/filesystem/dataset'
+require 'rom/files/dataset'
 
 module ROM
-  module Filesystem
+  module Files
     class Gateway < ROM::Gateway
       def initialize(root)
         @root = File.absolute_path(root)

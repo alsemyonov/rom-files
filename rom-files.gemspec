@@ -1,17 +1,17 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'rom/filesystem/version'
+require 'rom/files/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = 'rom-filesystem'
-  spec.version       = Rom::Filesystem::VERSION
-  spec.authors       = ['Héctor Ramón']
-  spec.email         = ['hector0193@gmail.com']
+  spec.name          = 'rom-files'
+  spec.version       = ROM::Files::VERSION
+  spec.authors       = ['Héctor Ramón', 'Alex Semyonov']
+  spec.email         = %w[hector0193@gmail.com alex@cerebelo.info]
 
-  spec.summary       = 'Filesystem adapter for ROM'
+  spec.summary       = 'File adapter for ROM'
   spec.description   = spec.summary
-  spec.homepage      = 'https://github.com/hecrj/rom-filesystem'
+  spec.homepage      = 'https://github.com/alsemyonov/rom-files'
   spec.license       = 'MIT'
 
   spec.files         = `git ls-files -z`.split("\x0")
