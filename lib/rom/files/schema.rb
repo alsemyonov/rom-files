@@ -2,6 +2,7 @@
 
 require 'rom/schema'
 require_relative 'types'
+require_relative 'associations'
 
 module ROM
   module Files
