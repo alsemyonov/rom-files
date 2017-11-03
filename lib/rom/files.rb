@@ -4,6 +4,7 @@ require 'dry/types/pathname'
 require 'rom'
 
 require 'rom/files/version'
+require 'rom/files/plugins'
 require 'rom/files/gateway'
 require 'rom/files/relation'
 
