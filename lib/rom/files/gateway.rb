@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require 'rom/files/connection'
 require 'forwardable'
+require_relative 'connection'
 
 module ROM
   module Files

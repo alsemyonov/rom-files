@@ -2,7 +2,7 @@
 
 require 'rom/initializer'
 require 'rom/data_proxy'
-require 'rom/files/types'
+require_relative 'types'
 
 module ROM
   module Files
@@ -62,7 +62,7 @@ module ROM
 
       # @return [Array<Hash{Symbol => Pathname, String}>]
       def to_a
-        matches.map(&self.class.row_proc)
+        matches.map(&row_proc)
       end
 
       alias to_ary to_a

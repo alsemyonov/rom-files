@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require 'rom/files/dataset'
 require 'concurrent/hash'
+require_relative 'dataset'
 
 module ROM
   module Files
