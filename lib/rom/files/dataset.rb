@@ -1,13 +1,15 @@
 # frozen_string_literal: true
 
-require 'rom/initializer'
 require 'rom/data_proxy'
+require 'rom/initializer'
+require 'rom/support/memoizable'
 require_relative 'types'
 
 module ROM
   module Files
     class Dataset
       extend Initializer
+      include Memoizable
 
       # @!method initialize(path, query: ['*'], sort_by: nil)
       #   @param path [Pathname, #to_s]
@@ -58,6 +60,9 @@ module ROM
         matches = matches.sort_by(&sort_by) if sort_by
         matches
       end
+
+      memoize :matches
+
       alias data matches
 
       # @return [Array<Hash{Symbol => Pathname, String}>]
