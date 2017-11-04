@@ -21,36 +21,46 @@ RSpec.describe ROM::Files::Plugins::Schema::Contents do
   end
 
   describe '.apply' do
+    let(:type) { ROM::Types::Date }
+
     context 'use :contents' do
       before { schema_dsl.use :contents }
       its([:__contents__]) { is_expected.to eql build_attribute }
+
+      context 'contents(name)' do
+        before { schema_dsl.contents :custom }
+        its([:custom]) { is_expected.to eql build_attribute(:custom) }
+      end
+
+      context 'contents(name, type)' do
+        before { schema_dsl.contents :custom, type }
+        its([:custom]) { is_expected.to eql build_attribute(:custom, type: type) }
+      end
+
+      context 'contents(name, type:)' do
+        before { schema_dsl.contents :custom, type: type }
+        its([:custom]) { is_expected.to eql build_attribute(:custom, type: type) }
+      end
+
+      context 'contents(type:)' do
+        before { schema_dsl.contents type: type }
+        its([:__contents__]) { is_expected.to eql build_attribute(type: type) }
+      end
     end
-  end
 
-  it 'supports custom types' do
-    date = ROM::Types::Date
-    schema_dsl.use :contents, type: date
+    context 'use :contents, name:' do
+      before { schema_dsl.use :contents, name: :contents }
+      its([:contents]) { is_expected.to eql build_attribute :contents }
+    end
 
-    expect(schema[:__contents__]).to eql(build_attribute(type: date))
-  end
+    context 'use :contents, type:' do
+      before { schema_dsl.use :contents, type: type }
+      its([:__contents__]) { is_expected.to eql build_attribute type: type }
+    end
 
-  it 'supports custom name with options' do
-    schema_dsl.use :contents, name: :contents
-
-    expect(schema.to_h.keys).to eql(%i[contents])
-  end
-
-  it 'supports custom name' do
-    schema_dsl.use :contents
-    schema_dsl.contents_attribute :contents
-
-    expect(schema.to_h.keys).to eql(%i[contents])
-  end
-
-  it 'supports custom name' do
-    schema_dsl.use :contents
-    schema_dsl.contents_attribute :contents
-
-    expect(schema.to_h.keys).to eql(%i[contents])
+    context 'use :contents, name:, type:' do
+      before { schema_dsl.use :contents, name: :contents, type: type }
+      its([:contents]) { is_expected.to eql build_attribute :contents, type: type }
+    end
   end
 end

@@ -25,53 +25,13 @@ RSpec.describe ROM::Files::Plugins::Schema::Stat do
 
   describe '.apply' do
     context 'use :stat' do
-      context 'use :stat' do
-        before { schema_dsl.use :stat }
-        its([:__stat__]) { is_expected.to eql build_attribute }
-      end
-
-      context 'use :stat, name:' do
-        before { schema_dsl.use :stat, name: :stat }
-        its([:stat]) { is_expected.to eql build_attribute(:stat) }
-      end
-
-      context 'use :stat, stats:' do
-        before { schema_dsl.use :stat, stats: %i[atime] }
-
-        its('to_h.keys') { is_expected.to eql %i[__stat__ atime] }
-        its([:__stat__]) { is_expected.to eql build_attribute }
-        its([:atime]) { is_expected.to eql build_attribute(:atime, type: ROM::Files::Types::Time) }
-      end
-
-      context 'use :stat, name: false, stats:' do
-        before { schema_dsl.use :stat, name: false, stats: %i[atime] }
-
-        its('to_h.keys') { is_expected.to eql %i[atime] }
-        its([:atime]) { is_expected.to eql build_attribute(:atime, type: ROM::Files::Types::Time) }
-      end
-
-      context 'use :stat, stats: [aliased]' do
-        before { schema_dsl.use :stat, stats: %i[created_at] }
-
-        its('to_h.keys') { is_expected.to eql %i[__stat__ created_at] }
-        its([:__stat__]) { is_expected.to eql build_attribute }
-        its([:created_at]) { is_expected.to eql build_attribute(:created_at, type: ROM::Files::Types::Time, stat: :birthtime) }
-      end
-
-      context 'use :stat, aliases:' do
-        before { schema_dsl.use :stat, aliases: { modified_at: :mtime } }
-
-        its('to_h.keys') { is_expected.to eql %i[__stat__ modified_at] }
-        its([:__stat__]) { is_expected.to eql build_attribute }
-        its([:modified_at]) { is_expected.to eql build_attribute(:modified_at, type: ROM::Files::Types::Time, stat: :mtime) }
-      end
-    end
-
-    context '#stat' do
       before { schema_dsl.use :stat }
+
+      its([:__stat__]) { is_expected.to eql build_attribute }
 
       context 'stat :stat' do
         before { schema_dsl.stat :stat }
+
         its([:stat]) { is_expected.to eql build_attribute(:stat) }
       end
 
@@ -105,6 +65,43 @@ RSpec.describe ROM::Files::Plugins::Schema::Stat do
         its([:__stat__]) { is_expected.to eql build_attribute }
         its([:modified_at]) { is_expected.to eql build_attribute(:modified_at, type: ROM::Files::Types::Time, stat: :mtime) }
       end
+    end
+
+    context 'use :stat, name:' do
+      before { schema_dsl.use :stat, name: :stat }
+
+      its([:stat]) { is_expected.to eql build_attribute(:stat) }
+    end
+
+    context 'use :stat, stats:' do
+      before { schema_dsl.use :stat, stats: %i[atime] }
+
+      its('to_h.keys') { is_expected.to eql %i[__stat__ atime] }
+      its([:__stat__]) { is_expected.to eql build_attribute }
+      its([:atime]) { is_expected.to eql build_attribute(:atime, type: ROM::Files::Types::Time) }
+    end
+
+    context 'use :stat, name: false, stats:' do
+      before { schema_dsl.use :stat, name: false, stats: %i[atime] }
+
+      its('to_h.keys') { is_expected.to eql %i[atime] }
+      its([:atime]) { is_expected.to eql build_attribute(:atime, type: ROM::Files::Types::Time) }
+    end
+
+    context 'use :stat, stats: [aliased]' do
+      before { schema_dsl.use :stat, stats: %i[created_at] }
+
+      its('to_h.keys') { is_expected.to eql %i[__stat__ created_at] }
+      its([:__stat__]) { is_expected.to eql build_attribute }
+      its([:created_at]) { is_expected.to eql build_attribute(:created_at, type: ROM::Files::Types::Time, stat: :birthtime) }
+    end
+
+    context 'use :stat, aliases:' do
+      before { schema_dsl.use :stat, aliases: { modified_at: :mtime } }
+
+      its('to_h.keys') { is_expected.to eql %i[__stat__ modified_at] }
+      its([:__stat__]) { is_expected.to eql build_attribute }
+      its([:modified_at]) { is_expected.to eql build_attribute(:modified_at, type: ROM::Files::Types::Time, stat: :mtime) }
     end
   end
 end

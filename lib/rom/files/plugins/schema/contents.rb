@@ -43,14 +43,20 @@ module ROM
           module DSL
             # Sets non-default contents attribute
             #
-            # @example
+            # @example Set custom attribute name
             #   schema do
             #     use :contents
-            #     contents_attribute :create_on, :updated_on
+            #     contents :contents
+            #   end
+            #
+            # @example Set custom type
+            #   schema do
+            #     use :contents
+            #     contents type: Types::JSON
             #   end
             #
             # @api public
-            def contents_attribute(name = DEFAULT_NAME, type = DEFAULT_TYPE)
+            def contents(name = DEFAULT_NAME, inline_type = DEFAULT_TYPE, type: inline_type)
               options = plugin_options(:contents)
               options[:name] = name
               options[:type] = type
