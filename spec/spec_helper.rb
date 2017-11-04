@@ -2,6 +2,7 @@
 
 require 'bundler'
 Bundler.setup
+require 'rspec/its'
 require 'simplecov'
 
 require 'rom-files'

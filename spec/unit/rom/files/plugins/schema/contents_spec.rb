@@ -16,14 +16,15 @@ RSpec.describe ROM::Files::Plugins::Schema::Contents do
   # @return [ROM::Attribute]
   def build_attribute(name = :__contents__, type: ROM::Types::String)
     ROM::Attribute.new(
-      type.meta(name: name, source: relation)
+      type.meta(name: name, source: relation, __contents__: true)
     )
   end
 
-  it 'adds contents attribute' do
-    schema_dsl.use :contents
-
-    expect(schema[:__contents__]).to eql(build_attribute(:__contents__))
+  describe '.apply' do
+    context 'use :contents' do
+      before { schema_dsl.use :contents }
+      its([:__contents__]) { is_expected.to eql build_attribute }
+    end
   end
 
   it 'supports custom types' do

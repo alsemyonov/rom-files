@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'rom/files/types'
+
 module ROM
   module Files
     module Plugins
@@ -25,12 +27,15 @@ module ROM
         #
         # @api public
         module Contents
+          DEFAULT_NAME = :__contents__
+          DEFAULT_TYPE = Types::String
+
           # @api private
-          def self.apply(schema, name: :__contents__, type: Types::String)
-            contents_attribute = type.meta(name: name, source: schema.name)
+          def self.apply(schema, name: DEFAULT_NAME, type: DEFAULT_TYPE)
+            contents = type.meta(name: name, source: schema.name, __contents__: true)
 
             schema.attributes.concat(
-              schema.class.attributes([contents_attribute], schema.attr_class)
+              schema.class.attributes([contents], schema.attr_class)
             )
           end
 
@@ -45,7 +50,7 @@ module ROM
             #   end
             #
             # @api public
-            def contents_attribute(name, type = Types::String)
+            def contents_attribute(name = DEFAULT_NAME, type = DEFAULT_TYPE)
               options = plugin_options(:contents)
               options[:name] = name
               options[:type] = type

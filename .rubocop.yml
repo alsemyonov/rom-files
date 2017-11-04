@@ -31,12 +31,11 @@ Lint/HandleExceptions:
 
 # Allow rom-sql
 Naming/FileName:
-    Enabled: false
+  Enabled: false
 
 # gemspec is a special snowflake
 Metrics/LineLength:
-  Exclude:
-  - rom-files.gemspec
+  Max: 256
 
 Metrics/BlockLength:
   Exclude:
