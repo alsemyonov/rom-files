@@ -30,6 +30,7 @@ Gem::Specification.new do |spec|
 
   # Testing
   spec.add_development_dependency 'rspec', '~> 3.7'
+  spec.add_development_dependency 'rspec-its'
   spec.add_development_dependency 'rubocop', '~> 0.51'
   spec.add_development_dependency 'simplecov', '~> 0.15'
 
