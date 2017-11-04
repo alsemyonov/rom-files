@@ -7,11 +7,14 @@ RSpec.shared_context 'media relation' do
 
   before :each do
     configuration.relation(:media) do
-      dataset { sort }
-
       # @return [ROM::Files::Relation]
       def text_files
-        select('*.txt')
+        select('*.{txt,md}')
+      end
+
+      # @return [ROM::Files::Relation]
+      def binary_files
+        reject('*.txt', '*.md')
       end
     end
   end

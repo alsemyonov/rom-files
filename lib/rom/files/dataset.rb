@@ -11,11 +11,13 @@ module ROM
       extend Initializer
       include Memoizable
 
-      # @!method initialize(path, query: ['*'], sort_by: nil)
+      # @!method initialize(path, includes: ['*'], excludes: [], sort_by: nil)
       #   @param path [Pathname, #to_s]
-      #     directory to search for `query` inside, maps to {#path}
-      #   @param query [Array<String, #to_s>]
-      #     array of patterns to be selected inside `path`, maps to {#query}
+      #     directory to search for `includes` inside, maps to {#path}
+      #   @param includes [Array<String, #to_s>]
+      #     array of patterns to be selected inside `path`, maps to {#includes}
+      #   @param excludes [Array<String, #to_s>]
+      #     array of patterns to be rejected inside `path`, maps to {#excludes}
       #   @param sort_by [Symbol, Proc, nil]
       #     see {#sort_by}
 
@@ -24,17 +26,24 @@ module ROM
       #   @return [Pathname]
       param :path, Types::Coercible::Pathname
 
-      # @!attribute [r] query
+      # @!attribute [r] includes
       #   Array of glob patterns to be selected inside {#path}
       #   @return [Array<String>]
-      option :query, Types::Strict::Array.of(Types::Coercible::String),
+      option :includes, Types::Strict::Array.of(Types::Coercible::String),
              default: proc { ['*'] }
+
+      # @!attribute [r] excludes
+      #   Array of filename patterns to be rejected
+      #   @return [Array<String>]
+      option :excludes, Types::Strict::Array.of(Types::Coercible::String),
+             default: proc { EMPTY_ARRAY }
 
       # @!attribute [r] sort_by
       #   @return [Proc?]
       option :sort_by, Types::Symbol.optional, default: proc { nil }
 
       include DataProxy
+      include Dry::Equalizer(:path, :includes, :excludes, :sort_by)
 
       def self.row_proc
         ->(path) { { name: path.basename.to_s, path: path } }
@@ -43,19 +52,44 @@ module ROM
       # @!group Reading
 
       # @return [Dataset]
-      def select(*query)
-        with(query: query)
+      def select(*patterns)
+        with(includes: patterns)
       end
 
       # @return [Dataset]
-      def sort(sort_by = :to_s)
+      def reject(*patterns)
+        with(excludes: patterns)
+      end
+
+      # @return [Dataset]
+      def sort(sort_by = :basename)
         with(sort_by: sort_by)
+      end
+
+      # @return [Dataset]
+      def inside(pattern)
+        select(*includes.map { |original| "#{pattern}/#{original}" })
+      end
+
+      # @return [Dataset]
+      def recursive
+        inside '**'
+      end
+
+      # @return [Boolean]
+      def recursive?
+        includes.all? { |pattern| pattern =~ %r{\*\*/} }
       end
 
       # @return [Array<Pathname>]
       def matches
-        matches = query.reduce([]) do |result, pattern|
+        matches = includes.reduce([]) do |result, pattern|
           result + Pathname.glob(path.join(pattern))
+        end
+        matches = matches.reject do |match|
+          excludes.any? do |pattern|
+            match.fnmatch(pattern, File::FNM_EXTGLOB)
+          end
         end
         matches = matches.sort_by(&sort_by) if sort_by
         matches
@@ -66,10 +100,11 @@ module ROM
       alias data matches
 
       # @return [Array<Hash{Symbol => Pathname, String}>]
-      def to_a
+      def call
         matches.map(&row_proc)
       end
 
+      alias to_a call
       alias to_ary to_a
     end
   end
