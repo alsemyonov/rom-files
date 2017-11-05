@@ -88,4 +88,34 @@ RSpec.describe ROM::Files::Dataset do
       its(:includes) { is_expected.to eq ['**/*.txt'] }
     end
   end
+
+  describe '#recursive?' do
+    subject { dataset.recursive? }
+
+    it { is_expected.to be false }
+
+    context 'after #recursive' do
+      let(:dataset) { super().recursive }
+
+      it { is_expected.to be true }
+    end
+
+    context 'after manual recursion via #inside' do
+      let(:dataset) { super().inside('**') }
+
+      it { is_expected.to be true }
+    end
+
+    context 'after manual recursion via #select' do
+      let(:dataset) { super().select('**/*.md') }
+
+      it { is_expected.to be true }
+    end
+
+    context 'after manual recursion via #select without folder' do
+      let(:dataset) { super().select('**') }
+
+      it { is_expected.to be false }
+    end
+  end
 end
