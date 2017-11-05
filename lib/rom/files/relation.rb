@@ -23,7 +23,7 @@ module ROM
       # @!method sort(sort_by = :to_s)
       #   @param (see Dataset#sort)
       #   @return (see Dataset#sort)
-      forward :select, :reject, :sort, :inside, :recursive
+      forward :select, :select_append, :reject, :sort, :inside, :recursive
     end
   end
 end

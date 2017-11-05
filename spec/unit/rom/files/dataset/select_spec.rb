@@ -18,6 +18,12 @@ RSpec.describe ROM::Files::Dataset, '#select' do
     its(:includes) { is_expected.to eq %w[*.txt *.md] }
   end
 
+  context '(multiple, duplicated patterns)' do
+    subject { dataset.select('*.txt', '*.md', '*.txt') }
+
+    its(:includes) { is_expected.to eq %w[*.txt *.md] }
+  end
+
   context '(glob_pattern)' do
     subject { dataset.select('*.{txt,md}') }
 

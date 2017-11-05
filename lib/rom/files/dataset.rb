@@ -57,14 +57,20 @@ module ROM
 
       # @return [Dataset]
       def select(*patterns)
-        with(includes: patterns)
+        with(includes: patterns.uniq)
+      end
+
+      # @return [Dataset]
+      def select_append(*patterns)
+        with(includes: (includes + patterns).uniq)
       end
 
       # @return [Dataset]
       def reject(*patterns)
-        with(excludes: patterns)
+        with(excludes: patterns.uniq)
       end
 
+      # @return [Dataset]
       # @return [Dataset]
       def sort(sort_by = :to_s)
         with(sort_by: sort_by)
