@@ -71,6 +71,10 @@ module ROM
       end
 
       # @return [Dataset]
+      def reject_append(*patterns)
+        with(excludes: (excludes + patterns).uniq)
+      end
+
       # @return [Dataset]
       def sort(sort_by = :to_s)
         with(sort_by: sort_by)

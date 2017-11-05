@@ -16,14 +16,28 @@ module ROM
 
       # @!method select(*patterns)
       #   @param (see Dataset#select)
-      #   @return (see Dataset#select)
+      #   @return [Relation]
+      # @!method select_append(*patterns)
+      #   @param (see Dataset#select_append)
+      #   @return [Relation]
       # @!method reject(*patterns)
       #   @param (see Dataset#reject)
-      #   @return (see Dataset#reject)
+      #   @return [Relation]
+      # @!method reject_append(*patterns)
+      #   @param (see Dataset#reject_append)
+      #   @return [Relation]
+      # @!method inside(*prefixes)
+      #   @param (see Dataset#inside)
+      #   @return [Relation]
+      # @!method recursive
+      #   @return [Relation]
+      # @!method recursive?
+      #   @return [Boolean]
       # @!method sort(sort_by = :to_s)
       #   @param (see Dataset#sort)
-      #   @return (see Dataset#sort)
-      forward :select, :select_append, :reject, :sort, :inside, :recursive
+      #   @return [Relation]
+      forward :select, :select_append, :reject, :reject_append,
+              :inside, :recursive, :recursive?, :sort
     end
   end
 end
