@@ -11,9 +11,12 @@ module ROM
       extend Initializer
       include Memoizable
 
+      RECURSIVE_PATTERN = '**/'
+      RECURSIVE_EXPRESSION = /#{Regexp.escape(RECURSIVE_PATTERN)}/
+
       # @!method initialize(path, includes: ['*'], excludes: [], sort_by: nil)
       #   @param path [Pathname, #to_s]
-      #     directory to search for `includes` inside, maps to {#path}
+      #     directory to search for files inside, maps to {#path}
       #   @param includes [Array<String, #to_s>]
       #     array of patterns to be selected inside `path`, maps to {#includes}
       #   @param excludes [Array<String, #to_s>]
@@ -30,7 +33,7 @@ module ROM
       #   Array of glob patterns to be selected inside {#path}
       #   @return [Array<String>]
       option :includes, Types::Strict::Array.of(Types::Coercible::String),
-             default: proc { ['*'] }
+             default: proc { %w[*] }
 
       # @!attribute [r] excludes
       #   Array of filename patterns to be rejected
@@ -40,7 +43,8 @@ module ROM
 
       # @!attribute [r] sort_by
       #   @return [Proc?]
-      option :sort_by, Types::Symbol.optional, default: proc { nil }
+      option :sort_by, Types::Symbol.optional,
+             default: proc { nil }
 
       include DataProxy
       include Dry::Equalizer(:path, :includes, :excludes, :sort_by)
@@ -62,13 +66,13 @@ module ROM
       end
 
       # @return [Dataset]
-      def sort(sort_by = :basename)
+      def sort(sort_by = :to_s)
         with(sort_by: sort_by)
       end
 
       # @return [Dataset]
-      def inside(pattern)
-        select(*includes.map { |original| "#{pattern}/#{original}" })
+      def inside(prefix)
+        select(*includes.map { |pattern| "#{prefix}/#{pattern}" })
       end
 
       # @return [Dataset]
@@ -78,7 +82,7 @@ module ROM
 
       # @return [Boolean]
       def recursive?
-        includes.all? { |pattern| pattern =~ %r{\*\*/} }
+        includes.all? { |pattern| pattern =~ RECURSIVE_EXPRESSION }
       end
 
       # @return [Array<Pathname>]

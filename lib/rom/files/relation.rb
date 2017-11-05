@@ -12,6 +12,8 @@ module ROM
       adapter :files
       schema_class Files::Schema
 
+      # @!group Reading
+
       # @!method select(*patterns)
       #   @param (see Dataset#select)
       #   @return (see Dataset#select)
