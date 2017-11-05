@@ -71,8 +71,12 @@ module ROM
       end
 
       # @return [Dataset]
-      def inside(prefix)
-        select(*includes.map { |pattern| "#{prefix}/#{pattern}" })
+      def inside(*prefixes)
+        select(*prefixes.inject([]) do |result, prefix|
+          result + includes.map do |pattern|
+            "#{prefix}/#{pattern}"
+          end
+        end)
       end
 
       # @return [Dataset]

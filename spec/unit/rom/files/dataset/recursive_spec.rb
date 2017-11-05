@@ -1,0 +1,26 @@
+# frozen_string_literal: true
+
+require 'rom/files/dataset'
+require 'shared/media_dataset'
+
+RSpec.describe ROM::Files::Dataset, '#recursive' do
+  include_context 'media dataset'
+
+  context '()' do
+    subject { dataset.recursive }
+
+    its(:includes) { is_expected.to eql ['**/*'] }
+  end
+
+  context 'with custom select' do
+    subject { dataset.select('*.txt').recursive }
+
+    its(:includes) { is_expected.to eql ['**/*.txt'] }
+  end
+
+  context 'with multiple select' do
+    subject { dataset.select('*.txt', '*.md').recursive }
+
+    its(:includes) { is_expected.to eql %w[**/*.txt **/*.md] }
+  end
+end

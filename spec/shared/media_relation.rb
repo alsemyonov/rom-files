@@ -5,6 +5,8 @@ require 'shared/media_files'
 RSpec.shared_context 'media relation' do
   include_context 'media files'
 
+  let(:relation) { container.relations[:media] }
+
   before :each do
     configuration.relation(:media) do
       # @return [ROM::Files::Relation]
