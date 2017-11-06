@@ -22,7 +22,7 @@ module ROM
       #   @return [Connection]
 
       # @param root [Pathname, #to_s]
-      def initialize(root)
+      def initialize(root = Pathname.pwd)
         @connection = Connection.new(root)
       end
 
