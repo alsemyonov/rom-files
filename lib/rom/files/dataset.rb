@@ -54,7 +54,6 @@ module ROM
         ->(path) do
           {
             __path__: path,
-            __basename__: path.basename.to_s,
             __contents__: path.read
           }
         end
@@ -126,7 +125,7 @@ module ROM
 
       def map(field = nil, &block)
         # block ||= ->(hash) { hash[field] }
-        block ||= field.to_proc
+        block ||= field ? field.to_proc : row_proc
         matches.map(&block)
       end
 
@@ -134,7 +133,7 @@ module ROM
 
       # @return [Array<Hash{Symbol => Pathname, String}>]
       def call
-        matches.map(&row_proc)
+        map(&row_proc)
       end
 
       alias to_a call

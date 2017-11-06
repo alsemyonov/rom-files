@@ -10,7 +10,6 @@ RSpec.shared_context 'files setup' do
     tree.map do |file, contents|
       {
         __path__: path.join(file),
-        __basename__: file,
         __contents__: contents
       }
     end

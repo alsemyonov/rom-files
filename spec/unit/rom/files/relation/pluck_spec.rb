@@ -8,6 +8,7 @@ RSpec.describe ROM::Files::Relation, '#pluck' do
 
   context 'with method name' do
     subject { relation.pluck(:basename) }
+
     it { is_expected.to eql([Pathname('some_image.png'), Pathname('some_file.txt'), Pathname('some_markdown.md')]) }
   end
 
