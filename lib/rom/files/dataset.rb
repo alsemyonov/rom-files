@@ -112,7 +112,7 @@ module ROM
           result + Pathname.glob(path.join(pattern))
         end
         matches = matches.reject do |match|
-          excludes.any? do |pattern|
+          match.directory? || excludes.any? do |pattern|
             match.fnmatch(pattern, File::FNM_EXTGLOB)
           end
         end
@@ -123,6 +123,14 @@ module ROM
       memoize :matches
 
       alias data matches
+
+      def map(field = nil, &block)
+        # block ||= ->(hash) { hash[field] }
+        block ||= field.to_proc
+        matches.map(&block)
+      end
+
+      alias pluck map
 
       # @return [Array<Hash{Symbol => Pathname, String}>]
       def call

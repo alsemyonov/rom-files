@@ -5,7 +5,7 @@ require 'shared/media_files'
 RSpec.shared_context 'media relation' do
   include_context 'media files'
 
-  subject(:relation) { container.relations[:media] }
+  subject(:relation) { container.relations.media }
 
   before :each do
     configuration.relation(:media) do

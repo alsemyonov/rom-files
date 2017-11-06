@@ -12,6 +12,9 @@ module ROM
       adapter :files
       schema_class Files::Schema
 
+      # @!attribute [r] dataset
+      #   @return [Dataset]
+
       # @!group Reading
 
       # @!method select(*patterns)
@@ -38,6 +41,26 @@ module ROM
       #   @return [Relation]
       forward :select, :select_append, :reject, :reject_append,
               :inside, :recursive, :recursive?, :sort
+
+      # Pluck values from a specific column
+      #
+      # @example
+      #   users.pluck { |pathname| pathname.basename.to_s }
+      #   # [1, 2, 3]
+      #
+      # @example
+      #   users.pluck(:id)
+      #   # [1, 2, 3]
+      #
+      # @param [Symbol] key An optional name of the key for extracting values
+      #                     from tuples
+      #
+      # @return [Array]
+      #
+      # @api public
+      def pluck(key = nil, &block)
+        dataset.map(key, &block)
+      end
 
       # Return relation count
       #
