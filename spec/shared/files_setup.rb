@@ -7,13 +7,17 @@ RSpec.shared_context 'files setup' do
 
   let(:path) { uri.join(dir) }
   let(:data) do
-    tree.map do |file, _|
-      { name: file, path: path.join(file) }
+    tree.map do |file, contents|
+      {
+        __path__: path.join(file),
+        __basename__: file,
+        __contents__: contents
+      }
     end
   end
 
   before :each do
     path.mkpath
-    tree.each { |file, tree| path.join(file).write(tree) }
+    tree.each { |file, contents| path.join(file).write(contents) }
   end
 end

@@ -6,7 +6,7 @@ require 'shared/media_relation'
 RSpec.describe ROM::Files::Relation, '#reject' do
   include_context 'media relation'
 
-  subject(:names) { relation.to_a.map { |file| file[:name] } }
+  subject(:names) { relation.to_a.map { |file| file[:__basename__] } }
   let(:relation) { container.relations[:media] }
 
   context '(list, of, patterns)' do

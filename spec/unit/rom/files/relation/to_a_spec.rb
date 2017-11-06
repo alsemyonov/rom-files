@@ -5,15 +5,12 @@ require 'shared/media_relation'
 RSpec.describe ROM::Files::Relation, '#to_a' do
   include_context 'media relation'
 
-  subject(:names) { relation.to_a.map { |file| file[:name] } }
-  let(:paths) { relation.to_a.map { |file| file[:path] } }
-  let(:relation) { container.relations[:media] }
+  let(:names) { relation.to_a.map { |file| file[:__basename__] } }
+  let(:paths) { relation.to_a.map { |file| file[:__path__] } }
 
-  it { is_expected.to eql(%w[some_image.png some_file.txt some_markdown.md]) }
+  its(:to_a) { is_expected.to eq data }
 
   it 'lists file paths' do
-    paths = relation.to_a.map { |file| file[:path] }
-
     expect(paths).to eql([
                            uri.join('media/some_image.png'),
                            uri.join('media/some_file.txt'),
@@ -21,15 +18,21 @@ RSpec.describe ROM::Files::Relation, '#to_a' do
                          ])
   end
 
-  context 'with custom view using select' do
-    let(:relation) { super().text_files }
+  context 'names' do
+    subject { names }
 
-    it { is_expected.to eql %w[some_file.txt some_markdown.md] }
-  end
+    it { is_expected.to eql(%w[some_image.png some_file.txt some_markdown.md]) }
 
-  context 'with custom view using reject' do
-    let(:relation) { super().binary_files }
+    context 'with custom view using select' do
+      let(:relation) { super().text_files }
 
-    it { is_expected.to eql %w[some_image.png] }
+      it { is_expected.to eql %w[some_file.txt some_markdown.md] }
+    end
+
+    context 'with custom view using reject' do
+      let(:relation) { super().binary_files }
+
+      it { is_expected.to eql %w[some_image.png] }
+    end
   end
 end

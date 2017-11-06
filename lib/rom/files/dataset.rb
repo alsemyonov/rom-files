@@ -49,8 +49,15 @@ module ROM
       include DataProxy
       include Dry::Equalizer(:path, :includes, :excludes, :sort_by)
 
+      # @return [Proc]
       def self.row_proc
-        ->(path) { { name: path.basename.to_s, path: path } }
+        ->(path) do
+          {
+            __path__: path,
+            __basename__: path.basename.to_s,
+            __contents__: path.read
+          }
+        end
       end
 
       # @!group Reading
