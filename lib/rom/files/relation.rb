@@ -38,6 +38,19 @@ module ROM
       #   @return [Relation]
       forward :select, :select_append, :reject, :reject_append,
               :inside, :recursive, :recursive?, :sort
+
+      # Return relation count
+      #
+      # @example
+      #   users.count
+      #   # => 12
+      #
+      # @return [Integer]
+      #
+      # @api public
+      def count
+        dataset.count
+      end
     end
   end
 end

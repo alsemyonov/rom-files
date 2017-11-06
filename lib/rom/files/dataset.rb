@@ -131,6 +131,11 @@ module ROM
 
       alias to_a call
       alias to_ary to_a
+
+      # @return [Integer]
+      def count
+        to_a.size
+      end
     end
   end
 end

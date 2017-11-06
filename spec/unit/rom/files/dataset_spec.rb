@@ -15,4 +15,5 @@ RSpec.describe ROM::Files::Dataset do
   its(:includes) { is_expected.to eq %w[*] }
   its(:excludes) { is_expected.to eq [] }
   its(:sort_by) { is_expected.to eq nil }
+  its(:count) { is_expected.to eq 3 }
 end
