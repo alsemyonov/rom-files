@@ -14,9 +14,10 @@ RSpec.describe ROM::Files::Gateway do
   it_behaves_like "a rom gateway"
 
   describe '#use_logger' do
+    let(:logger) { Logger.new(STDOUT) }
     it 'sets logger' do
-      gateway_instance.use_logger(:logger)
-      expect(gateway_instance.logger).to eq :logger
+      gateway_instance.use_logger(logger)
+      expect(gateway_instance.logger).to eq logger
     end
   end
 
