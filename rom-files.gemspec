@@ -38,4 +38,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'redcarpet'
   spec.add_development_dependency 'yard', '~> 0.9'
   spec.add_development_dependency 'yard-junk'
+  spec.add_development_dependency 'yardcheck'
 end

@@ -19,11 +19,16 @@ namespace :doc do
     exit_code = YardJunk::Janitor.new.run.report(:text)
     exit exit_code unless exit_code.zero?
   end
+
+  desc 'Check documentation with `yardcheck`'
+  task :check do
+    sh 'yardcheck --require rom-files --include lib --namespace ROM::Files --rspec spec'
+  end
 end
 
 task doc: %i[doc:default]
 
 desc 'Run CI tasks'
-task ci: %i[spec style doc doc:junk]
+task ci: %i[spec style doc doc:junk doc:check]
 
 task default: :ci
