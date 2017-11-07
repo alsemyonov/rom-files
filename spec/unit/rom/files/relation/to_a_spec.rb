@@ -6,7 +6,7 @@ RSpec.describe ROM::Files::Relation, '#to_a' do
   include_context 'media relation'
 
   let(:names) { relation.pluck(:basename) }
-  let(:paths) { relation.to_a.map { |file| file[:__path__] } }
+  let(:paths) { relation.to_a.map { |file| file[:__FILE__] } }
 
   its(:to_a) { is_expected.to eq data }
 

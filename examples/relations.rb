@@ -10,9 +10,9 @@ configuration = ROM::Configuration.new(:files, Pathname(__dir__).dirname)
 class Implementations < ROM::Files::Relation
   dataset { select('*.rb').recursive }
   schema :lib, as: :implementations do
-    attribute :__path__, Types::Coercible::Pathname
+    attribute :__FILE__, Types::Coercible::Pathname
 
-    primary_key :__path__
+    primary_key :__FILE__
   end
 end
 
@@ -21,9 +21,9 @@ configuration.register_relation(Implementations)
 class Specifications < ROM::Files::Relation
   dataset { select('*_spec.rb').recursive }
   schema :spec, as: :specifications do
-    attribute :__path__, Types::Coercible::Pathname
+    attribute :__FILE__, Types::Coercible::Pathname
 
-    primary_key :__path__
+    primary_key :__FILE__
   end
 end
 
@@ -32,9 +32,9 @@ configuration.register_relation(Specifications)
 class TemporaryFiles < ROM::Files::Relation
   dataset { recursive }
   schema :tmp, as: :temporary_files do
-    attribute :__path__, Types::Coercible::Pathname
+    attribute :__FILE__, Types::Coercible::Pathname
 
-    primary_key :__path__
+    primary_key :__FILE__
   end
 end
 

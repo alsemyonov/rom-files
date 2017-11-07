@@ -4,7 +4,7 @@
 [codeclimate]: https://codeclimate.com/github/alsemyonov/rom-files
 [inchpages]: http://inch-ci.org/github/alsemyonov/rom-files
 
-# ROM::File
+# ROM::Files
 
 [![Gem Version](https://badge.fury.io/rb/rom-files.svg)][gem]
 [![Build Status](https://travis-ci.org/alsemyonov/rom-files.svg?branch=master)][travis]

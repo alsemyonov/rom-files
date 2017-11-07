@@ -53,7 +53,7 @@ module ROM
       def self.row_proc
         ->(path) do
           {
-            __path__: path,
+            __FILE__: path,
             __contents__: path.read
           }
         end
