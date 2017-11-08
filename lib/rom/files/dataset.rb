@@ -5,6 +5,7 @@ require 'rom/initializer'
 require 'rom/support/memoizable'
 require_relative 'types'
 require_relative 'dataset/filtering'
+require_relative 'dataset/mime_type_filtering'
 
 module ROM
   module Files
@@ -12,6 +13,7 @@ module ROM
       extend Initializer
       include Memoizable
       include Filtering
+      prepend MimeTypeFiltering
       include Dry::Equalizer(:path, :mime_type, :includes, :excludes, :sort_by)
       include DataProxy
 
