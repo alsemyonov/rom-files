@@ -12,6 +12,7 @@ RSpec.describe ROM::Files::Dataset do
   it_behaves_like "a rom enumerable dataset"
 
   its(:path) { is_expected.to eq path }
+  its(:mime_type) { is_expected.to eq nil }
   its(:includes) { is_expected.to eq %w[*] }
   its(:excludes) { is_expected.to eq [] }
   its(:sort_by) { is_expected.to eq nil }

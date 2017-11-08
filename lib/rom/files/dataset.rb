@@ -29,6 +29,12 @@ module ROM
       #   @return [Pathname]
       param :path, Types::Coercible::Pathname
 
+      # @!attribute [r] mime_type
+      #   MIME-type of files to include
+      #   @return [MIME::Type?]
+      option :mime_type, Types::MimeType.optional,
+             default: -> { nil }
+
       # @!attribute [r] includes
       #   Array of glob patterns to be selected inside {#path}
       #   @return [Array<String>]
