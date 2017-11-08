@@ -12,6 +12,8 @@ module ROM
       extend Initializer
       include Memoizable
       include Filtering
+      include Dry::Equalizer(:path, :mime_type, :includes, :excludes, :sort_by)
+      include DataProxy
 
       RECURSIVE_PATTERN = '**/'
       RECURSIVE_EXPRESSION = /#{Regexp.escape(RECURSIVE_PATTERN)}/
@@ -53,9 +55,6 @@ module ROM
       #   @return [Symbol, Proc, nil]
       option :sort_by, Types::Symbol.optional,
              default: proc { nil }
-
-      include DataProxy
-      include Dry::Equalizer(:path, :includes, :excludes, :sort_by)
 
       # @return [Proc]
       def self.row_proc
