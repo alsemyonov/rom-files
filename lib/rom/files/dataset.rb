@@ -4,12 +4,14 @@ require 'rom/data_proxy'
 require 'rom/initializer'
 require 'rom/support/memoizable'
 require_relative 'types'
+require_relative 'dataset/filtering'
 
 module ROM
   module Files
     class Dataset
       extend Initializer
       include Memoizable
+      include Filtering
 
       RECURSIVE_PATTERN = '**/'
       RECURSIVE_EXPRESSION = /#{Regexp.escape(RECURSIVE_PATTERN)}/
@@ -48,7 +50,7 @@ module ROM
              default: proc { EMPTY_ARRAY }
 
       # @!attribute [r] sort_by
-      #   @return [Proc?]
+      #   @return [Symbol, Proc, nil]
       option :sort_by, Types::Symbol.optional,
              default: proc { nil }
 
