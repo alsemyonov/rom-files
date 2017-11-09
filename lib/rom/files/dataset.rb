@@ -100,6 +100,17 @@ module ROM
         files.each { |tuple| yield(row_proc[tuple]) }
       end
 
+      # Project a dataset
+      #
+      # @param [Array<Symbol>] names A list of attribute names
+      #
+      # @return [Dataset]
+      #
+      # @api public
+      def project(*names)
+        map { |tuple| tuple.select { |key| names.include?(key) } }
+      end
+
       # Pluck values from a pathname property
       #
       # @overload pluck(field)
