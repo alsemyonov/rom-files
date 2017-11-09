@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'rom/plugins/relation/files/instrumentation'
+
 require 'rom/files/plugins/schema/contents'
 require 'rom/files/plugins/schema/stat'
 
