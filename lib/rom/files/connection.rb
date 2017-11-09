@@ -38,7 +38,7 @@ module ROM
       #   @api private
       def_instance_delegators :data, :[], :size
 
-      # @param name [String]
+      # @param name [String, Symbol]
       # @return [Dataset]
       def create_dataset(name)
         types = MIME::Types[name]

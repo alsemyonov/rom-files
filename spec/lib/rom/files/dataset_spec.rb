@@ -18,4 +18,5 @@ RSpec.describe ROM::Files::Dataset do
   its(:sorting) { is_expected.to eq nil }
   its(:row_proc) { is_expected.to be_a Proc }
   its(:count) { is_expected.to eq 3 }
+  its(:each) { is_expected.to be_a Enumerator }
 end

@@ -22,22 +22,29 @@ module ROM
       # @!method select(*patterns)
       #   @param (see Dataset#select)
       #   @return [Relation]
+      #
       # @!method select_append(*patterns)
       #   @param (see Dataset#select_append)
       #   @return [Relation]
+      #
       # @!method reject(*patterns)
       #   @param (see Dataset#reject)
       #   @return [Relation]
+      #
       # @!method reject_append(*patterns)
       #   @param (see Dataset#reject_append)
       #   @return [Relation]
+      #
       # @!method inside(*prefixes)
       #   @param (see Dataset#inside)
       #   @return [Relation]
+      #
       # @!method recursive
       #   @return [Relation]
+      #
       # @!method recursive?
       #   @return [Boolean]
+      #
       # @!method sort(sorting = :to_s)
       #   @param (see Dataset#sort)
       #   @return [Relation]
@@ -46,28 +53,13 @@ module ROM
 
       # @!method mime_type
       #   @return [MIME::Type, nil]
-      def_instance_delegators :dataset, :mime_type
-
-      # Pluck values from a specific column
       #
-      # @example
-      #   users.pluck { |pathname| pathname.basename.to_s }
-      #   # [1, 2, 3]
+      #   @see Dataset#mime_type
+      # @!method pluck
+      #   @return [Array]
       #
-      # @example
-      #   users.pluck(:id)
-      #   # [1, 2, 3]
-      #
-      # @param [Symbol] key An optional name of the key for extracting values
-      #                     from tuples
-      #
-      # @return [Array]
-      #
-      # @api public
-      def pluck(key = nil, &block)
-        block ||= key.to_proc
-        dataset.pluck(&block)
-      end
+      #   @see Dataset#pluck
+      def_instance_delegators :dataset, :mime_type, :pluck
 
       # Return relation count
       #

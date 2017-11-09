@@ -66,8 +66,7 @@ module ROM
       def self.row_proc
         ->(path) do
           {
-            __FILE__: path,
-            __contents__: path.read
+            __FILE__: path
           }
         end
       end
@@ -93,7 +92,7 @@ module ROM
 
       # Iterate over data using row_proc
       #
-      # @return [Enumerator] if block is not given
+      # @return [Enumerator, Array] if block is not given
       #
       # @api private
       def each
@@ -101,15 +100,33 @@ module ROM
         files.each { |tuple| yield(row_proc[tuple]) }
       end
 
+      # Pluck values from a pathname property
+      #
+      # @overload pluck(field)
+      #
+      # @example Usage with Symbol
+      #   users.pluck(:extname).uniq
+      #   # %w[.rb .rbw]
+      #
+      # @param [#to_proc, nil] field A name of the property for extracting values from pathname
+      #
+      # @overload pluck { |pathname| ... }
+      #
+      # @example Usage with block
+      #   users.pluck { |pathname| pathname.basename.to_s }
+      #   # [1, 2, 3]
+      #
+      # @return [Array]
+      #
+      # @api public
       def pluck(field = nil, &block)
-        # block ||= ->(hash) { hash[field] }
-        block ||= field ? field.to_proc : row_proc
+        block ||= field.to_proc
         files.map(&block)
       end
 
       # @return [Array<Hash{Symbol => Pathname, String}>]
       def call
-        pluck(&row_proc)
+        pluck(row_proc)
       end
       alias data call
 

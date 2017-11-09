@@ -15,7 +15,7 @@ module ROM
           super(path, mime_type: mime_type, includes: includes, **options)
         end
 
-        # @param type [String]
+        # @param type [String, nil]
         # @return [Dataset]
         def mime(type = nil)
           type = Types::MimeType[type] if type
