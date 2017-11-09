@@ -16,18 +16,20 @@ end
 
 group :red_green_refactor, halt_on_fail: true do
   guard :rspec, cmd: 'rspec', all_on_start: true, all_after_pass: true do
-    # run all specs if Gemfile.lock is modified
-    watch('Gemfile.lock') { 'spec' }
+    require 'guard/rspec/dsl'
+    dsl = Guard::RSpec::Dsl.new(self)
 
-    # run all specs if any library code is modified
-    watch(%r{\Alib/.+\.rb\Z}) { 'spec' }
+    rspec = dsl.rspec
+    watch('.rspec') { rspec.spec_dir }
+    watch('Gemfile.lock') { rspec.spec_dir }
+    watch(rspec.spec_helper) { rspec.spec_dir }
+    watch(rspec.spec_support) { rspec.spec_dir }
+    watch(%r{\A#{rspec.spec_dir}/(?:shared)/.+\.rb\Z}) { rspec.spec_dir }
+    watch(rspec.spec_files)
 
-    # run all specs if supporting files are modified
-    watch('spec/spec_helper.rb') { 'spec' }
-    watch(%r{\Aspec/(?:lib|support|shared)/.+\.rb\Z}) { 'spec' }
-
-    # run a spec if it is modified
-    watch(%r{\Aspec/(?:unit|integration)/.+_spec\.rb\Z})
+    # Ruby files
+    ruby = dsl.ruby
+    dsl.watch_spec_files_for(ruby.lib_files)
 
     notification :tmux, display_message: true if ENV.key?('TMUX')
   end
