@@ -3,6 +3,7 @@
 require 'forwardable'
 require 'rom/relation'
 require_relative 'schema'
+require_relative 'attribute'
 
 module ROM
   module Files
@@ -13,6 +14,7 @@ module ROM
 
       adapter :files
       schema_class Files::Schema
+      schema_attr_class Files::Attribute
 
       # @!attribute [r] dataset
       #   @return [Dataset]
