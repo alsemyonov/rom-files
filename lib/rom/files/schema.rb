@@ -14,7 +14,7 @@ module ROM
       #
       # This can be used by views to generate a new relation automatically.
       # In example a schema can project a relation, join any additional relations
-      # if it uncludes attributes from other relations etc.
+      # if it includes attributes from other relations etc.
       #
       # Default implementation is a no-op and it simply returns back untouched relation
       #
@@ -24,12 +24,22 @@ module ROM
       #
       # @api public
       def call(relation)
-        relation.class.new(relation.dataset.with(row_proc: method(:load_attributes)))
+        relation.new(relation.dataset.with(row_proc: row_proc), schema: self)
       end
 
-      def load_attributes(row_proc)
-        each do |attribute|
-          row_proc[attribute.name] = attribute.(row_proc[:__FILE__])
+      # @return [Method, Proc]
+      def row_proc
+        method(:load_attributes)
+      end
+
+      # @param pathname [Pathname]
+      # @return [Hash{Symbol => Object}]
+      def load_attributes(pathname)
+        attributes.each_with_object({}) do |attribute, result|
+          result[attribute.name] = attribute.(pathname)
+          result
+        end
+      end
         end
       end
     end
