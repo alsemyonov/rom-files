@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'concurrent/hash'
+require 'mime/types/full'
 require_relative 'dataset'
 
 module ROM
@@ -37,14 +38,20 @@ module ROM
       #   @api private
       def_instance_delegators :data, :[], :size
 
+      # @param name [String]
       # @return [Dataset]
       def create_dataset(name)
-        @data[name] = Dataset.new(path_for(name))
+        types = MIME::Types[name]
+        @data[name] = if types.any?
+                        Dataset.new(path, mime_type: types.first)
+                      else
+                        Dataset.new(path_for(name))
+                      end
       end
 
       # @return [Boolean]
       def key?(name)
-        path_for(name).exist?
+        MIME::Types[name].any? || path_for(name).exist?
       end
 
       private
