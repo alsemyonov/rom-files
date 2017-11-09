@@ -18,6 +18,7 @@ module ROM
         # @param type [String]
         # @return [Dataset]
         def mime(type = nil)
+          type = Types::MimeType[type] if type
           with(mime_type: type)
         end
       end
