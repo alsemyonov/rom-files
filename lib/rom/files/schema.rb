@@ -40,6 +40,17 @@ module ROM
           result
         end
       end
+
+      # Internal hook used during setup process
+      #
+      # @see Schema#finalize_associations!
+      #
+      # @api private
+      def finalize_associations!(relations:)
+        super do
+          associations.map do |definition|
+            Files::Associations.const_get(definition.type).new(definition, relations)
+          end
         end
       end
     end
