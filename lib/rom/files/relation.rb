@@ -29,6 +29,13 @@ module ROM
       #   @param (see Dataset#select_append)
       #   @return [Relation]
       #
+      # @!method inside(*prefixes)
+      #   @param (see Dataset#inside)
+      #   @return [Relation]
+      #
+      # @!method recursive
+      #   @return [Relation]
+      #
       # @!method reject(*patterns)
       #   @param (see Dataset#reject)
       #   @return [Relation]
@@ -37,31 +44,27 @@ module ROM
       #   @param (see Dataset#reject_append)
       #   @return [Relation]
       #
-      # @!method inside(*prefixes)
-      #   @param (see Dataset#inside)
-      #   @return [Relation]
-      #
-      # @!method recursive
-      #   @return [Relation]
-      #
-      # @!method recursive?
-      #   @return [Boolean]
-      #
       # @!method sort(sorting = :to_s)
       #   @param (see Dataset#sort)
       #   @return [Relation]
       forward :select, :select_append, :reject, :reject_append,
-              :inside, :recursive, :recursive?, :sort
+              :inside, :recursive, :sort
 
       # @!method mime_type
       #   @return [MIME::Type, nil]
       #
       #   @see Dataset#mime_type
+      #
       # @!method pluck
       #   @return [Array]
       #
       #   @see Dataset#pluck
-      def_instance_delegators :dataset, :mime_type, :pluck
+      #
+      # @!method recursive?
+      #   @return [Boolean]
+      #
+      #   @see Dataset#recursive?
+      def_instance_delegators :dataset, :mime_type, :recursive?, :pluck
 
       # Return relation count
       #
