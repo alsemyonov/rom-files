@@ -3,6 +3,7 @@
 require 'rom/data_proxy'
 require 'rom/initializer'
 require 'rom/support/memoizable'
+require_relative 'constants'
 require_relative 'types'
 require_relative 'dataset/filtering'
 require_relative 'dataset/mime_type'
@@ -14,11 +15,8 @@ module ROM
       include Memoizable
       include Filtering
       prepend MimeType
-      include Dry::Equalizer(:path, :mime_type, :includes, :excludes, :sort_by)
       include DataProxy
-
-      RECURSIVE_PATTERN = '**/'
-      RECURSIVE_EXPRESSION = /#{Regexp.escape(RECURSIVE_PATTERN)}/
+      include Dry::Equalizer(:path, :mime_type, :includes, :excludes, :sort_by)
 
       # @!method initialize(path, includes: ['*'], excludes: [], sort_by: nil)
       #   @param path [Pathname, #to_s]
@@ -45,7 +43,7 @@ module ROM
       #   Array of glob patterns to be selected inside {#path}
       #   @return [Array<String>]
       option :includes, Types::Strict::Array.of(Types::Coercible::String),
-             default: proc { %w[*] }
+             default: proc { ALL }
 
       # @!attribute [r] excludes
       #   Array of filename patterns to be rejected
