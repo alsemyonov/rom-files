@@ -1,11 +1,13 @@
 # frozen_string_literal: true
 
+require 'forwardable'
 require 'rom/relation'
 require_relative 'schema'
 
 module ROM
   module Files
     class Relation < ROM::Relation
+      extend Forwardable
       include Enumerable
       include Files
 
@@ -41,6 +43,10 @@ module ROM
       #   @return [Relation]
       forward :select, :select_append, :reject, :reject_append,
               :inside, :recursive, :recursive?, :sort
+
+      # @!method mime_type
+      #   @return [MIME::Type, nil]
+      def_instance_delegators :dataset, :mime_type
 
       # Pluck values from a specific column
       #
