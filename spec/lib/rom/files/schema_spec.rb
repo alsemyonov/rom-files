@@ -6,7 +6,7 @@ require 'shared/media_relation'
 RSpec.describe ROM::Files::Schema do
   describe '#primary_key' do
     subject(:primary_key) { schema.primary_key }
-    let(:schema) { schema_proc.call }
+    let(:schema) { schema_proc.() }
 
     before { schema.finalize_attributes!.finalize! }
 

@@ -5,7 +5,7 @@ require 'shared/media_relation'
 RSpec.describe ROM::Files::Plugins::Schema::Stat do
   include_context 'media relation'
 
-  subject(:schema) { schema_dsl.call }
+  subject(:schema) { schema_dsl.() }
   let(:relation_name) { ROM::Relation::Name[:media] }
   let(:schema_dsl) do
     ROM::Schema::DSL.new(relation_name, adapter: :files)

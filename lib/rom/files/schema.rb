@@ -29,7 +29,7 @@ module ROM
 
       def load_attributes(row_proc)
         each do |attribute|
-          row_proc[attribute.name] = attribute.call(row_proc[:__FILE__])
+          row_proc[attribute.name] = attribute.(row_proc[:__FILE__])
         end
       end
     end
