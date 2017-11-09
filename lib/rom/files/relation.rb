@@ -16,6 +16,11 @@ module ROM
       schema_class Files::Schema
       schema_attr_class Files::Attribute
 
+      def initialize(*) # :nodoc:
+        super
+        @dataset = @dataset.with(row_proc: schema.row_proc) if schema
+      end
+
       # @!attribute [r] dataset
       #   @return [Dataset]
 
@@ -65,6 +70,17 @@ module ROM
       #
       #   @see Dataset#recursive?
       def_instance_delegators :dataset, :mime_type, :recursive?, :pluck
+
+      # Project a relation with provided attribute names
+      #
+      # @param names [Array<Symbol>] A list with attribute names
+      #
+      # @return [Relation]
+      #
+      # @api public
+      def project(*names)
+        schema.project(*names).(self)
+      end
 
       # Return relation count
       #
