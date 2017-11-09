@@ -41,8 +41,8 @@ module ROM
         end
 
         # @return [Dataset]
-        def sort(sort_by = :to_s)
-          with(sort_by: sort_by)
+        def sort(sorting = :to_s)
+          with(sorting: sorting)
         end
       end
     end

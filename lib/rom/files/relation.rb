@@ -38,7 +38,7 @@ module ROM
       #   @return [Relation]
       # @!method recursive?
       #   @return [Boolean]
-      # @!method sort(sort_by = :to_s)
+      # @!method sort(sorting = :to_s)
       #   @param (see Dataset#sort)
       #   @return [Relation]
       forward :select, :select_append, :reject, :reject_append,
@@ -65,7 +65,8 @@ module ROM
       #
       # @api public
       def pluck(key = nil, &block)
-        dataset.map(key, &block)
+        block ||= key.to_proc
+        dataset.pluck(&block)
       end
 
       # Return relation count

@@ -12,21 +12,22 @@ module ROM
   module Files
     class Dataset
       extend Initializer
-      include Memoizable
-      include Filtering
-      prepend MimeType
-      include DataProxy
-      include Dry::Equalizer(:path, :mime_type, :includes, :excludes, :sort_by)
 
-      # @!method initialize(path, includes: ['*'], excludes: [], sort_by: nil)
+      prepend MimeType
+
+      include Dry::Equalizer(:path, :mime_type, :includes, :excludes, :sorting)
+      include Enumerable
+      include Filtering
+
+      # @!method initialize(path, mime_type: nil, includes: ['*'], excludes: [], sorting: nil)
       #   @param path [Pathname, #to_s]
       #     directory to search for files inside, maps to {#path}
       #   @param includes [Array<String, #to_s>]
       #     array of patterns to be selected inside `path`, maps to {#includes}
       #   @param excludes [Array<String, #to_s>]
       #     array of patterns to be rejected inside `path`, maps to {#excludes}
-      #   @param sort_by [Symbol, Proc, nil]
-      #     see {#sort_by}
+      #   @param sorting [Symbol, Proc, nil]
+      #     see {#sorting}
 
       # @!attribute [r] path
       #   Path of directory containing related files
@@ -51,9 +52,9 @@ module ROM
       option :excludes, Types::Strict::Array.of(Types::Coercible::String),
              default: proc { EMPTY_ARRAY }
 
-      # @!attribute [r] sort_by
+      # @!attribute [r] sorting
       #   @return [Symbol, Proc, nil]
-      option :sort_by, Types::Symbol.optional,
+      option :sorting, Types::Symbol.optional,
              default: proc { nil }
 
       # @!attribute [r] row_proc
@@ -77,38 +78,43 @@ module ROM
       end
 
       # @return [Array<Pathname>]
-      def matches
-        matches = includes.reduce([]) do |result, pattern|
+      def files
+        files = includes.reduce([]) do |result, pattern|
           result + Pathname.glob(path.join(pattern))
         end
-        matches = matches.reject do |match|
+        files = files.reject do |match|
           match.directory? || excludes.any? do |pattern|
             match.fnmatch(pattern, File::FNM_EXTGLOB)
           end
         end
-        matches = matches.sort_by(&sort_by) if sort_by
-        matches
+        files = files.sort_by(&sorting) if sorting
+        files
       end
 
-      memoize :matches
+      # Iterate over data using row_proc
+      #
+      # @return [Enumerator] if block is not given
+      #
+      # @api private
+      def each
+        return to_enum unless block_given?
+        files.each { |tuple| yield(row_proc[tuple]) }
+      end
 
-      alias data matches
-
-      def map(field = nil, &block)
+      def pluck(field = nil, &block)
         # block ||= ->(hash) { hash[field] }
         block ||= field ? field.to_proc : row_proc
-        matches.map(&block)
+        files.map(&block)
       end
-
-      alias pluck map
 
       # @return [Array<Hash{Symbol => Pathname, String}>]
       def call
-        map(&row_proc)
+        pluck(&row_proc)
       end
+      alias data call
 
       alias to_a call
-      alias to_ary to_a
+      # alias to_ary to_a
 
       # @return [Integer]
       def count

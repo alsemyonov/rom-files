@@ -15,7 +15,7 @@ RSpec.describe ROM::Files::Dataset do
   its(:mime_type) { is_expected.to eq nil }
   its(:includes) { is_expected.to eq %w[*] }
   its(:excludes) { is_expected.to eq [] }
-  its(:sort_by) { is_expected.to eq nil }
+  its(:sorting) { is_expected.to eq nil }
   its(:row_proc) { is_expected.to be_a Proc }
   its(:count) { is_expected.to eq 3 }
 end

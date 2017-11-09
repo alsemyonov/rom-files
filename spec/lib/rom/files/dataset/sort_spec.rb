@@ -6,17 +6,17 @@ require 'shared/media_dataset'
 RSpec.describe ROM::Files::Dataset, '#sort' do
   include_context 'media dataset'
 
-  its(:sort_by) { is_expected.to eq nil }
+  its(:sorting) { is_expected.to eq nil }
 
   context '()' do
     subject { dataset.sort }
 
-    its(:sort_by) { is_expected.to eq :to_s }
+    its(:sorting) { is_expected.to eq :to_s }
   end
 
   context '(method)' do
     subject { dataset.sort(:basename) }
 
-    its(:sort_by) { is_expected.to eq :basename }
+    its(:sorting) { is_expected.to eq :basename }
   end
 end
