@@ -56,6 +56,11 @@ module ROM
       option :sort_by, Types::Symbol.optional,
              default: proc { nil }
 
+      # @!attribute [r] row_proc
+      #   @return [Proc]
+      option :row_proc,
+             default: proc { self.class.row_proc }
+
       # @return [Proc]
       def self.row_proc
         ->(path) do
