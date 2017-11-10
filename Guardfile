@@ -34,7 +34,7 @@ group :red_green_refactor, halt_on_fail: true do
     notification :tmux, display_message: true if ENV.key?('TMUX')
   end
 
-  guard :rubocop do
+  guard :rubocop, cli: '--auto-correct' do
     # run rubocop on modified file
     watch(%r{\Alib/.+\.rb\Z})
     watch(%r{\Aspec/.+\.rb\Z})
