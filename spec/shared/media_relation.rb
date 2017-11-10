@@ -9,6 +9,10 @@ RSpec.shared_context 'media relation' do
 
   before :each do
     configuration.relation(:media) do
+      schema :media do
+        attribute :__FILE__, ROM::Files::Types::Path
+      end
+
       # @return [ROM::Files::Relation]
       def text_files
         select('*.{txt,md}')

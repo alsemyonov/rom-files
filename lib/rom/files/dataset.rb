@@ -64,11 +64,7 @@ module ROM
 
       # @return [Proc]
       def self.row_proc
-        ->(path) do
-          {
-            __FILE__: path
-          }
-        end
+        ->(path) { { __FILE__: path } }
       end
 
       # @return [Boolean]
@@ -136,13 +132,11 @@ module ROM
       end
 
       # @return [Array<Hash{Symbol => Pathname, String}>]
-      def call
+      def data
         pluck(row_proc)
       end
-      alias data call
-
-      alias to_a call
-      # alias to_ary to_a
+      alias to_a data
+      alias to_ary to_a
 
       # @return [Integer]
       def count
