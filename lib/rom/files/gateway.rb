@@ -2,6 +2,7 @@
 
 require 'forwardable'
 require_relative 'connection'
+require_relative 'extensions'
 
 module ROM
   module Files
@@ -22,8 +23,10 @@ module ROM
       #   @return [Connection]
 
       # @param root [Pathname, #to_s]
-      def initialize(root = Pathname.pwd)
+      # @param extensions [Array<Symbol>, Symbol]
+      def initialize(root = Pathname.pwd, extensions: [])
         @connection = Connection.new(root)
+        Files.load_extensions(*Array(extensions))
       end
 
       # @return [Object] default logger
