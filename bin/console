@@ -3,4 +3,4 @@
 require 'bundler/setup'
 require 'rom-files'
 
-require_relative '../examples/gem'
+require_relative '../examples/gem_example'
