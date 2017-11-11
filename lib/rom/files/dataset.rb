@@ -62,6 +62,11 @@ module ROM
       option :row_proc,
              default: proc { self.class.row_proc }
 
+      # @!attribute [r] connection
+      #   @return [Connection]
+      option :connection,
+             default: proc { Connection.new(path) }
+
       # @return [Proc]
       def self.row_proc
         ->(path) { { __FILE__: path } }
@@ -74,16 +79,7 @@ module ROM
 
       # @return [Array<Pathname>]
       def files
-        files = includes.reduce([]) do |result, pattern|
-          result + Pathname.glob(path.join(pattern))
-        end
-        files = files.reject do |match|
-          match.directory? || excludes.any? do |pattern|
-            match.fnmatch(pattern, File::FNM_EXTGLOB)
-          end
-        end
-        files = files.sort_by(&sorting) if sorting
-        files
+        connection.search(includes, excludes: excludes, sorting: sorting, path: path)
       end
 
       # Iterate over data using row_proc

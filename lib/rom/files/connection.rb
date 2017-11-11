@@ -43,15 +43,30 @@ module ROM
       def create_dataset(name)
         types = MIME::Types[name]
         @data[name] = if types.any?
-                        Dataset.new(path, mime_type: types.first)
+                        Dataset.new(path, mime_type: types.first, connection: self)
                       else
-                        Dataset.new(path_for(name))
+                        Dataset.new(path_for(name), connection: self)
                       end
       end
 
       # @return [Boolean]
       def key?(name)
         MIME::Types[name].any? || path_for(name).exist?
+      end
+
+      # @return [Array<Pathname>]
+      def search(patterns, path: self.path, excludes: EMPTY_ARRAY, sorting: nil, directories: false)
+        files = patterns.inject([]) do |result, pattern|
+          result + Pathname.glob(path.join(pattern))
+        end
+        files = files.reject(&:directory?) unless directories
+        files = files.reject do |match|
+          excludes.any? do |pattern|
+            match.fnmatch(pattern, File::FNM_EXTGLOB)
+          end
+        end
+        files = files.sort_by(&sorting) if sorting
+        files
       end
 
       private

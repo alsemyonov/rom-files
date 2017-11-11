@@ -56,4 +56,19 @@ RSpec.describe ROM::Files::Connection do
       it { is_expected.to eq false }
     end
   end
+
+  describe '#search' do
+    subject(:files) { connection.search(patterns, excludes: excludes, sorting: sorting, directories: directories) }
+    let(:patterns) { ['*'] }
+    let(:excludes) { [] }
+    let(:sorting) { nil }
+    let(:directories) { false }
+
+    it { is_expected.to be_a Array }
+
+    xcontext 'including everything'
+    xcontext 'excluding images'
+    xcontext 'sorting results'
+    xcontext 'including directories'
+  end
 end
