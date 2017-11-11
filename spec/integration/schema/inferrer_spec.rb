@@ -39,14 +39,14 @@ RSpec.describe 'Schema inference for common file types' do
         its('type.primitive') { is_expected.to be Pathname }
       end
 
-      describe '__contents__' do
-        subject(:attribute) { schema[:__contents__] }
+      describe 'DATA' do
+        subject(:attribute) { schema[:DATA] }
 
         its(:source) { is_expected.to eql source }
         its('type.primitive') { is_expected.to be String }
 
         it 'autoloads contents' do
-          expect(attribute.meta[:__contents__]).to be(true)
+          expect(attribute.meta[:DATA]).to be(true)
         end
       end
     end

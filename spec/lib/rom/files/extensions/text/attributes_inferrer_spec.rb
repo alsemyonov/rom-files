@@ -34,11 +34,11 @@ RSpec.describe ROM::Files::Text::AttributesInferrer do
         its(:primary_key?) { is_expected.to be true }
       end
 
-      describe '__contents__' do
+      describe 'DATA' do
         subject(:attribute) { inferred[1] }
 
         it { is_expected.to be_a attr_class }
-        its(:name) { is_expected.to eq :__contents__ }
+        its(:name) { is_expected.to eq :DATA }
         its(:primitive) { is_expected.to eq String }
         its(:primary_key?) { is_expected.to be false }
       end

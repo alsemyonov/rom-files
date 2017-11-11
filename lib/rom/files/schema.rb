@@ -55,7 +55,7 @@ module ROM
       # @return [String]
       def contents_for(tuple)
         contents = attributes.each_with_object([]) do |attr, result|
-          result << tuple[attr.name] if attr.meta[:__contents__]
+          result << tuple[attr.name] if attr.meta[DATA]
         end.compact
         contents.join if contents.any?
       end

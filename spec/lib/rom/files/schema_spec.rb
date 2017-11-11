@@ -70,7 +70,7 @@ RSpec.describe ROM::Files::Schema do
     let(:schema_proc) do
       Class.new(ROM::Relation[:files]).schema do
         attribute :path, ROM::Files::Types::Path
-        attribute :contents, ROM::Files::Types::String.meta(__contents__: true)
+        attribute :contents, ROM::Files::Types::String.meta(DATA: true)
       end
     end
 
@@ -90,8 +90,8 @@ RSpec.describe ROM::Files::Schema do
     let(:schema_proc) do
       Class.new(ROM::Relation[:files]).schema do
         attribute :path, ROM::Files::Types::Path
-        attribute :header, ROM::Files::Types::String.meta(__contents__: true)
-        attribute :footer, ROM::Files::Types::String.meta(__contents__: true)
+        attribute :header, ROM::Files::Types::String.meta(DATA: true)
+        attribute :footer, ROM::Files::Types::String.meta(DATA: true)
       end
     end
 

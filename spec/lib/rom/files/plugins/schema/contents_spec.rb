@@ -14,9 +14,9 @@ RSpec.describe ROM::Files::Plugins::Schema::Contents do
   # @param name [Symbol]
   # @param type [Dry::Types::Definition]
   # @return [ROM::Attribute]
-  def build_attribute(name = :__contents__, type: ROM::Types::String)
+  def build_attribute(name = :DATA, type: ROM::Types::String)
     ROM::Attribute.new(
-      type.meta(name: name, source: relation, __contents__: true)
+      type.meta(name: name, source: relation, DATA: true)
     )
   end
 
@@ -25,7 +25,7 @@ RSpec.describe ROM::Files::Plugins::Schema::Contents do
 
     context 'use :contents' do
       before { schema_dsl.use :contents }
-      its([:__contents__]) { is_expected.to eql build_attribute }
+      its([:DATA]) { is_expected.to eql build_attribute }
 
       context 'contents(name)' do
         before { schema_dsl.contents :custom }
@@ -44,7 +44,7 @@ RSpec.describe ROM::Files::Plugins::Schema::Contents do
 
       context 'contents(type:)' do
         before { schema_dsl.contents type: type }
-        its([:__contents__]) { is_expected.to eql build_attribute(type: type) }
+        its([:DATA]) { is_expected.to eql build_attribute(type: type) }
       end
     end
 
@@ -55,7 +55,7 @@ RSpec.describe ROM::Files::Plugins::Schema::Contents do
 
     context 'use :contents, type:' do
       before { schema_dsl.use :contents, type: type }
-      its([:__contents__]) { is_expected.to eql build_attribute type: type }
+      its([:DATA]) { is_expected.to eql build_attribute type: type }
     end
 
     context 'use :contents, name:, type:' do

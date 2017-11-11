@@ -9,12 +9,12 @@ module ROM
         def infer_attributes(schema, _gateway)
           [
             build(Types::Path, ID, schema),
-            build(Types::String.meta(__contents__: true), :__contents__, schema)
+            build(Types::String.meta(DATA: true), DATA, schema)
           ]
         end
 
         def columns
-          super + [:__contents__]
+          super + [DATA]
         end
       end
     end
