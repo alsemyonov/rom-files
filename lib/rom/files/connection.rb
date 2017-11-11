@@ -69,6 +69,37 @@ module ROM
         files
       end
 
+      # @param id [Pathname, #to_s]
+      # @return [String]
+      def read(id)
+        path.join(id).read
+      end
+
+      # @param id [Pathname, #to_s]
+      # @param contents [String, #to_s]
+      # @return [String]
+      def write(id, contents)
+        path.join(id).write(contents.to_s)
+      end
+
+      # @param id [Pathname, #to_s]
+      # @return [String]
+      def binread(id)
+        path.join(id).binread
+      end
+
+      # @param id [Pathname, #to_s]
+      # @param contents [String, #to_s]
+      # @return [String]
+      def binwrite(id, contents)
+        path.join(id).binwrite(contents)
+      end
+
+      # @param id [Pathname, #to_s]
+      def delete(id)
+        path.join(id).delete
+      end
+
       private
 
       # @return [Pathname]
