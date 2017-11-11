@@ -51,6 +51,15 @@ module ROM
         Pathname(path.shift).join(*path)
       end
 
+      # @param tuple [Hash]
+      # @return [String]
+      def contents_for(tuple)
+        contents = attributes.each_with_object([]) do |attr, result|
+          result << tuple[attr.name] if attr.meta[:__contents__]
+        end.compact
+        contents.join if contents.any?
+      end
+
       # Internal hook used during setup process
       #
       # @see Schema#finalize_associations!
