@@ -30,6 +30,11 @@ module ROM
           inside '**'
         end
 
+        # @return [Boolean]
+        def recursive?
+          includes.all? { |pattern| pattern =~ RECURSIVE_EXPRESSION }
+        end
+
         # @return [Dataset]
         def reject(*patterns)
           with(excludes: patterns.uniq)

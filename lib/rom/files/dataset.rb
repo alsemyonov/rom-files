@@ -72,11 +72,6 @@ module ROM
         ->(path) { { __FILE__: path } }
       end
 
-      # @return [Boolean]
-      def recursive?
-        includes.all? { |pattern| pattern =~ RECURSIVE_EXPRESSION }
-      end
-
       # @return [Array<Pathname>]
       def files
         connection.search(includes, excludes: excludes, sorting: sorting, path: path)
