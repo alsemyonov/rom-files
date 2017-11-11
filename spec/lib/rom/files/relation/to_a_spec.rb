@@ -9,6 +9,7 @@ RSpec.describe ROM::Files::Relation, '#to_a' do
   let(:paths) { relation.to_a.map { |file| file[:__FILE__] } }
 
   its(:to_a) { is_expected.to eq data }
+  its(:schema) { is_expected.to be_a ROM::Files::Schema }
 
   it 'lists file paths' do
     expect(paths).to eql([

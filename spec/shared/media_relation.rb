@@ -8,10 +8,8 @@ RSpec.shared_context 'media relation' do
   subject(:relation) { container.relations.media }
 
   before :each do
-    configuration.relation(:media) do
-      schema :media do
-        attribute :__FILE__, ROM::Files::Types::Path
-      end
+    configuration.relation :media do
+      schema :media, infer: true
 
       # @return [ROM::Files::Relation]
       def text_files
@@ -21,6 +19,11 @@ RSpec.shared_context 'media relation' do
       # @return [ROM::Files::Relation]
       def binary_files
         reject('*.txt', '*.md')
+      end
+    end
+
+    configuration.relation :text do
+      schema 'text/plain', infer: true do
       end
     end
   end

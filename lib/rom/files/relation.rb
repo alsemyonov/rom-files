@@ -2,8 +2,9 @@
 
 require 'forwardable'
 require 'rom/relation'
-require_relative 'schema'
 require_relative 'attribute'
+require_relative 'schema'
+require_relative 'schema/inferrer'
 
 module ROM
   module Files
@@ -13,8 +14,9 @@ module ROM
       include Files
 
       adapter :files
-      schema_class Files::Schema
       schema_attr_class Files::Attribute
+      schema_class Files::Schema
+      schema_inferrer Files::Schema::Inferrer.new.freeze
 
       def initialize(*) # :nodoc:
         super

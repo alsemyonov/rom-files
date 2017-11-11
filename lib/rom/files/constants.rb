@@ -6,6 +6,7 @@ module ROM
   module Files
     include Dry::Core::Constants
 
+    ID = :__FILE__
     ALL = ['*'].freeze
     DIRS = %w[. ..].freeze
     RECURSIVE_PATTERN = '**/'
