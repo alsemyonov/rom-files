@@ -24,7 +24,9 @@ module ROM
       end
 
       # @!attribute [r] dataset
-      #   @return [Dataset]
+      #   @return [Files::Dataset]
+      # @!attribute [r] schema
+      #   @return [Files::Schema]
 
       # @!group Reading
 
@@ -96,6 +98,38 @@ module ROM
       def count
         dataset.count
       end
+
+      # @!group Writing
+
+      def create(tuple)
+        dataset.write(
+          identify(tuple),
+          contents_for(tuple)
+        )
+      end
+      alias << create
+
+      def update(tuple, attributes = {})
+        dataset.write(
+          identify(tuple),
+          contents_for(tuple.merge(attributes))
+        )
+      end
+
+      def delete(tuple)
+        dataset.delete(identify(tuple))
+      end
+
+      # @!method identify(tuple)
+      #   @param (see Schema#identify)
+      #   @return (see Schema#identify)
+      #   @see Schema#identify
+      #
+      # @!method contents_for(tuple)
+      #   @param (see Schema#contents_for)
+      #   @return (see Schema#contents_for)
+      #   @see Schema#contents_for
+      def_instance_delegators :schema, :identify, :contents_for
     end
   end
 end
