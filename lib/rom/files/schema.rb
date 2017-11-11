@@ -41,6 +41,16 @@ module ROM
         end
       end
 
+      # @param tuple [Hash]
+      # @return [Pathname]
+      def identify(tuple)
+        path = (primary_key_names || [ID]).map do |name|
+          tuple[name]
+        end.compact
+        return unless path.any?
+        Pathname(path.shift).join(*path)
+      end
+
       # Internal hook used during setup process
       #
       # @see Schema#finalize_associations!
