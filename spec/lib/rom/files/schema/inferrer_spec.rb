@@ -8,7 +8,7 @@ RSpec.describe ROM::Files::Schema::Inferrer do
 
   subject(:inferrer) { described_class.new }
   let(:relation_name) { ROM::Relation::Name.new(:media) }
-  let(:schema) { ROM::Schema.new(relation_name) }
+  let(:schema) { ROM::Files::Schema.new(relation_name) }
 
   its(:attr_class) { is_expected.to eq ROM::Files::Attribute }
 
