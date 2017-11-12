@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'rom/files/dataset'
-require 'shared/media_dataset'
+require 'shared/rom/files/media_dataset'
 
 RSpec.describe ROM::Files::Dataset, '#recursive' do
   include_context 'media dataset'

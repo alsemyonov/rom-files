@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'shared/media_relation'
+require 'shared/rom/files/media_relation'
 
 RSpec.describe ROM::Files::Plugins::Schema::Contents do
   include_context 'media relation'

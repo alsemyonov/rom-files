@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'shared/files_setup'
+require 'shared/rom/files/files_setup'
 
 RSpec.shared_context 'media files' do
   include_context 'files setup' do

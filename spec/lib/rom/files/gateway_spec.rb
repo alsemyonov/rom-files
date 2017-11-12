@@ -2,7 +2,7 @@
 
 require 'rom/lint/spec'
 require 'rom/files/gateway'
-require 'shared/media_relation'
+require 'shared/rom/files/media_relation'
 
 RSpec.describe ROM::Files::Gateway do
   include_context 'media relation'

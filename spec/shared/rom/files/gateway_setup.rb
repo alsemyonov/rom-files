@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'shared/filesystem_setup'
+require 'shared/rom/files/filesystem_setup'
 
 RSpec.shared_context 'gateway setup' do
   include_context 'filesystem setup'

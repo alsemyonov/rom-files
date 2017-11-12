@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'rom/files/schema/inferrer'
-require 'shared/media_files'
+require 'shared/rom/files/media_files'
 
 RSpec.describe 'Schema inference for common file types' do
   include_context 'media files'
