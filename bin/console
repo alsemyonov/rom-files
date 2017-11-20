@@ -2,5 +2,6 @@
 
 require 'bundler/setup'
 require 'rom-files'
+require 'pry'
 
-require_relative '../examples/gem_example'
+binding.pry
