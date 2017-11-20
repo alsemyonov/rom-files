@@ -31,7 +31,7 @@ module ROM
           DEFAULT_TYPE = Types::String
 
           # @api private
-          def self.apply(schema, name: DATA, type: DEFAULT_TYPE)
+          def self.apply(schema, name: Files::DATA, type: DEFAULT_TYPE)
             contents = type.meta(name: name, source: schema.name, DATA: true)
 
             schema.attributes.concat(
@@ -56,7 +56,7 @@ module ROM
             #   end
             #
             # @api public
-            def contents(name = DATA, inline_type = DEFAULT_TYPE, type: inline_type)
+            def contents(name = Files::DATA, inline_type = DEFAULT_TYPE, type: inline_type)
               options = plugin_options(:contents)
               options[:name] = name
               options[:type] = type

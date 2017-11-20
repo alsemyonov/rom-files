@@ -1,132 +1,43 @@
-require 'spec_helper'
+# frozen_string_literal: true
 
-RSpec.describe ROM::SQL::Attribute, :postgres do
-  include_context 'users and tasks'
+require 'rom/files/attribute'
+require 'shared/rom/files/media_relation'
 
-  let(:ds) { users.dataset }
+RSpec.describe ROM::Files::Attribute do
+  Types = ROM::Files::Types
 
-  describe '#is' do
-    context 'with a standard value' do
-      it 'returns a boolean expression' do
-        expect(users[:id].is(1).sql_literal(ds)).to eql('("users"."id" = 1)')
-      end
+  subject(:attribute) { described_class.new(type.meta(name: name)) }
+  let(:type) { Types::String }
+  let(:name) { :attr_name }
+  let(:path) { Pathname(__FILE__) }
 
-      it 'returns a boolean equality expression for attribute' do
-        expect((users[:id].is(1)).sql_literal(ds)).to eql('("users"."id" = 1)')
-      end
+  it { is_expected.to be_a described_class } # no-op
+
+  describe '#call' do
+    subject(:call) { attribute.method(:call) }
+
+    context 'with DATA' do
+      let(:type) { Types::String.meta(DATA: true) }
+
+      its([Pathname(__FILE__)]) { is_expected.to eq File.read(__FILE__) }
     end
 
-    context 'with a nil value' do
-      it 'returns an IS NULL expression' do
-        expect(users[:id].is(nil).sql_literal(ds)).to eql('("users"."id" IS NULL)')
-      end
+    context 'with stat' do
+      let(:type) { Types::FileStat.meta(__stat__: true) }
 
-      it 'returns an IS NULL expression for attribute' do
-        expect((users[:id].is(nil)).sql_literal(ds)).to eql('("users"."id" IS NULL)')
-      end
+      its([Pathname(__FILE__)]) { is_expected.to eq File.stat(__FILE__) }
     end
 
-    context 'with a boolean true' do
-      it 'returns an IS TRUE expression' do
-        expect(users[:id].is(true).sql_literal(ds)).to eql('("users"."id" IS TRUE)')
-      end
+    context 'with specific stat' do
+      let(:type) { Types::Int.meta(__stat__: :mode) }
 
-      it 'returns an IS TRUE expression for attribute' do
-        expect((users[:id].is(true)).sql_literal(ds)).to eql('("users"."id" IS TRUE)')
-      end
+      its([Pathname(__FILE__)]) { is_expected.to eq 0o0100644 }
     end
 
-    context 'with a boolean false' do
-      it 'returns an IS FALSE expression' do
-        expect((users[:id].is(false)).sql_literal(ds)).to eql('("users"."id" IS FALSE)')
-      end
-    end
-  end
+    context 'with proc' do
+      let(:type) { Types::String.meta(__proc__: ->(path) { path.extname }) }
 
-  describe '#not' do
-    context 'with a standard value' do
-      it 'returns a negated boolean equality expression' do
-        expect((users[:id].not(1)).sql_literal(ds)).to eql('("users"."id" != 1)')
-      end
-    end
-
-    context 'with a nil value' do
-      it 'returns an IS NOT NULL expression' do
-        expect(users[:id].not(nil).sql_literal(ds)).to eql('("users"."id" IS NOT NULL)')
-      end
-    end
-
-    context 'with a boolean true' do
-      it 'returns an IS NOT TRUE expression' do
-        expect((users[:id].not(true)).sql_literal(ds)).to eql('("users"."id" IS NOT TRUE)')
-      end
-    end
-
-    context 'with a boolean false' do
-      it 'returns an IS NOT FALSE expression' do
-        expect(users[:id].not(false).sql_literal(ds)).to eql('("users"."id" IS NOT FALSE)')
-      end
-    end
-  end
-
-  describe '#!' do
-    it 'returns a new attribute with negated sql expr' do
-      expect((!users[:id].is(1)).sql_literal(ds)).to eql('("users"."id" != 1)')
-    end
-  end
-
-  describe '#concat' do
-    it 'returns a concat function attribute' do
-      expect(users[:id].concat(users[:name]).as(:uid).sql_literal(ds)).
-        to eql(%(CONCAT("users"."id", ' ', "users"."name") AS "uid"))
-    end
-  end
-
-  describe 'extensions' do
-    before do
-      ROM::SQL::TypeExtensions.instance_variable_get(:@types)['sqlite'].delete('custom')
-
-      ROM::SQL::TypeExtensions.register(type) do
-        def custom(type, expr, value)
-          ROM::SQL::Attribute[ROM::SQL::Types::Bool].
-            meta(sql_expr: Sequel::SQL::BooleanExpression.new(:'=', 1, value))
-        end
-      end
-    end
-
-    let(:equality_expr) { Sequel::SQL::BooleanExpression.new(:'=', 1, 2) }
-
-    shared_context 'type methods' do
-      it 'successfully invokes type-specific methods' do
-        expect(attribute.custom(2)).
-          to eql(ROM::SQL::Attribute[ROM::SQL::Types::Bool].meta(sql_expr: equality_expr))
-      end
-    end
-
-    let(:type) { Dry::Types['int'].meta(database: 'sqlite', db_type: 'custom') }
-
-    context 'plain type' do
-      subject(:attribute) { ROM::SQL::Attribute[type] }
-
-      include_context 'type methods'
-    end
-
-    context 'optional type' do
-      subject(:attribute) { ROM::SQL::Attribute[type.optional] }
-
-      include_context 'type methods'
-    end
-
-    context 'default type' do
-      subject(:attribute) { ROM::SQL::Attribute[type.default(42)] }
-
-      include_context 'type methods'
-    end
-
-    context 'optional with default' do
-      subject(:attribute) { ROM::SQL::Attribute[type.optional.default(42)] }
-
-      include_context 'type methods'
+      its([Pathname(__FILE__)]) { is_expected.to eq '.rb' }
     end
   end
 end
