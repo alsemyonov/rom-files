@@ -7,7 +7,7 @@ require 'simplecov'
 
 require 'rom-files'
 
-SPEC_ROOT = Pathname(__FILE__).dirname
+SPEC_ROOT = Pathname(__dir__)
 
 RSpec.configure do |config|
   config.before do
