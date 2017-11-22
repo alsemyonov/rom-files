@@ -1,11 +1,14 @@
 # frozen_string_literal: true
 
 source 'https://rubygems.org'
+git_source :github do |repo|
+  "https://github.com/#{repo}"
+end
 
 gemspec
 
-gem 'rom', '~> 4.1', git: 'https://github.com/rom-rb/rom.git', branch: :master
-gem 'rom-sql', '~> 2.2', git: 'https://github.com/rom-rb/rom-sql.git', branch: :master
+gem 'rom', '~> 4.1', github: 'rom-rb/rom', branch: :master
+gem 'rom-sql', '~> 2.2', github: 'rom-rb/rom-sql', branch: :master
 
 group :ide do
   gem 'guard'
