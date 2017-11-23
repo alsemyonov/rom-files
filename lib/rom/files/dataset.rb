@@ -98,6 +98,28 @@ module ROM
         map { |tuple| tuple.select { |key| names.include?(key) } }
       end
 
+      # Join with other datasets
+      #
+      # @param args [Array<Dataset>] A list of dataset to join with
+      #
+      # @return [Dataset]
+      #
+      # @api public
+      def join(*args) # rubocop:disable Metrics/AbcSize
+        left, right = args.size > 1 ? args : [self, args.first]
+
+        join_map = left.each_with_object({}) { |tuple, h|
+          others = right.to_a.find_all { |t| (tuple.to_a & t.to_a).any? }
+          (h[tuple] ||= []).concat(others)
+        }
+
+        tuples = left.flat_map { |tuple|
+          join_map[tuple].map { |other| tuple.merge(other) }
+        }
+
+        self.class.new(tuples, options)
+      end
+
       # Restrict a dataset
       #
       # @param criteria [Hash] A hash with conditions
