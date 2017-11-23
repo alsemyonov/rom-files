@@ -2,6 +2,7 @@
 # frozen_string_literal: true
 
 require 'rom-files'
+require 'rspec'
 
 RSpec.example_group ROM::Files, 'usage with gem' do
   # @param [ROM::ConfigurationDSL] config
@@ -93,3 +94,5 @@ RSpec.example_group ROM::Files, 'usage with gem' do
     expect(library_files.to_a).to be_a Array
   end
 end
+
+require 'rspec/autorun' if $PROGRAM_NAME == __FILE__

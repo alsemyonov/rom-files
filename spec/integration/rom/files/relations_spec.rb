@@ -2,6 +2,7 @@
 # frozen_string_literal: true
 
 require 'rom-files'
+require 'rspec'
 
 RSpec.example_group ROM::Files::Relation do
   Files = ROM::Files
@@ -58,3 +59,5 @@ RSpec.example_group ROM::Files::Relation do
     puts "tmp #=> #{tmp.to_a}"
   end
 end
+
+require 'rspec/autorun' if $PROGRAM_NAME == __FILE__

@@ -41,7 +41,7 @@ group :red_green_refactor, halt_on_fail: true do
   end
 
   guard :shell do
-    command = "bin/yard doc --use-cache"
+    command = 'bin/yard doc --use-cache'
     watch(%r{\Alib/.+\.rb\Z}) { |m| `#{command} #{m}` }
     watch(/\A.+\.md\Z/) { |m| `#{command} #{m}` }
     watch('.yardopts') { `#{command}` }

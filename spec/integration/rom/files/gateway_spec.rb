@@ -2,6 +2,7 @@
 # frozen_string_literal: true
 
 require 'rom-files'
+require 'rspec'
 
 RSpec.describe ROM::Files::Gateway, 'usage' do
   subject(:gateway) { ROM::Files::Gateway.new(uri) }
@@ -23,3 +24,5 @@ RSpec.describe ROM::Files::Gateway, 'usage' do
     p "Specifications:\n", spec.pluck(&:to_s)
   end
 end
+
+require 'rspec/autorun' if $PROGRAM_NAME == __FILE__
