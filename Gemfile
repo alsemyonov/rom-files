@@ -13,8 +13,8 @@ gem 'rom-sql', '~> 2.2', github: 'rom-rb/rom-sql', branch: :master
 group :ide do
   gem 'guard'
   gem 'guard-bundler'
-  gem 'guard-rake'
   gem 'guard-rspec'
   gem 'guard-rubocop'
+  gem 'guard-shell'
   gem 'terminal-notifier-guard'
 end

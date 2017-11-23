@@ -40,10 +40,10 @@ group :red_green_refactor, halt_on_fail: true do
     watch(%r{\Aspec/.+\.rb\Z})
   end
 
-  guard :rake, task: 'doc' do
-    watch(%r{\Alib/.+\.rb\Z})
-    watch(/\A.+\.md\Z/)
-    watch 'Rakefile'
-    watch '.yardopts'
+  guard :shell do
+    command = "bin/yard doc --use-cache"
+    watch(%r{\Alib/.+\.rb\Z}) { |m| `#{command} #{m}` }
+    watch(/\A.+\.md\Z/) { |m| `#{command} #{m}` }
+    watch('.yardopts') { `#{command}` }
   end
 end
