@@ -89,13 +89,34 @@ module ROM
 
       # Project a dataset
       #
-      # @param [Array<Symbol>] names A list of attribute names
+      # @param names [Array<Symbol>] A list of attribute names
       #
       # @return [Dataset]
       #
       # @api public
       def project(*names)
         map { |tuple| tuple.select { |key| names.include?(key) } }
+      end
+
+      # Restrict a dataset
+      #
+      # @param criteria [Hash] A hash with conditions
+      #
+      # @return [Dataset]
+      #
+      # @api public
+      def restrict(criteria = nil)
+        return find_all { |tuple| yield(tuple) } unless criteria
+
+        find_all do |tuple|
+          criteria.all? do |k, v|
+            case v
+            when Array then v.include?(tuple[k])
+            when Regexp then tuple[k].match(v)
+            else tuple[k].eql?(v)
+            end
+          end
+        end
       end
 
       # Pluck values from a pathname property

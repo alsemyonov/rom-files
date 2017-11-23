@@ -56,8 +56,12 @@ module ROM
       # @!method sort(sorting = :to_s)
       #   @param (see Dataset#sort)
       #   @return [Relation]
+      #
+      # @!method restrict(criteria = nil)
+      #   @param (see Dataset#restrict)
+      #   @return [Relation]
       forward :select, :select_append, :reject, :reject_append,
-              :inside, :recursive, :sort
+              :inside, :recursive, :sort, :restrict
 
       # @!method mime_type
       #   @return [MIME::Type, nil]
