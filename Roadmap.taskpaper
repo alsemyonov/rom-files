@@ -1,17 +1,22 @@
 rom-files:
-	- Provide dynamic attributes based on pathname
-	- Provide Foreign Keys shortcuts
-	- Provide dynamic attributes based on contents
-	- Provide `#has_one` association support (`library_files` has one `spec_file` in gem setup)
-	- Provide `#has_many` association support (`year` has many `months` in middleman-like setup)
-	- Provide `:frontmatter` schema plugin
-	- Provide `:markdown` extension with `text/markdown` mime-type support @done(2017-11-23)
-	- Provide `:ruby` extension with `application/x-ruby` mime-type support
-	- Provide `:gem` extension with gem structure setup
-Backlog:
-	- Port Rake::FileList to ROM::Files::Dataset
-	- Provide `:website` extension for setting up middleman-like setup
-	- Provide `:blog` extension for settings up blog setup
+	ROM adapter for `file://` scheme
+	Goal: Universal ROM adapter for hierarchical tree-like (POSIX-compatible) filesystems 
+	Dataset:
+		- provide interface comparable with Rake::FileList
+	Schema:
+		- Provide dynamic attributes based on pathname
+		- Provide Foreign Keys shortcuts
+		- Provide dynamic attributes based on contents
+		- Provide `#has_one` association support (`library_files` has one `spec_file` in gem setup)
+		- Provide `#has_many` association support (`year` has many `months` in middleman-like setup)
+		- Provide `:frontmatter` schema plugin
+		- Provide `:markdown` extension with `text/markdown` mime-type support @done(2017-11-23)
+		- Provide `:ruby` extension with `application/x-ruby` mime-type support
+	Backlog:
+		- Provide `:gem` extension with gem structure setup
+		- Provide `:website` extension for setting up middleman-like website
+		- Provide `:blog` extension for setting up blog
+		- Provide `:src` extension for unbroken pipeline
 Archive:
 	- Provide the way to use file stat properties in schema @done(2017-11-20) @project(rom-files)
 	- Add dynamic attributes, based on file path or other properties @done(2017-11-20) @project(rom-files)
