@@ -15,7 +15,7 @@ guard :bundler do
 end
 
 group :red_green_refactor, halt_on_fail: true do
-  guard :rspec, cmd: 'rspec', all_on_start: true, all_after_pass: true do
+  guard :rspec, cmd: 'bin/rspec', all_on_start: true, all_after_pass: true do
     require 'guard/rspec/dsl'
     dsl = Guard::RSpec::Dsl.new(self)
 
@@ -39,11 +39,11 @@ group :red_green_refactor, halt_on_fail: true do
     watch(%r{\Alib/.+\.rb\Z})
     watch(%r{\Aspec/.+\.rb\Z})
   end
-end
 
-guard :rake, task: 'doc' do
-  watch(%r{\Alib/.+\.rb\Z})
-  watch(/\A.+\.md\Z/)
-  watch 'Rakefile'
-  watch '.yardopts'
+  guard :rake, task: 'doc' do
+    watch(%r{\Alib/.+\.rb\Z})
+    watch(/\A.+\.md\Z/)
+    watch 'Rakefile'
+    watch '.yardopts'
+  end
 end
