@@ -5,7 +5,7 @@ require 'shared/rom/files/filesystem_setup'
 RSpec.shared_context 'gateway setup' do
   include_context 'filesystem setup'
 
-  let(:configuration) { ROM::Configuration.new(:files, uri, extensions: %i[text]) }
+  let(:configuration) { ROM::Configuration.new(:files, uri, extensions: %i[text markdown]) }
   let(:container) { ROM.container(configuration) }
   let(:gateway) { container.gateways[:default] }
 

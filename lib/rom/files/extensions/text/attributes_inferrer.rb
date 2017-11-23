@@ -6,11 +6,19 @@ module ROM
   module Files
     module Text
       class AttributesInferrer < Schema::AttributesInferrer
-        def infer_attributes(schema, _gateway)
+        def infer_attributes(schema, gateway)
+          super + infer_data_attributes(schema, gateway)
+        end
+
+        def infer_data_attributes(schema, _gateway)
           [
-            build(Types::Path, ID, schema),
-            build(Types::String.meta(DATA: true), DATA, schema)
+            build(data_type.meta(DATA: true), DATA, schema)
           ]
+        end
+
+        # @return [Dry::Types::Definition]
+        def data_type
+          Types::String
         end
 
         def columns

@@ -50,5 +50,28 @@ RSpec.describe 'Schema inference for common file types' do
         end
       end
     end
+
+    context 'for `text/markdown` file set' do
+      let(:relation_name) { :texts }
+      let(:dataset) { 'text/markdown' }
+
+      describe '__FILE__' do
+        subject(:attribute) { schema[:__FILE__] }
+
+        its(:source) { is_expected.to eql source }
+        its('type.primitive') { is_expected.to be Pathname }
+      end
+
+      describe 'DATA' do
+        subject(:attribute) { schema[:DATA] }
+
+        its(:source) { is_expected.to eql source }
+        its('type.primitive') { is_expected.to be Kramdown::Document }
+
+        it 'autoloads contents' do
+          expect(attribute.meta[:DATA]).to be(true)
+        end
+      end
+    end
   end
 end
