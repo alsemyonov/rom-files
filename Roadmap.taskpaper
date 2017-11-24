@@ -4,8 +4,8 @@ rom-files:
 	Dataset:
 		- provide interface comparable with Rake::FileList
 	Schema:
-		- Provide dynamic attributes based on pathname
-		- Provide Foreign Keys shortcuts
+		- Provide dynamic attributes based on pathname @done(2017-11-24)
+		- Provide Foreign Keys shortcuts @done(2017-11-24)
 		- Provide dynamic attributes based on contents
 		- Provide `#has_one` association support (`library_files` has one `spec_file` in gem setup)
 		- Provide `#has_many` association support (`year` has many `months` in middleman-like setup)

@@ -29,9 +29,13 @@ Lint/HandleExceptions:
   Exclude:
   - Rakefile
 
-# Allow rom-sql
 Naming/FileName:
-  Enabled: false
+  Exclude:
+  - '**/rom-files*'
+
+Naming/MethodName:
+  Exclude:
+  - lib/**/types.rb
 
 # gemspec is a special snowflake
 Metrics/LineLength:
