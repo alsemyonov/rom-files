@@ -13,9 +13,9 @@ RSpec.describe ROM::Files::Relation, '#to_a' do
 
   it 'lists file paths' do
     expect(paths).to eql([
-                           uri.join('media/some_image.png'),
-                           uri.join('media/some_file.txt'),
-                           uri.join('media/some_markdown.md')
+                           Pathname('some_image.png'),
+                           Pathname('some_file.txt'),
+                           Pathname('some_markdown.md')
                          ])
   end
 

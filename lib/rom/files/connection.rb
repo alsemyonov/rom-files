@@ -57,7 +57,7 @@ module ROM
       # @return [Array<Pathname>]
       def search(patterns, path: self.path, excludes: EMPTY_ARRAY, sorting: nil, directories: false)
         files = patterns.inject([]) do |result, pattern|
-          result + Pathname.glob(path.join(pattern))
+          result + Pathname.glob(path.join(pattern)).map { |found| found.relative_path_from(path) }
         end
         files = files.reject(&:directory?) unless directories
         files = files.reject do |match|
