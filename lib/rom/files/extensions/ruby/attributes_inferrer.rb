@@ -5,14 +5,15 @@ require_relative '../markup/attributes_inferrer'
 
 module ROM
   module Files
-    module Markdown
+    module Ruby
       class AttributesInferrer < Markup::AttributesInferrer
+        # @return [Dry::Types::Definition]
         def markup_type
-          Types::Markdown::Document
+          Types::Ruby::ASTWithComments
         end
       end
     end
 
-    Schema::AttributesInferrer.register 'text/markdown', Markdown::AttributesInferrer.new.freeze
+    Schema::AttributesInferrer.register 'application/x-ruby', Ruby::AttributesInferrer.new.freeze
   end
 end

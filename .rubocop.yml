@@ -45,6 +45,7 @@ Metrics/BlockLength:
   Exclude:
   - Guardfile
   - spec/**/*_spec.rb
+  - rom-files.gemspec
 
 # UTF-8 is perfectly fine in comments
 Style/AsciiComments:

@@ -7,11 +7,15 @@ module ROM
     extend Dry::Core::Extensions
 
     register_extension :text do
-      require 'rom/files/extensions/text'
+      require_relative 'extensions/text/attributes_inferrer'
     end
 
     register_extension :markdown do
-      require 'rom/files/extensions/markdown'
+      require_relative 'extensions/markdown/attributes_inferrer'
+    end
+
+    register_extension :ruby do
+      require_relative 'extensions/ruby/attributes_inferrer'
     end
   end
 end

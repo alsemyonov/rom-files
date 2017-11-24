@@ -35,9 +35,9 @@ group :red_green_refactor, halt_on_fail: true do
   end
 
   guard :rubocop, cli: '--auto-correct' do
-    # run rubocop on modified file
     watch(%r{\Alib/.+\.rb\Z})
     watch(%r{\Aspec/.+\.rb\Z})
+    watch(/\.rubocop.*\.yml/)
   end
 
   guard :shell do

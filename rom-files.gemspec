@@ -25,6 +25,7 @@ Gem::Specification.new do |spec|
 
   # Extensions
   spec.add_development_dependency 'kramdown'
+  spec.add_development_dependency 'parser'
 
   # Dependencies
   spec.add_development_dependency 'bundler'

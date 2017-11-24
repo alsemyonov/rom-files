@@ -11,7 +11,7 @@ rom-files:
 		- Provide `#has_many` association support (`year` has many `months` in middleman-like setup)
 		- Provide `:frontmatter` schema plugin
 		- Provide `:markdown` extension with `text/markdown` mime-type support @done(2017-11-23)
-		- Provide `:ruby` extension with `application/x-ruby` mime-type support
+		- Provide `:ruby` extension with `application/x-ruby` mime-type support @done(2017-11-24)
 	Backlog:
 		- Provide `:gem` extension with gem structure setup
 		- Provide `:website` extension for setting up middleman-like website
