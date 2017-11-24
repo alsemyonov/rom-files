@@ -60,8 +60,12 @@ module ROM
       # @!method restrict(criteria = nil)
       #   @param (see Dataset#restrict)
       #   @return [Relation]
+      #
+      # @!method join(*args)
+      #   @param (see Dataset#join)
+      #   @return [Relation]
       forward :select, :select_append, :reject, :reject_append,
-              :inside, :recursive, :sort, :restrict
+              :inside, :recursive, :sort, :restrict, :join
 
       # @!method mime_type
       #   @return [MIME::Type, nil]
