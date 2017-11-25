@@ -17,5 +17,9 @@ module ROM
     register_extension :ruby do
       require_relative 'extensions/ruby/attributes_inferrer'
     end
+
+    register_extension :gem do
+      require_relative 'extensions/gem'
+    end
   end
 end

@@ -59,6 +59,10 @@ Style/BlockDelimiters:
 Style/Documentation:
   Enabled: false
 
+Style/FormatStringToken:
+  Exclude:
+  - lib/rom/files/extensions/gem/relations/*.rb
+
 # Early returns have their vices
 Style/GuardClause:
   Enabled: false

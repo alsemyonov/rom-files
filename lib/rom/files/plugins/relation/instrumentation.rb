@@ -3,9 +3,9 @@
 require 'rom/plugins/relation/instrumentation'
 
 module ROM
-  module Plugins
-    module Relation
-      module Files
+  module Files
+    module Plugins
+      module Relation
         # @api private
         module Instrumentation
           def self.included(klass)
@@ -24,11 +24,5 @@ module ROM
         end
       end
     end
-  end
-end
-
-ROM.plugins do
-  adapter :files do
-    register :instrumentation, ROM::Plugins::Relation::Files::Instrumentation, type: :relation
   end
 end
