@@ -21,7 +21,7 @@ module ROM
         #
         # @api public
         module Stat
-          DEFAULT_NAME = :__stat__
+          NAME = :stat
 
           TYPES = {
             atime: Types::Time,
@@ -56,7 +56,7 @@ module ROM
 
           class << self
             # @api private
-            def apply(schema, name: DEFAULT_NAME, stats: EMPTY_ARRAY, aliases: EMPTY_HASH)
+            def apply(schema, name: NAME, stats: EMPTY_ARRAY, aliases: EMPTY_HASH)
               attributes = []
               attributes = [build_property(schema, name, type: Types::FileStat)] if name
               attributes += stats.map { |stat| build_property(schema, stat) }
@@ -73,7 +73,7 @@ module ROM
 
             def build_property(schema, name, stat: ALIASES[name] || name, type: TYPES[stat])
               raise ArgumentError, "Unknown property #{(stat || name).inspect}" unless type
-              type.meta(name: name, source: schema.name, __stat__: (stat == DEFAULT_NAME) || stat)
+              type.meta(name: name, source: schema.name, __stat__: (stat == NAME) || stat)
             end
           end
 
@@ -92,7 +92,7 @@ module ROM
             #   end
             #
             # @api public
-            def stat(name = DEFAULT_NAME, stats: EMPTY_ARRAY, aliases: EMPTY_HASH)
+            def stat(name = NAME, stats: EMPTY_ARRAY, aliases: EMPTY_HASH)
               options = plugin_options(:stat)
               options[:name] = name
               options[:stats] = stats
