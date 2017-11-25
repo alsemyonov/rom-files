@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 notification :terminal_notifier if `uname`.match?(/Darwin/)
+notification :tmux, display_message: true if ENV.key?('TMUX')
 
 guard :bundler do
   require 'guard/bundler'
@@ -30,14 +31,12 @@ group :red_green_refactor, halt_on_fail: true do
     # Ruby files
     ruby = dsl.ruby
     dsl.watch_spec_files_for(ruby.lib_files)
-
-    notification :tmux, display_message: true if ENV.key?('TMUX')
   end
 
   guard :rubocop, cli: '--auto-correct' do
     watch(%r{\Alib/.+\.rb\Z})
     watch(%r{\Aspec/.+\.rb\Z})
-    watch(/\.rubocop.*\.yml/)
+    watch(/\.rubocop.*\.yml/) { '.' }
   end
 
   guard :shell do
