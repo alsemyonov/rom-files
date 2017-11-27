@@ -9,30 +9,30 @@ RSpec.describe ROM::Files::Dataset, '#select' do
   context '(simple_pattern)' do
     subject { dataset.select('*.txt') }
 
-    its(:includes) { is_expected.to eq %w[*.txt] }
+    its(:include_patterns) { is_expected.to eq %w[*.txt] }
   end
 
   context '(multiple, patterns)' do
     subject { dataset.select('*.txt', '*.md') }
 
-    its(:includes) { is_expected.to eq %w[*.txt *.md] }
+    its(:include_patterns) { is_expected.to eq %w[*.txt *.md] }
   end
 
   context '(multiple, duplicated patterns)' do
     subject { dataset.select('*.txt', '*.md', '*.txt') }
 
-    its(:includes) { is_expected.to eq %w[*.txt *.md] }
+    its(:include_patterns) { is_expected.to eq %w[*.txt *.md] }
   end
 
   context '(glob_pattern)' do
     subject { dataset.select('*.{txt,md}') }
 
-    its(:includes) { is_expected.to eq %w[*.{txt,md}] }
+    its(:include_patterns) { is_expected.to eq %w[*.{txt,md}] }
   end
 
   context '(ordered_glob_pattern)' do
     subject { dataset.select('*.{md,txt}') }
 
-    its(:includes) { is_expected.to eq %w[*.{md,txt}] }
+    its(:include_patterns) { is_expected.to eq %w[*.{md,txt}] }
   end
 end

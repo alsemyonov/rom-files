@@ -6,14 +6,30 @@ module ROM
   module Files
     class Dataset
       module MimeType
-        def initialize(path, mime_type: nil, includes: ALL, **options)
-          if mime_type && includes.all? { |pattern| pattern !~ /\./ }
-            includes = includes.inject([]) do |result, pattern|
-              result + mime_type.extensions.map { |ext| "#{pattern}.#{ext}" }
-            end
+        def self.included(other)
+          super(other)
+          other.module_eval do
+            option :mime_type, Types::MimeType.optional,
+                   default: -> { nil }
+
+            prepend Initializer
           end
-          super(path, mime_type: mime_type, includes: includes, **options)
         end
+
+        module Initializer
+          def initialize(path, mime_type: nil, include_patterns: ALL, **options)
+            if mime_type && include_patterns.all? { |pattern| pattern !~ /\./ }
+              include_patterns = include_patterns.inject([]) do |result, pattern|
+                result + mime_type.extensions.map { |ext| "#{pattern}.#{ext}" }
+              end
+            end
+            super(path, mime_type: mime_type, include_patterns: include_patterns, **options)
+          end
+        end
+
+        # @!attribute [r] mime_type
+        #   MIME-type of files to include
+        #   @return [MIME::Type?]
 
         # @param type [String, nil]
         # @return [Dataset]

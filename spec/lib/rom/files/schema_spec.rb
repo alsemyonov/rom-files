@@ -13,17 +13,17 @@ RSpec.describe ROM::Files::Schema do
   context 'with simple primary key' do
     let(:schema_proc) do
       Class.new(ROM::Relation[:files]).schema do
-        attribute :__FILE__, ROM::Files::Types::Path
+        attribute :path, ROM::Files::Types::Path
       end
     end
 
-    its(:primary_key) { is_expected.to eql [schema[:__FILE__]] }
+    its(:primary_key) { is_expected.to eql [schema[:path]] }
 
     describe '#identify' do
       subject { identify }
 
-      its([__FILE__: Pathname('a')]) { is_expected.to eq Pathname('a') }
-      its([__FILE__: Pathname('a'), other: 'b']) { is_expected.to eq Pathname('a') }
+      its([path: Pathname('a')]) { is_expected.to eq Pathname('a') }
+      its([path: Pathname('a'), other: 'b']) { is_expected.to eq Pathname('a') }
       its([other: 'b']) { is_expected.to eq nil }
     end
   end

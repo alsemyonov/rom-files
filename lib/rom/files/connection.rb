@@ -55,13 +55,13 @@ module ROM
       end
 
       # @return [Array<Pathname>]
-      def search(patterns, path: self.path, excludes: EMPTY_ARRAY, sorting: nil, directories: false)
+      def search(patterns, path: self.path, exclude_patterns: EMPTY_ARRAY, sorting: nil, directories: false)
         files = patterns.inject([]) do |result, pattern|
           result + Pathname.glob(path.join(pattern)).map { |found| found.relative_path_from(path) }
         end
         files = files.reject(&:directory?) unless directories
         files = files.reject do |match|
-          excludes.any? do |pattern|
+          exclude_patterns.any? do |pattern|
             match.fnmatch(pattern, File::FNM_EXTGLOB)
           end
         end

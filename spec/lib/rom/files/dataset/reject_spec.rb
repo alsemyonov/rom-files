@@ -9,18 +9,18 @@ RSpec.describe ROM::Files::Dataset, '#reject' do
   context 'dataset.reject(pattern)' do
     subject { dataset.reject('*.txt') }
 
-    its(:excludes) { is_expected.to eq %w[*.txt] }
+    its(:exclude_patterns) { is_expected.to eq %w[*.txt] }
   end
 
   context '(list, of, patterns)' do
     subject { dataset.reject('*.txt', '*.md') }
 
-    its(:excludes) { is_expected.to eq %w[*.txt *.md] }
+    its(:exclude_patterns) { is_expected.to eq %w[*.txt *.md] }
   end
 
   context '(glob_expression)' do
     subject { dataset.reject('*.{txt,md}') }
 
-    its(:excludes) { is_expected.to eq %w[*.{txt,md}] }
+    its(:exclude_patterns) { is_expected.to eq %w[*.{txt,md}] }
   end
 end

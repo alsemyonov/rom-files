@@ -4,22 +4,41 @@ module ROM
   module Files
     class Dataset
       module Filtering
+        def self.included(other)
+          super(other)
+          other.module_eval do
+            option :include_patterns, Types::Strict::Array.of(Types::Coercible::String),
+                   default: proc { ALL }
+
+            option :exclude_patterns, Types::Strict::Array.of(Types::Coercible::String),
+                   default: proc { EMPTY_ARRAY }
+          end
+        end
+
         # @!group Reading
+
+        # @!attribute [r] include_patterns
+        #   Array of glob patterns to be selected inside {#path}
+        #   @return [Array<String>]
+
+        # @!attribute [r] exclude_patterns
+        #   Array of filename patterns to be rejected
+        #   @return [Array<String>]
 
         # @return [Dataset]
         def select(*patterns)
-          with(includes: patterns.uniq)
+          with(include_patterns: patterns.uniq)
         end
 
         # @return [Dataset]
         def select_append(*patterns)
-          with(includes: (includes + patterns).uniq)
+          with(include_patterns: (include_patterns + patterns).uniq)
         end
 
         # @return [Dataset]
         def inside(*prefixes)
           select(*prefixes.inject([]) do |result, prefix|
-            result + includes.map do |pattern|
+            result + include_patterns.map do |pattern|
               "#{prefix}/#{pattern}"
             end
           end)
@@ -32,22 +51,17 @@ module ROM
 
         # @return [Boolean]
         def recursive?
-          includes.all? { |pattern| pattern =~ RECURSIVE_EXPRESSION }
+          include_patterns.all? { |pattern| pattern =~ RECURSIVE_EXPRESSION }
         end
 
         # @return [Dataset]
         def reject(*patterns)
-          with(excludes: patterns.uniq)
+          with(exclude_patterns: patterns.uniq)
         end
 
         # @return [Dataset]
         def reject_append(*patterns)
-          with(excludes: (excludes + patterns).uniq)
-        end
-
-        # @return [Dataset]
-        def sort(sorting = :to_s)
-          with(sorting: sorting)
+          with(exclude_patterns: (exclude_patterns + patterns).uniq)
         end
       end
     end

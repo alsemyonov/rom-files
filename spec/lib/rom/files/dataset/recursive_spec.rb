@@ -9,18 +9,18 @@ RSpec.describe ROM::Files::Dataset, '#recursive' do
   context '()' do
     subject { dataset.recursive }
 
-    its(:includes) { is_expected.to eql ['**/*'] }
+    its(:include_patterns) { is_expected.to eql ['**/*'] }
   end
 
   context 'with custom select' do
     subject { dataset.select('*.txt').recursive }
 
-    its(:includes) { is_expected.to eql ['**/*.txt'] }
+    its(:include_patterns) { is_expected.to eql ['**/*.txt'] }
   end
 
   context 'with multiple select' do
     subject { dataset.select('*.txt', '*.md').recursive }
 
-    its(:includes) { is_expected.to eql %w[**/*.txt **/*.md] }
+    its(:include_patterns) { is_expected.to eql %w[**/*.txt **/*.md] }
   end
 end

@@ -58,9 +58,9 @@ RSpec.describe ROM::Files::Connection do
   end
 
   describe '#search' do
-    subject(:files) { connection.search(patterns, excludes: excludes, sorting: sorting, directories: directories) }
+    subject(:files) { connection.search(patterns, exclude_patterns: exclude_patterns, sorting: sorting, directories: directories) }
     let(:patterns) { ['*'] }
-    let(:excludes) { [] }
+    let(:exclude_patterns) { [] }
     let(:sorting) { nil }
     let(:directories) { false }
 

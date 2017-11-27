@@ -18,6 +18,6 @@ RSpec.describe ROM::Files::Dataset, '#mime' do
     subject { dataset.mime('application/x-ruby') }
 
     its(:mime_type) { is_expected.to eq 'application/x-ruby' }
-    its(:includes) { is_expected.to eq %w[*.rb *.rbw] }
+    its(:include_patterns) { is_expected.to eq %w[*.rb *.rbw] }
   end
 end

@@ -13,8 +13,8 @@ RSpec.describe ROM::Files::Dataset do
 
   its(:path) { is_expected.to eq path }
   its(:mime_type) { is_expected.to eq nil }
-  its(:includes) { is_expected.to eq %w[*] }
-  its(:excludes) { is_expected.to eq [] }
+  its(:include_patterns) { is_expected.to eq %w[*] }
+  its(:exclude_patterns) { is_expected.to eq [] }
   its(:sorting) { is_expected.to eq nil }
   its(:row_proc) { is_expected.to be_a Proc }
   its(:count) { is_expected.to eq 3 }
