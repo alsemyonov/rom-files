@@ -19,6 +19,8 @@ module ROM
     end
 
     register_extension :gem do
+      require 'pathname/extensions'
+      Pathname.load_extensions :pathmap
       require_relative 'extensions/gem'
     end
   end
