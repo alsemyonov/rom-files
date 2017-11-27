@@ -9,10 +9,12 @@ RSpec.describe ROM::Files::Connection do
 
   subject(:connection) { described_class.new(uri) }
 
+  its(:path) { is_expected.to eq uri }
+
   describe '#create_dataset' do
     subject(:dataset) { connection.create_dataset(name_or_mime_type) }
 
-    context '(path)' do
+    xcontext '(path)' do
       let(:name_or_mime_type) { :media }
 
       it { is_expected.to be_a ROM::Files::Dataset }

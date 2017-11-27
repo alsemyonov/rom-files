@@ -1,12 +1,17 @@
 # frozen_string_literal: true
 
+require 'rom/memory/dataset'
+
 module ROM
   module Files
-    class Dataset
+    class Dataset < Memory::Dataset
       module Filtering
         def self.included(other)
           super(other)
           other.module_eval do
+            option :inside_paths, Types::Strict::Array.of(Types::Coercible::Pathname),
+                   default: proc { HERE }
+
             option :include_patterns, Types::Strict::Array.of(Types::Coercible::String),
                    default: proc { ALL }
 
@@ -17,8 +22,12 @@ module ROM
 
         # @!group Reading
 
+        # @!attribute [r] inside_paths
+        #   Array of glob patterns to select files inside
+        #   @return [Array<String>]
+
         # @!attribute [r] include_patterns
-        #   Array of glob patterns to be selected inside {#path}
+        #   Array of glob patterns to be selected inside {#inside_paths}
         #   @return [Array<String>]
 
         # @!attribute [r] exclude_patterns

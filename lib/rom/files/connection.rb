@@ -10,7 +10,7 @@ module ROM
       extend Forwardable
 
       # @param path [Pathname, #to_s]
-      def initialize(path)
+      def initialize(path = Pathname.pwd)
         @path = Pathname(path).expand_path
         @data = Concurrent::Hash.new
       end
@@ -41,12 +41,16 @@ module ROM
       # @param name [String, Symbol]
       # @return [Dataset]
       def create_dataset(name)
-        types = MIME::Types[name]
-        @data[name] = if types.any?
-                        Dataset.new(path, mime_type: types.first, connection: self)
+        mime_type = MIME::Types[name].first
+        @data[name] = if mime_type
+                        build_dataset(mime_type: mime_type)
                       else
-                        Dataset.new(path_for(name), connection: self)
+                        build_dataset(inside_paths: [name])
                       end
+      end
+
+      def build_dataset(options)
+        Dataset.new([], options.merge(connection: self))
       end
 
       # @return [Boolean]
@@ -54,10 +58,15 @@ module ROM
         MIME::Types[name].any? || path_for(name).exist?
       end
 
+      # @param patterns [Array<String>]
+      # @param path [Pathname]
+      # @param exclude_patterns [Array<String>]
+      # @param sorting [#to_proc]
+      # @param directories [Boolean]
       # @return [Array<Pathname>]
       def search(patterns, path: self.path, exclude_patterns: EMPTY_ARRAY, sorting: nil, directories: false)
         files = patterns.inject([]) do |result, pattern|
-          result + Pathname.glob(path.join(pattern)).map { |found| found.relative_path_from(path) }
+          result + Pathname.glob(path_for(pattern, path: path)).map { |found| found.relative_path_from(path) }
         end
         files = files.reject(&:directory?) unless directories
         files = files.reject do |match|
@@ -72,38 +81,38 @@ module ROM
       # @param id [Pathname, #to_s]
       # @return [String]
       def read(id)
-        path.join(id).read
+        path_for(id).read
       end
 
       # @param id [Pathname, #to_s]
       # @param contents [String, #to_s]
       # @return [String]
       def write(id, contents)
-        path.join(id).write(contents.to_s)
+        path_for(id).write(contents.to_s)
       end
 
       # @param id [Pathname, #to_s]
       # @return [String]
       def binread(id)
-        path.join(id).binread
+        path_for(id).binread
       end
 
       # @param id [Pathname, #to_s]
       # @param contents [String, #to_s]
       # @return [String]
       def binwrite(id, contents)
-        path.join(id).binwrite(contents)
+        path_for(id).binwrite(contents)
       end
 
       # @param id [Pathname, #to_s]
       def delete(id)
-        path.join(id).delete
+        path_for(id).delete
       end
 
       private
 
       # @return [Pathname]
-      def path_for(name)
+      def path_for(name, path: self.path)
         path.join(name.to_s)
       end
     end

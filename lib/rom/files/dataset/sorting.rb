@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
+require 'rom/memory/dataset'
+
 module ROM
   module Files
-    class Dataset
+    class Dataset < Memory::Dataset
       module Sorting
         def self.included(other)
           super(other)

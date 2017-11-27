@@ -2,16 +2,18 @@
 
 module ROM
   module Files
-    module Gem
-      module Relations
-        class Executables < ROM::Files::Relation
-          gateway :files
+    module Extensions
+      module Gem
+        module Relations
+          class Executables < ROM::Files::Relation
+            gateway :files
 
-          dataset { inside('exe') }
+            dataset { inside('exe') }
 
-          schema '.', as: :executables, infer: true do
-            use :shebang
-            use :contents, type: ROM::Files::Types::Ruby::ASTWithComments
+            schema '.', as: :executables, infer: true do
+              use :shebang
+              use :contents, type: ROM::Files::Types::Ruby::ASTWithComments
+            end
           end
         end
       end

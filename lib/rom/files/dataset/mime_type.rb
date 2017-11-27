@@ -1,10 +1,11 @@
 # frozen_string_literal: true
 
+require 'rom/memory/dataset'
 require_relative '../constants'
 
 module ROM
   module Files
-    class Dataset
+    class Dataset < Memory::Dataset
       module MimeType
         def self.included(other)
           super(other)
@@ -17,13 +18,13 @@ module ROM
         end
 
         module Initializer
-          def initialize(path, mime_type: nil, include_patterns: ALL, **options)
+          def initialize(data, mime_type: nil, include_patterns: ALL, **options)
             if mime_type && include_patterns.all? { |pattern| pattern !~ /\./ }
               include_patterns = include_patterns.inject([]) do |result, pattern|
                 result + mime_type.extensions.map { |ext| "#{pattern}.#{ext}" }
               end
             end
-            super(path, mime_type: mime_type, include_patterns: include_patterns, **options)
+            super(data, mime_type: mime_type, include_patterns: include_patterns, **options)
           end
         end
 

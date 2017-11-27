@@ -7,13 +7,15 @@ require_relative 'gem/relations/specifications'
 
 module ROM
   module Files
-    module Gem
-      # @param config [ROM::Configuration]
-      def self.register_extension(config)
-        config.register_relation Relations::Documentations,
-                                 Relations::Executables,
-                                 Relations::Implementations,
-                                 Relations::Specifications
+    module Extensions
+      module Gem
+        # @param config [ROM::Configuration]
+        def self.register_extension(config)
+          config.register_relation Relations::Documentations,
+                                   Relations::Executables,
+                                   Relations::Implementations,
+                                   Relations::Specifications
+        end
       end
     end
   end

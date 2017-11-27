@@ -2,14 +2,16 @@
 
 module ROM
   module Files
-    module Gem
-      module Relations
-        class Documentations < ROM::Files::Relation
-          gateway :files
+    module Extensions
+      module Gem
+        module Relations
+          class Documentations < ROM::Files::Relation
+            gateway :files
 
-          dataset { recursive }
+            dataset { recursive }
 
-          schema 'text/markdown', as: :documentations, infer: true do
+            schema 'text/markdown', as: :documentations, infer: true do
+            end
           end
         end
       end

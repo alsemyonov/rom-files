@@ -3,7 +3,7 @@
 require 'rom/files/extensions/text/attributes_inferrer'
 require 'shared/rom/files/media_relation'
 
-RSpec.describe ROM::Files::Text::AttributesInferrer do
+RSpec.describe ROM::Files::Extensions::Text::AttributesInferrer do
   include_context 'media files'
 
   subject(:inferrer) { described_class.new(attr_class: attr_class) }

@@ -1,8 +1,14 @@
 rom-files:
 	ROM adapter for `file://` scheme
-	Goal: Universal ROM adapter for hierarchical tree-like (POSIX-compatible) filesystems 
+	Goal: Universal ROM adapter for hierarchical tree-like (POSIX-compatible) filesystems
 	Dataset:
-		- provide interface comparable with Rake::FileList
+		- provide interface comparable with Rake::FileList:
+			- remove Dataset#path
+			- add Dataset#data including selected tuples
+			- add Dataset#pending meaning #data should be rebuilt
+			- make #data-based datasets
+			- make datasets with MIME-type filtering
+			- make datasets with glob patterns filtering
 	Schema:
 		- Provide dynamic attributes based on pathname @done(2017-11-24)
 		- Provide Foreign Keys shortcuts @done(2017-11-24)

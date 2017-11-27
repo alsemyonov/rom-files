@@ -1,42 +1,43 @@
 # frozen_string_literal: true
 
+require 'rom/memory/dataset'
+require 'rom/files/constants'
+
 module ROM
   module Files
-    class Dataset
-      module Selecting
+    class Dataset < Memory::Dataset
+      module Paths
         def self.included(other)
           super(other)
-          other.module_eval do
-            extend ClassInterface
-
-            option :row_proc,
-                   default: proc { self.class.row_proc }
-          end
+          other.extend ClassInterface
         end
 
         module ClassInterface
           # @return [Proc]
           def row_proc
-            ->(path) { { ID => path } }
+            ->(path) { Hash[ID => path] }
           end
         end
+
+        # @return [Array<Hash{Symbol => Pathname, String}>]
+        def data
+          pluck(row_proc)
+        end
+
+        alias to_a data
+        alias to_ary to_a
 
         # @!attribute [r] row_proc
         #   @return [Proc]
 
         # @return [Array<Pathname>]
-        def files
-          connection.search(include_patterns, exclude_patterns: exclude_patterns, sorting: sorting, path: path)
-        end
-
-        # Iterate over data using row_proc
-        #
-        # @return [Enumerator, Array] if block is not given
-        #
-        # @api private
-        def each
-          return to_enum unless block_given?
-          files.each { |tuple| yield(row_proc[tuple]) }
+        def paths
+          patterns = inside_paths.inject([]) do |result, path|
+            result + include_patterns.map do |pattern|
+              path.join(pattern)
+            end
+          end
+          connection.search(patterns, exclude_patterns: exclude_patterns, sorting: sorting, path: path)
         end
 
         # Pluck values from a pathname property
@@ -60,15 +61,18 @@ module ROM
         # @api public
         def pluck(field = nil, &block)
           block ||= field.to_proc
-          files.map(&block)
+          paths.map(&block)
         end
 
-        # @return [Array<Hash{Symbol => Pathname, String}>]
-        def data
-          pluck(row_proc)
+        # Iterate over data using row_proc
+        #
+        # @return [Enumerator, Array] if block is not given
+        #
+        # @api private
+        def each
+          return to_enum unless block_given?
+          paths.each { |tuple| yield(row_proc[tuple]) }
         end
-        alias to_a data
-        alias to_ary to_a
 
         # @return [Integer]
         def count

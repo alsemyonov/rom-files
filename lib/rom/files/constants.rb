@@ -8,8 +8,8 @@ module ROM
 
     ID = :__FILE__
     DATA = :DATA
-    ALL = ['*'].freeze
-    DIRS = %w[. ..].freeze
+    HERE = %w[.].freeze
+    ALL = %w[*].freeze
     RECURSIVE_PATTERN = '**/'
     RECURSIVE_EXPRESSION = /#{Regexp.escape(RECURSIVE_PATTERN)}/
   end

@@ -7,12 +7,13 @@ require 'shared/rom/files/media_files'
 RSpec.describe ROM::Files::Dataset do
   include_context 'media files'
 
-  subject(:dataset) { ROM::Files::Dataset.new(path) }
+  subject(:dataset) { connection.create_dataset(dir) }
+  let(:connection) { ROM::Files::Connection.new(uri) }
 
   it_behaves_like "a rom enumerable dataset"
 
-  its(:path) { is_expected.to eq path }
   its(:mime_type) { is_expected.to eq nil }
+  its(:inside_paths) { is_expected.to eq [Pathname(dir)] }
   its(:include_patterns) { is_expected.to eq %w[*] }
   its(:exclude_patterns) { is_expected.to eq [] }
   its(:sorting) { is_expected.to eq nil }

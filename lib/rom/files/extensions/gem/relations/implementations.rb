@@ -2,23 +2,25 @@
 
 module ROM
   module Files
-    module Gem
-      module Relations
-        class Implementations < ROM::Files::Relation
-          gateway :files
+    module Extensions
+      module Gem
+        module Relations
+          class Implementations < ROM::Files::Relation
+            gateway :files
 
-          dataset { recursive.inside('lib') }
+            dataset { recursive.inside('lib') }
 
-          schema 'application/x-ruby', as: :implementations, infer: true do
-            use :stat
+            schema 'application/x-ruby', as: :implementations, infer: true do
+              use :stat
 
-            attribute :specification_path, Types.ForeignKey(
-              :specifications,
-              map: ->(path) { path.pathmap('spec/%X_spec.rb') }
-            )
+              attribute :specification_path, Types.ForeignKey(
+                :specifications,
+                map: ->(path) { path.pathmap('spec/%X_spec.rb') }
+              )
 
-            associations do
-              has_one :specification, foreign_key: :specification_path
+              associations do
+                has_one :specification, foreign_key: :specification_path
+              end
             end
           end
         end
