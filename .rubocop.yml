@@ -29,6 +29,30 @@ Lint/HandleExceptions:
   Exclude:
   - Rakefile
 
+Metrics/AbcSize:
+  Exclude:
+  - lib/pathname/extensions/pathmap.rb
+  - lib/rom/files/attribute.rb
+
+Metrics/BlockLength:
+  Exclude:
+  - Guardfile
+  - lib/pathname/extensions/pathmap.rb
+  - rom-files.gemspec
+  - spec/**/*_spec.rb
+
+Metrics/CyclomaticComplexity:
+  Exclude:
+  - lib/pathname/extensions/pathmap.rb
+
+Metrics/LineLength:
+  Max: 256
+
+Metrics/MethodLength:
+  Exclude:
+  - lib/pathname/extensions/pathmap.rb
+  - lib/rom/files/connection.rb
+
 Naming/FileName:
   Exclude:
   - '**/rom-files*'
@@ -36,16 +60,6 @@ Naming/FileName:
 Naming/MethodName:
   Exclude:
   - lib/**/types.rb
-
-# gemspec is a special snowflake
-Metrics/LineLength:
-  Max: 256
-
-Metrics/BlockLength:
-  Exclude:
-  - Guardfile
-  - spec/**/*_spec.rb
-  - rom-files.gemspec
 
 # UTF-8 is perfectly fine in comments
 Style/AsciiComments:
@@ -61,7 +75,9 @@ Style/Documentation:
 
 Style/FormatStringToken:
   Exclude:
+  - lib/pathname/extensions/pathmap.rb
   - lib/rom/files/extensions/gem/relations/*.rb
+  - spec/lib/pathname/extensions/pathmap_spec.rb
 
 # Early returns have their vices
 Style/GuardClause:
@@ -71,6 +87,7 @@ Style/GuardClause:
 Style/Lambda:
   Enabled: false
 
+# Use compact calls with braces
 Style/LambdaCall:
   EnforcedStyle: braces
 
