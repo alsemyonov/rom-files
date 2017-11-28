@@ -4,6 +4,9 @@ require 'dry/core/extensions'
 
 module ROM
   module Files
+    module Extensions
+    end
+
     extend Dry::Core::Extensions
 
     register_extension :text do

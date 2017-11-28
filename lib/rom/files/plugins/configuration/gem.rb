@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rom/plugins/relation/instrumentation'
+require 'rom/files/extensions'
 
 module ROM
   module Files
@@ -20,7 +20,7 @@ module ROM
           module Methods
             def register_gem_relations
               Files.load_extensions(:gem)
-              Files::Gem.register_extension(self)
+              Files::Extensions::Gem.register_extension(self)
             end
           end
         end

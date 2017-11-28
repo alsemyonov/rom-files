@@ -6,13 +6,12 @@ module ROM
       module Gem
         module Relations
           class Specifications < ROM::Files::Relation
-            gateway :files
-
             dataset { select('*_spec.rb').recursive.inside('spec') }
 
             schema 'application/x-ruby', as: :specifications, infer: true do
               use :stat
 
+              attribute :specification_path, Types::Path
               attribute :implementation_path, Types.ForeignKey(
                 :implementations,
                 map: ->(path) { path.pathmap('%{^spec,}X.rb') }

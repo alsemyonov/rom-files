@@ -6,8 +6,6 @@ module ROM
       module Gem
         module Relations
           class Documentations < ROM::Files::Relation
-            gateway :files
-
             dataset { recursive }
 
             schema 'text/markdown', as: :documentations, infer: true do

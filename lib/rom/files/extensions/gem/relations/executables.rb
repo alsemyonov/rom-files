@@ -6,8 +6,6 @@ module ROM
       module Gem
         module Relations
           class Executables < ROM::Files::Relation
-            gateway :files
-
             dataset { inside('exe') }
 
             schema '.', as: :executables, infer: true do

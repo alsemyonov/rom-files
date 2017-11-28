@@ -23,6 +23,6 @@ ROM.plugins do
     register :mime, ROM::Files::Plugins::Schema::Mime, type: :schema
     register :shebang, ROM::Files::Plugins::Schema::Shebang, type: :schema
     register :stat, ROM::Files::Plugins::Schema::Stat, type: :schema
-    register :gem, ROM::Files::Plugins::Configuration::Gem, type: :configuration
   end
+  register :gem, ROM::Files::Plugins::Configuration::Gem, type: :configuration
 end
