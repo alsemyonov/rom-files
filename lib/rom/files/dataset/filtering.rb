@@ -9,14 +9,10 @@ module ROM
         def self.included(other)
           super(other)
           other.module_eval do
-            option :inside_paths, Types::Strict::Array.of(Types::Coercible::Pathname),
-                   default: proc { HERE }
-
-            option :include_patterns, Types::Strict::Array.of(Types::Coercible::String),
-                   default: proc { ALL }
-
-            option :exclude_patterns, Types::Strict::Array.of(Types::Coercible::String),
-                   default: proc { EMPTY_ARRAY }
+            option :inside_paths, Types::Strict::Array.of(Types::Coercible::Pathname), default: proc { HERE }
+            option :include_patterns, Types::Strict::Array.of(Types::Coercible::String), default: proc { ALL }
+            option :exclude_patterns, Types::Strict::Array.of(Types::Coercible::String), default: proc { EMPTY_ARRAY }
+            option :search_recursive, Types::Bool, default: proc { true }
           end
         end
 
@@ -34,6 +30,10 @@ module ROM
         #   Array of filename patterns to be rejected
         #   @return [Array<String>]
 
+        # @!attribute [r] search_recursive
+        #   Whether to search for files only in specific directory/ies or recursively
+        #   @return [Boolean]
+
         # @return [Dataset]
         def select(*patterns)
           with(include_patterns: patterns.uniq)
@@ -45,22 +45,40 @@ module ROM
         end
 
         # @return [Dataset]
-        def inside(*prefixes)
-          select(*prefixes.inject([]) do |result, prefix|
-            result + include_patterns.map do |pattern|
-              "#{prefix}/#{pattern}"
-            end
-          end)
+        def inside(*paths)
+          with(inside_paths: paths)
+        end
+
+        # @return [Dataset]
+        def inside_append(*paths)
+          with(inside_paths: (inside_paths + paths).uniq)
         end
 
         # @return [Dataset]
         def recursive
-          inside '**'
+          with(search_recursive: true)
+        end
+
+        # @return [Dataset]
+        def not_recursive
+          with(search_recursive: false)
+        end
+
+        # @return [Array<Pathname>]
+        def search_patterns
+          inside_paths.inject([]) do |result, path|
+            path = path.join('**') if search_recursive
+            result + include_patterns.map do |pattern|
+              path.join(pattern)
+            end
+          end
         end
 
         # @return [Boolean]
         def recursive?
-          include_patterns.all? { |pattern| pattern =~ RECURSIVE_EXPRESSION }
+          search_recursive ||
+            inside_paths.all? { |path| path.to_s =~ RECURSIVE_EXPRESSION } ||
+            include_patterns.all? { |pattern| pattern =~ RECURSIVE_EXPRESSION }
         end
 
         # @return [Dataset]

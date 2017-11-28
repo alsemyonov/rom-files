@@ -19,25 +19,12 @@ module ROM
           end
         end
 
-        # @return [Array<Hash{Symbol => Pathname, String}>]
-        def data
-          pluck(row_proc)
-        end
-
-        alias to_a data
-        alias to_ary to_a
-
         # @!attribute [r] row_proc
         #   @return [Proc]
 
         # @return [Array<Pathname>]
         def paths
-          patterns = inside_paths.inject([]) do |result, path|
-            result + include_patterns.map do |pattern|
-              path.join(pattern)
-            end
-          end
-          connection.search(patterns, exclude_patterns: exclude_patterns, sorting: sorting, path: path)
+          connection.search(search_patterns, exclude_patterns: exclude_patterns, sorting: sorting, path: path)
         end
 
         # Pluck values from a pathname property
@@ -60,9 +47,17 @@ module ROM
         #
         # @api public
         def pluck(field = nil, &block)
-          block ||= field.to_proc
+          block ||= field&.to_proc || row_proc
           paths.map(&block)
         end
+
+        # @return [Array<Hash{Symbol => Pathname, String}>]
+        def data
+          pluck(row_proc)
+        end
+
+        alias to_a data
+        alias to_ary to_a
 
         # Iterate over data using row_proc
         #
