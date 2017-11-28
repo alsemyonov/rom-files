@@ -14,6 +14,7 @@ module Dry
     register_if_needed 'strict.pathname', strict = simple.constrained(type: Pathname)
     register_if_needed 'coercible.pathname',
                        coercible = simple.constructor(->(path) { Pathname(path.to_s) })
+    register_if_needed 'optional.pathname', simple.optional
     register_if_needed 'optional.strict.pathname', strict.optional
     register_if_needed 'optional.coercible.pathname', coercible.optional
   end
