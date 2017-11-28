@@ -13,6 +13,11 @@ rom-files:
 			- make #data-based datasets @done(2017-11-28)
 			- make datasets with MIME-type filtering @done(2017-11-28)
 			- make datasets with glob patterns filtering @done(2017-11-28)
+		- Implement Dataset#at(path)
+		- Implement Dataset#patterns @done(2017-11-28)
+		- Implement Dataset#paths @done(2017-11-28)
+		- Implement Dataset#to_tree
+			See `tty-tree` gem
 	Schema:
 		- Provide dynamic attributes based on pathname @done(2017-11-24)
 		- Provide Foreign Keys shortcuts @done(2017-11-24)
@@ -22,8 +27,15 @@ rom-files:
 		- Provide `:frontmatter` schema plugin
 		- Provide `:markdown` extension with `text/markdown` mime-type support @done(2017-11-23)
 		- Provide `:ruby` extension with `application/x-ruby` mime-type support @done(2017-11-24)
+		- Provide `:yaml` extension with `text/x-yaml` MIME-type support
+		- Provide `:csv` extension with `text/csv` MIME-type support
+	Configuration:
+		- Provide `:gem` extension with gem relations
+		- Provide `:xdg` extension for user directories layout support
+		- Provide `:ruby_generator` extension support
+			- Provide command for generating ruby class with RSpec test
+		- Provide `:dry_web` extension command for generating dry-web
 	Backlog:
-		- Provide `:gem` extension with gem structure setup
 		- Provide `:website` extension for setting up middleman-like website
 		- Provide `:blog` extension for setting up blog
 		- Provide `:src` extension for unbroken pipeline

@@ -10,6 +10,11 @@ gemspec
 gem 'rom', '~> 4.1', github: 'rom-rb/rom', branch: :master
 gem 'rom-sql', '~> 2.2', github: 'rom-rb/rom-sql', branch: :master
 
+group :development do
+  gem 'tty-file'
+  gem 'tty-tree'
+end
+
 group :ide do
   gem 'guard'
   gem 'guard-bundler'
