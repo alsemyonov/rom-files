@@ -1,14 +1,18 @@
 rom-files:
 	ROM adapter for `file://` scheme
 	Goal: Universal ROM adapter for hierarchical tree-like (POSIX-compatible) filesystems
+	Connection:
+		- support file:// @done(2017-11-28)
+		- support dropbox://
+		- support webdav://
 	Dataset:
 		- provide interface comparable with Rake::FileList:
-			- remove Dataset#path
+			- remove Dataset#path @done(2017-11-28)
 			- add Dataset#data including selected tuples
 			- add Dataset#pending meaning #data should be rebuilt
-			- make #data-based datasets
-			- make datasets with MIME-type filtering
-			- make datasets with glob patterns filtering
+			- make #data-based datasets @done(2017-11-28)
+			- make datasets with MIME-type filtering @done(2017-11-28)
+			- make datasets with glob patterns filtering @done(2017-11-28)
 	Schema:
 		- Provide dynamic attributes based on pathname @done(2017-11-24)
 		- Provide Foreign Keys shortcuts @done(2017-11-24)
