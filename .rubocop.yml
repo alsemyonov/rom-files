@@ -60,6 +60,7 @@ Naming/FileName:
 Naming/MethodName:
   Exclude:
   - lib/**/types.rb
+  - lib/dry/types/pathname.rb
 
 # UTF-8 is perfectly fine in comments
 Style/AsciiComments:
