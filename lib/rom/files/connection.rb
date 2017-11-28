@@ -61,7 +61,7 @@ module ROM
       # @param patterns [Array<String>]
       # @param path [Pathname]
       # @param exclude_patterns [Array<String>]
-      # @param sorting [#to_proc]
+      # @param sorting [#to_proc, nil]
       # @param directories [Boolean]
       # @return [Array<Pathname>]
       def search(patterns, path: self.path, exclude_patterns: EMPTY_ARRAY, sorting: nil, directories: false)

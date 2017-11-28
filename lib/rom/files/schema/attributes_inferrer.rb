@@ -22,10 +22,10 @@ module ROM
         attr_class Files::Attribute
 
         # @param type [String]
-        # @param builder [TypeBuilder]
+        # @param inferrer [AttributesInferrer]
         # @return [AttributesInferrer]
-        def self.register(type, builder)
-          registry[type] = builder
+        def self.register(type, inferrer)
+          registry[type] = inferrer
         end
 
         def self.registered?(type)
