@@ -12,15 +12,15 @@ module ROM
           # @param configuration [ROM::Configuration]
           # @param relations [Boolean]
           # @return [ROM::Configuration]
-          def self.apply(configuration, relations: true)
+          def self.apply(configuration, relations: true, **options)
             configuration.extend Methods
-            configuration.register_gem_relations if relations
+            configuration.register_gem_relations(**options) if relations
           end
 
           module Methods
-            def register_gem_relations
+            def register_gem_relations(**options)
               Files.load_extensions(:gem)
-              Files::Extensions::Gem.register_extension(self)
+              Files::Extensions::Gem.register_extension(self, **options)
             end
           end
         end

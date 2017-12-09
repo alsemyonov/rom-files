@@ -13,7 +13,7 @@ module ROM
     module Extensions
       module Gem
         # @param config [ROM::Configuration]
-        def self.register_extension(config, gateway = :default)
+        def self.register_extension(config, gateway: :default)
           relations = [Relations::Documentations,
                        Relations::Executables,
                        Relations::Implementations,
