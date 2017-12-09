@@ -39,11 +39,23 @@ module ROM
       #   @return [Connection]
       option :connection, default: proc { Connection.new }
 
-      # TODO: remove this ↓
-      # @!method path
-      #   @see Connection#path
-      #   @return [Pathname]
-      def_instance_delegators :connection, :path
+      # @!attribute [r] path
+      #   @return [Connection]
+      option :path, Types::Coercible::Pathname, default: proc { connection.path }
+
+      def at(path)
+        with(path: Pathname(path))
+      end
+
+      def dig(path)
+        with(path: self.path.join(path))
+      end
+
+      def up(level = 1)
+        path = self.path
+        level.times { path = path.dirname }
+        with(path: path)
+      end
 
       # @!method project(*names)
       # Project a dataset
