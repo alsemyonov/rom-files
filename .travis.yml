@@ -5,9 +5,6 @@ bundler_args: --without yard guard benchmarks tools
 script: "bin/rake ci"
 rvm:
   - 2.4
-  - rbx-2
-  - jruby-9000
-  - jruby-head
   - ruby-head
 env:
   global:
