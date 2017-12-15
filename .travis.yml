@@ -2,19 +2,20 @@ language: ruby
 sudo: false
 cache: bundler
 bundler_args: --without yard guard benchmarks tools
-script: "bundle exec rake ci"
+script: "bin/rake ci"
 rvm:
   - 2.0
   - 2.1
   - 2.2
-  - 2.3.0
+  - 2.3
+  - 2.4
   - rbx-2
   - jruby-9000
   - jruby-head
   - ruby-head
 env:
   global:
-    - CODECLIMATE_REPO_TOKEN=4bc2ab1a7aa4cefb2d9794f3f13941a479c42884d0afea032a841ed0fbebfb44
+    - CODECLIMATE_REPO_TOKEN=d284024edac5ef6b2f4b7d4a85505d192433ea269824c54592876999f0efce47
     - JRUBY_OPTS='--dev -J-Xmx1024M'
 matrix:
   allow_failures:

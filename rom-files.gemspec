@@ -7,10 +7,10 @@ require 'rom/files/version'
 Gem::Specification.new do |spec|
   spec.name = 'rom-files'
   spec.version = ROM::Files::VERSION
-  spec.authors = ['Héctor Ramón', 'Alex Semyonov']
-  spec.email = %w[hector0193@gmail.com alex@cerebelo.info]
+  spec.authors = ['Alex Semyonov', 'Héctor Ramón']
+  spec.email = %w[alex@cerebelo.info hector0193@gmail.com]
 
-  spec.summary = 'File adapter for ROM'
+  spec.summary = 'Files adapter for ROM'
   spec.description = spec.summary
   spec.homepage = 'https://github.com/alsemyonov/rom-files'
   spec.license = 'MIT'
