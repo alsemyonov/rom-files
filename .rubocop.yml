@@ -8,6 +8,7 @@ AllCops:
   - tmp/**/*
   - bin/*
   - vendor/bundle/**/*
+  - vendor/bundle/ruby/2.4.0/gems/backports-3.10.3/.irbrc
 
 # The enforced style doesn’t match Vim’s defaults
 Layout/AlignParameters:
