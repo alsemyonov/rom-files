@@ -20,8 +20,8 @@ RSpec.describe 'Schema inference for common file types' do
     context 'for any file set' do
       let(:dataset) { :media }
 
-      describe '__FILE__' do
-        subject(:attribute) { schema[:__FILE__] }
+      describe ROM::Files::ID.to_s do
+        subject(:attribute) { schema[ROM::Files::ID] }
 
         its(:source) { is_expected.to eql source }
         its('type.primitive') { is_expected.to be Pathname }
@@ -32,8 +32,8 @@ RSpec.describe 'Schema inference for common file types' do
       let(:relation_name) { :texts }
       let(:dataset) { 'text/plain' }
 
-      describe '__FILE__' do
-        subject(:attribute) { schema[:__FILE__] }
+      describe ROM::Files::ID.to_s do
+        subject(:attribute) { schema[ROM::Files::ID] }
 
         its(:source) { is_expected.to eql source }
         its('type.primitive') { is_expected.to be Pathname }
@@ -55,8 +55,8 @@ RSpec.describe 'Schema inference for common file types' do
       let(:relation_name) { :texts }
       let(:dataset) { 'text/markdown' }
 
-      describe '__FILE__' do
-        subject(:attribute) { schema[:__FILE__] }
+      describe ROM::Files::ID.to_s do
+        subject(:attribute) { schema[ROM::Files::ID] }
 
         its(:source) { is_expected.to eql source }
         its('type.primitive') { is_expected.to be Pathname }

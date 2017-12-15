@@ -25,7 +25,7 @@ RSpec.describe ROM::Files::Extensions::Text::AttributesInferrer do
       it { is_expected.to be_a Array }
       its(:size) { is_expected.to eq 2 }
 
-      describe '__FILE__' do
+      describe ROM::Files::ID.to_s do
         subject(:attribute) { inferred.first }
 
         it { is_expected.to be_a attr_class }

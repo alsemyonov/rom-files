@@ -19,7 +19,7 @@ module ROM
     class Dataset < Memory::Dataset
       extend Forwardable
 
-      include Dry::Equalizer(:mime_type, :inside_paths, :include_patterns, :exclude_patterns, :sorting)
+      include Dry::Equalizer(:path, :mime_type, :inside_paths, :include_patterns, :exclude_patterns, :sorting, :ftype)
       include Filtering
       include MimeType
       include Paths

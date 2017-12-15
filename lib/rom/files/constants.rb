@@ -6,7 +6,7 @@ module ROM
   module Files
     include Dry::Core::Constants
 
-    ID = :__FILE__
+    ID = :path
     DATA = :DATA
     HERE = %w[.].freeze
     ALL = %w[*].freeze
