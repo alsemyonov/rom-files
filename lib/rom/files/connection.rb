@@ -62,13 +62,13 @@ module ROM
       # @param path [Pathname]
       # @param exclude_patterns [Array<String>]
       # @param sorting [#to_proc, nil]
-      # @param directories [Boolean]
+      # @param ftype [Array<String>]
       # @return [Array<Pathname>]
-      def search(patterns, path: self.path, exclude_patterns: EMPTY_ARRAY, sorting: nil, directories: false)
+      def search(patterns, path: self.path, exclude_patterns: EMPTY_ARRAY, sorting: nil, ftype: FILES)
         files = patterns.inject([]) do |result, pattern|
           result + Pathname.glob(path_for(pattern, path: path)).map { |found| found.relative_path_from(path) }
         end
-        files = files.reject(&:directory?) unless directories
+        files = files.select { |file| ftype.include?(path.join(file).ftype) }
         files = files.reject do |match|
           exclude_patterns.any? do |pattern|
             match.fnmatch(pattern, File::FNM_EXTGLOB)

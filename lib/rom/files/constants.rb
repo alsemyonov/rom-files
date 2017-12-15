@@ -10,6 +10,8 @@ module ROM
     DATA = :DATA
     HERE = %w[.].freeze
     ALL = %w[*].freeze
+    FILES = %w[file].freeze
+    DIRECTORIES = %w[directory].freeze
     RECURSIVE_PATTERN = '**'
     RECURSIVE_EXPRESSION = /#{Regexp.escape(RECURSIVE_PATTERN)}/
   end

@@ -24,7 +24,13 @@ module ROM
 
         # @return [Array<Pathname>]
         def paths
-          connection.search(search_patterns, exclude_patterns: exclude_patterns, sorting: sorting, path: path)
+          connection.search(
+            search_patterns,
+            exclude_patterns: exclude_patterns,
+            sorting: sorting,
+            path: path,
+            ftype: ftype
+          )
         end
 
         # Pluck values from a pathname property
