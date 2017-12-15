@@ -32,6 +32,6 @@ end
 task doc: %i[doc:default]
 
 desc 'Run CI tasks'
-task ci: %i[spec style doc doc:junk doc:check]
+task ci: %i[spec doc doc:junk doc:check]
 
 task default: :ci
