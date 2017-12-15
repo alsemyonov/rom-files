@@ -9,9 +9,6 @@ rvm:
 env:
   global:
     - CODECLIMATE_REPO_TOKEN=d284024edac5ef6b2f4b7d4a85505d192433ea269824c54592876999f0efce47
-    - JRUBY_OPTS='--dev -J-Xmx1024M'
 matrix:
   allow_failures:
-    - rvm: jruby-9000
     - rvm: ruby-head
-    - rvm: jruby-head
