@@ -9,7 +9,7 @@ RSpec.example_group ROM::Files::Relation do
   Types = Files::Types
 
   class Implementations < ROM::Files::Relation
-    dataset { select('*.rb').recursive }
+    dataset { select('*.rb').recursively }
     schema :lib, as: :implementations do
       attribute Files::ID, Types::Coercible::Pathname
 
@@ -18,14 +18,14 @@ RSpec.example_group ROM::Files::Relation do
   end
 
   class Specifications < ROM::Files::Relation
-    dataset { select('*_spec.rb').recursive }
+    dataset { select('*_spec.rb').recursively }
     schema :spec, as: :specifications do
       attribute Files::ID, Types::Path
     end
   end
 
   class TempFiles < ROM::Files::Relation
-    dataset { recursive }
+    dataset { recursively }
     schema :tmp, as: :temporary_files do
       attribute Files::ID, Types::Pathname.meta(primary_key: true)
     end

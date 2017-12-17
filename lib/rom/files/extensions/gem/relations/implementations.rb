@@ -6,7 +6,7 @@ module ROM
       module Gem
         module Relations
           class Implementations < ROM::Files::Relation
-            dataset { recursive.inside('lib') }
+            dataset { recursively.inside('lib') }
 
             schema 'application/x-ruby', as: :implementations, infer: true do
               use :stat

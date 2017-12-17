@@ -9,14 +9,14 @@ RSpec.describe ROM::Files::Gateway, 'usage' do
   let(:uri) { SPEC_ROOT.dirname }
 
   example 'Obtaining datasets', :aggregate_failures do
-    lib = gateway.dataset(:lib).recursive
+    lib = gateway.dataset(:lib).recursively
 
     expect(lib).to be_a ROM::Files::Dataset
     expect(gateway.dataset?(:lib)).to be true
 
     puts "Library files:\n", lib.pluck(&:to_s)
 
-    spec = gateway.dataset(:spec).recursive
+    spec = gateway.dataset(:spec).recursively
 
     expect(spec).to be_a ROM::Files::Dataset
     expect(gateway.dataset?(:spec)).to be true

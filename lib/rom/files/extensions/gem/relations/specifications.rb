@@ -6,7 +6,7 @@ module ROM
       module Gem
         module Relations
           class Specifications < ROM::Files::Relation
-            dataset { select('*_spec.rb').recursive.inside('spec') }
+            dataset { select('*_spec.rb').recursively.inside('spec') }
 
             schema 'application/x-ruby', as: :specifications, infer: true do
               use :stat

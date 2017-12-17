@@ -41,7 +41,7 @@ RSpec.example_group ROM::Files, 'usage with gem' do
 
   def def_library(config)
     config.relation :implementations do
-      dataset { inside('lib').recursive }
+      dataset { inside('lib').recursively }
 
       schema 'lib' do
         # associations do

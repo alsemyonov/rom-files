@@ -6,7 +6,7 @@ module ROM
       module Gem
         module Relations
           class Documentations < ROM::Files::Relation
-            dataset { recursive }
+            dataset { recursively }
 
             schema 'text/markdown', as: :documentations, infer: true do
             end

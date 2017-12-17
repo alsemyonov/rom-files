@@ -42,7 +42,7 @@ module ROM
       #   @param (see Dataset#inside)
       #   @return [Relation]
       #
-      # @!method recursive
+      # @!method recursively
       #   @return [Relation]
       #
       # @!method reject(*patterns)
@@ -65,8 +65,8 @@ module ROM
       #   @param (see Dataset#join)
       #   @return [Relation]
       forward :select, :select_append, :reject, :reject_append,
-              :inside, :recursive, :not_recursive, :sort, :restrict, :join,
-              :files, :directories
+              :inside, :recursively, :non_recursively, :sort, :restrict, :join,
+              :files, :directories, :at, :dig, :up
 
       # @!method mime_type
       #   @return [MIME::Type, nil]
@@ -81,7 +81,7 @@ module ROM
       # @!method recursive?
       #   @return [Boolean]
       #
-      #   @see Dataset#recursive?
+      #   @see Dataset#recursively?
       def_instance_delegators :dataset, :mime_type, :recursive?, :pluck
 
       # Project a relation with provided attribute names

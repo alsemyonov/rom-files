@@ -72,12 +72,12 @@ module ROM
         end
 
         # @return [Dataset]
-        def recursive
+        def recursively
           with(search_recursive: true)
         end
 
         # @return [Dataset]
-        def not_recursive
+        def non_recursively
           with(search_recursive: false)
         end
 

@@ -10,20 +10,20 @@ RSpec.describe ROM::Files::Dataset, '#recursive?' do
 
   it { is_expected.to be true }
 
-  context 'after #recursive' do
-    let(:dataset) { super().recursive }
+  context 'after #recursively' do
+    let(:dataset) { super().recursively }
 
     it { is_expected.to be true }
   end
 
-  context 'after #not_recursive' do
-    let(:dataset) { super().not_recursive }
+  context 'after #non_recursively' do
+    let(:dataset) { super().non_recursively }
 
     it { is_expected.to be false }
   end
 
   context 'after manual recursion via #inside' do
-    let(:dataset) { super().not_recursive.inside('**') }
+    let(:dataset) { super().non_recursively.inside('**') }
 
     it { is_expected.to be true }
   end

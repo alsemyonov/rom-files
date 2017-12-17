@@ -13,11 +13,12 @@ module ROM
         #   @return [Array(Array, Array)]
         attributes_inferrer ->(schema, gateway, options) do
           dataset = gateway.dataset(schema.name.dataset)
-          inferrer = if dataset.mime_type
-                       if AttributesInferrer.registered?(content_type = dataset.mime_type.content_type)
-                         AttributesInferrer[content_type].with(options)
-                       elsif AttributesInferrer.registered?(media_type = dataset.mime_type.media_type)
-                         AttributesInferrer[media_type].with(options)
+          mime_type = dataset.mime_type
+          inferrer = if mime_type
+                       if AttributesInferrer.registered?(mime_type.content_type)
+                         AttributesInferrer[mime_type.content_type].with(options)
+                       elsif AttributesInferrer.registered?(mime_type.media_type)
+                         AttributesInferrer[mime_type.media_type].with(options)
                        else
                          AttributesInferrer.new(**options)
                        end
