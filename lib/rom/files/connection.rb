@@ -45,7 +45,7 @@ module ROM
         @data[name] = if mime_type
                         build_dataset(mime_type: mime_type)
                       else
-                        build_dataset(inside_paths: [name])
+                        build_dataset(path: path_for(name))
                       end
       end
 
@@ -60,17 +60,17 @@ module ROM
 
       # @param patterns [Array<String>]
       # @param path [Pathname]
-      # @param exclude_patterns [Array<String>]
+      # @param exclude [Array<String>]
       # @param sorting [#to_proc, nil]
       # @param ftype [Array<String>]
       # @return [Array<Pathname>]
-      def search(patterns, path: self.path, exclude_patterns: EMPTY_ARRAY, sorting: nil, ftype: FILES)
+      def search(patterns, path: self.path, exclude: EMPTY_ARRAY, sorting: nil, ftype: FILES)
         files = patterns.inject([]) do |result, pattern|
           result + Pathname.glob(path_for(pattern, path: path)).map { |found| found.relative_path_from(path) }
         end
         files = files.select { |file| ftype.include?(path.join(file).ftype) }
         files = files.reject do |match|
-          exclude_patterns.any? do |pattern|
+          exclude.any? do |pattern|
             match.fnmatch(pattern, File::FNM_EXTGLOB)
           end
         end

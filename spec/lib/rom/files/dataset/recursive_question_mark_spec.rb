@@ -8,22 +8,10 @@ RSpec.describe ROM::Files::Dataset, '#recursive?' do
 
   subject { dataset.recursive? }
 
-  it { is_expected.to be true }
+  it { is_expected.to be false }
 
   context 'after #recursively' do
     let(:dataset) { super().recursively }
-
-    it { is_expected.to be true }
-  end
-
-  context 'after #non_recursively' do
-    let(:dataset) { super().non_recursively }
-
-    it { is_expected.to be false }
-  end
-
-  context 'after manual recursion via #inside' do
-    let(:dataset) { super().non_recursively.inside('**') }
 
     it { is_expected.to be true }
   end
@@ -36,6 +24,12 @@ RSpec.describe ROM::Files::Dataset, '#recursive?' do
 
   context 'after manual recursion via #select without folder' do
     let(:dataset) { super().select('**') }
+
+    it { is_expected.to be true }
+  end
+
+  context 'after manual recursion via #select without folder' do
+    let(:dataset) { super().inside('**') }
 
     it { is_expected.to be true }
   end

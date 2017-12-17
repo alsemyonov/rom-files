@@ -14,5 +14,6 @@ module ROM
     DIRECTORIES = %w[directory].freeze
     RECURSIVE_PATTERN = '**'
     RECURSIVE_EXPRESSION = /#{Regexp.escape(RECURSIVE_PATTERN)}/
+    RECURSIVELY = Pathname('**')
   end
 end

@@ -8,7 +8,7 @@ RSpec.shared_context 'files setup' do
   let(:path) { uri.join(dir) }
   let(:data) do
     tree.map do |file, _contents|
-      { path: path.join(file).relative_path_from(uri) }
+      { path: P(file) }
     end
   end
 

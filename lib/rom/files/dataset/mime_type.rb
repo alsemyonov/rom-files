@@ -18,8 +18,8 @@ module ROM
         end
 
         module Initializer
-          def initialize(data, mime_type: nil, include_patterns: ALL, **options)
-            if mime_type && include_patterns.all? { |pattern| pattern !~ /\./ }
+          def initialize(data = [], mime_type: nil, include_patterns: ALL, **options)
+            if mime_type && include_patterns.all? { |pattern| pattern.to_s !~ /\./ }
               include_patterns = include_patterns.inject([]) do |result, pattern|
                 result + mime_type.extensions.map { |ext| "#{pattern}.#{ext}" }
               end

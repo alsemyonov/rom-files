@@ -23,12 +23,14 @@ module ROM
         #   @return [Proc]
 
         # @return [Array<Pathname>]
+
+        # @return [Array<Pathname>]
         def paths
           connection.search(
-            search_patterns,
-            exclude_patterns: exclude_patterns,
-            sorting: sorting,
+            include_patterns,
             path: path,
+            exclude: exclude_patterns,
+            sorting: sorting,
             ftype: ftype
           )
         end

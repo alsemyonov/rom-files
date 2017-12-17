@@ -12,9 +12,8 @@ RSpec.describe ROM::Files::Dataset do
 
   it_behaves_like "a rom enumerable dataset"
 
-  its(:path) { is_expected.to eq uri }
+  its(:path) { is_expected.to eq path }
   its(:mime_type) { is_expected.to eq nil }
-  its(:inside_paths) { is_expected.to eq [Pathname(dir)] }
   its(:include_patterns) { is_expected.to eq %w[*] }
   its(:exclude_patterns) { is_expected.to eq [] }
   its(:sorting) { is_expected.to eq nil }
@@ -41,12 +40,12 @@ RSpec.describe ROM::Files::Dataset do
   context '#up' do
     subject(:new_dataset) { dataset.up }
 
-    its(:path) { is_expected.to eq uri.join('..') }
+    its(:path) { is_expected.to eq path.join('..') }
   end
 
   context '#dig' do
     subject(:new_dataset) { dataset.up.dig(dir) }
 
-    its(:path) { is_expected.to eq uri.join('../media') }
+    its(:path) { is_expected.to eq path.join('../media') }
   end
 end

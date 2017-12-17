@@ -9,8 +9,9 @@ require_relative 'connection'
 require_relative 'constants'
 require_relative 'types'
 
+require_relative 'dataset/exclude_patterns'
 require_relative 'dataset/file_type'
-require_relative 'dataset/filtering'
+require_relative 'dataset/include_patterns'
 require_relative 'dataset/mime_type'
 require_relative 'dataset/paths'
 require_relative 'dataset/sorting'
@@ -20,16 +21,16 @@ module ROM
     class Dataset < Memory::Dataset
       extend Forwardable
 
-      include Dry::Equalizer(:path, :mime_type, :inside_paths, :include_patterns, :exclude_patterns, :sorting, :ftype)
+      include ExcludePatterns
       include FileType
-      include Filtering
+      include IncludePatterns
       include MimeType
       include Paths
       include Sorting
 
-      # @!method initialize(mime_type: nil, inside_paths: ['.'], include_patterns: ['*'], exclude_patterns: [], sorting: nil)
-      #   @param inside_paths [Pathname, #to_s]
-      #     list of directories to search files in
+      include Dry::Equalizer(:path, :include_patterns, :exclude_patterns, :sorting, :ftype, :mime_type)
+
+      # @!method initialize(mime_type: nil, include_patterns: ['*'], exclude_patterns: [], sorting: nil)
       #   @param include_patterns [Array<String, #to_s>]
       #     array of patterns to be selected inside `path`, maps to {#include_patterns}
       #   @param exclude_patterns [Array<String, #to_s>]

@@ -7,7 +7,6 @@ RSpec.describe ROM::Files::Relation, '#select' do
   include_context 'media relation'
 
   subject(:names) { relation.pluck(:basename) }
-  let(:relation) { container.relations[:media] }
 
   context '(simple_pattern)' do
     let(:relation) { super().select('*.txt') }

@@ -64,9 +64,11 @@ module ROM
       # @!method join(*args)
       #   @param (see Dataset#join)
       #   @return [Relation]
-      forward :select, :select_append, :reject, :reject_append,
-              :inside, :recursively, :non_recursively, :sort, :restrict, :join,
-              :files, :directories, :at, :dig, :up
+      forward :select, :select_append, :reject, :reject_append, :inside, :recursively,
+              :sort,
+              :restrict, :join,
+              :files, :directories,
+              :at, :dig, :up
 
       # @!method mime_type
       #   @return [MIME::Type, nil]
