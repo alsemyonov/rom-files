@@ -9,6 +9,7 @@ require_relative 'connection'
 require_relative 'constants'
 require_relative 'types'
 
+require_relative 'dataset/file_type'
 require_relative 'dataset/filtering'
 require_relative 'dataset/mime_type'
 require_relative 'dataset/paths'
@@ -20,6 +21,7 @@ module ROM
       extend Forwardable
 
       include Dry::Equalizer(:path, :mime_type, :inside_paths, :include_patterns, :exclude_patterns, :sorting, :ftype)
+      include FileType
       include Filtering
       include MimeType
       include Paths

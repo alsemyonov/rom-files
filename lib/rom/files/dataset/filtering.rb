@@ -14,7 +14,6 @@ module ROM
             option :include_patterns, Types::Strict::Array.of(Types::Coercible::String), default: proc { ALL }
             option :exclude_patterns, Types::Strict::Array.of(Types::Coercible::String), default: proc { EMPTY_ARRAY }
             option :search_recursive, Types::Bool, default: proc { true }
-            option :ftype, Types::Strict::Array.of(Types::FileType), default: proc { FILES }
           end
         end
 
@@ -35,21 +34,6 @@ module ROM
         # @!attribute [r] search_recursive
         #   Whether to search for files only in specific directory/ies or recursively
         #   @return [Boolean]
-
-        # @!attribute [r] ftype
-        #   Specify ftype that should be selected
-        #   @see Types::FileType
-        #   @return [Array<String>]
-
-        # @return [Dataset]
-        def files
-          with(ftype: FILES)
-        end
-
-        # @return [Dataset]
-        def directories
-          with(ftype: DIRECTORIES)
-        end
 
         # @return [Dataset]
         def select(*patterns)
