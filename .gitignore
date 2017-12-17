@@ -1,11 +1,12 @@
+*.gem
+/.ruby-version
 /.bundle/
+/.idea/
 /.yardoc
-/Gemfile.lock
 /_yardoc/
 /coverage/
 /doc/
+/Gemfile.lock
 /pkg/
 /spec/reports/
 /tmp/
-/.idea/
-*.gem
