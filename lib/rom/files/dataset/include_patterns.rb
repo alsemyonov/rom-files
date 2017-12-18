@@ -33,11 +33,8 @@ module ROM
         # @return [Dataset]
         def inside(*paths)
           paths = paths.map { |path| Pathname(path) }
-          with(
-            include_patterns: include_patterns.inject([]) do |result, pattern|
-              result + paths.map { |path| path.join(pattern) }
-            end
-          )
+          patterns = include_patterns.inject([]) { |result, pattern| result + paths.map { |path| path.join(pattern) } }
+          with(include_patterns: patterns)
         end
 
         # @return [Dataset]
