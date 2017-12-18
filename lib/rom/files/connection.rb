@@ -66,14 +66,14 @@ module ROM
       # @return [Array<Pathname>]
       def search(patterns, path: self.path, exclude: EMPTY_ARRAY, sorting: nil, ftype: FILES)
         files = patterns.inject([]) do |result, pattern|
-          result + Pathname.glob(path_for(pattern, path: path)).map { |found| found.relative_path_from(path) }
+          result + Pathname.glob(path_for(pattern, path: path))
         end
-        files = files.select { |file| ftype.include?(path.join(file).ftype) }
         files = files.reject do |match|
           exclude.any? do |pattern|
             match.fnmatch(pattern, File::FNM_EXTGLOB)
           end
         end
+        files = files.select { |file| ftype.include?(file.ftype) }
         files = files.sort_by(&sorting) if sorting
         files
       end

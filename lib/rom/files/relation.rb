@@ -20,7 +20,7 @@ module ROM
 
       def initialize(*) # :nodoc:
         super
-        @dataset = @dataset.with(row_proc: schema.row_proc) if schema
+        @dataset = schema.dataset_for(self) if schema
       end
 
       # @!attribute [r] dataset
