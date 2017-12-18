@@ -27,12 +27,12 @@ module ROM
 
         # @return [Dataset]
         def files
-          typed(FILES)
+          typed(*FILES)
         end
 
         # @return [Dataset]
         def directories
-          typed(DIRECTORIES)
+          typed(*DIRECTORIES)
         end
       end
     end
