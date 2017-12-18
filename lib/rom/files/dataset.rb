@@ -14,6 +14,7 @@ require_relative 'dataset/file_type'
 require_relative 'dataset/include_patterns'
 require_relative 'dataset/mime_type'
 require_relative 'dataset/data'
+require_relative 'dataset/path'
 require_relative 'dataset/sorting'
 
 module ROM
@@ -21,11 +22,12 @@ module ROM
     class Dataset < Memory::Dataset
       extend Forwardable
 
+      include Data
       include ExcludePatterns
       include FileType
       include IncludePatterns
       include MimeType
-      include Data
+      include Path
       include Sorting
 
       include Dry::Equalizer(:path, :include_patterns, :exclude_patterns, :sorting, :ftype, :mime_type)
@@ -37,31 +39,6 @@ module ROM
       #     array of patterns to be rejected inside `path`, maps to {#exclude_patterns}
       #   @param sorting [Symbol, Proc, nil]
       #     see {#sorting}
-
-      # @!attribute [r] connection
-      #   @return [Connection]
-      option :connection, default: proc { Connection.new }
-
-      # @!attribute [r] path
-      #   @return [Connection]
-      option :path, Types::Coercible::Pathname, default: proc { connection.path }
-
-      # @return [new Dataset]
-      def at(path)
-        with(path: Pathname(path))
-      end
-
-      # @return [new Dataset]
-      def dig(path)
-        with(path: self.path.join(path))
-      end
-
-      # @return [new Dataset]
-      def up(level = 1)
-        path = self.path
-        level.times { path = path.dirname }
-        with(path: path)
-      end
 
       # @!method project(*names)
       #   Project a dataset

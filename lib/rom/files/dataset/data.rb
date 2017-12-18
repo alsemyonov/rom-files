@@ -9,7 +9,11 @@ module ROM
       module Data
         def self.included(other)
           super(other)
-          other.extend ClassInterface
+          other.module_eval do
+            extend ClassInterface
+
+            option :connection, default: proc { Connection.new }
+          end
         end
 
         module ClassInterface
@@ -18,6 +22,9 @@ module ROM
             ->(path) { Hash[ID => path] }
           end
         end
+
+        # @!attribute [r] connection
+        #   @return [Connection]
 
         # @!attribute [r] row_proc
         #   @return [Proc]
