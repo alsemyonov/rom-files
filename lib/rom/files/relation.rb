@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
 require 'forwardable'
-require 'rom/relation'
+require 'rom/memory/relation'
 require_relative 'attribute'
 require_relative 'schema'
 require_relative 'schema/inferrer'
 
 module ROM
   module Files
-    class Relation < ROM::Relation
+    class Relation < ROM::Memory::Relation
       extend Forwardable
       include Enumerable
       include Files
@@ -66,7 +66,6 @@ module ROM
       #   @return [Relation]
       forward :select, :select_append, :reject, :reject_append, :inside, :recursively,
               :sort,
-              :restrict, :join,
               :files, :directories,
               :at, :dig, :up
 
