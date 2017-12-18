@@ -7,6 +7,7 @@ module ROM
   module Files
     class Dataset < Memory::Dataset
       module FileType
+        # @param other [Module]
         def self.included(other)
           super(other)
           other.module_eval do
@@ -20,13 +21,18 @@ module ROM
         #   @return [Array<String>]
 
         # @return [Dataset]
+        def typed(*types)
+          with(ftype: types)
+        end
+
+        # @return [Dataset]
         def files
-          with(ftype: FILES)
+          typed(FILES)
         end
 
         # @return [Dataset]
         def directories
-          with(ftype: DIRECTORIES)
+          typed(DIRECTORIES)
         end
       end
     end
