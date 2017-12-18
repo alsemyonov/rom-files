@@ -13,7 +13,11 @@ module ROM
         return type[pathname.read] if meta[Files::DATA]
         return type[pathname.stat] if meta[:__stat__].is_a?(TrueClass)
         return type[pathname.stat.send(meta[:__stat__])] if meta[:__stat__]
-        return type[meta[:__proc__].(pathname)] if meta[:__proc__]
+
+        if meta[:__proc__]
+          proc = meta[:__proc__].respond_to?(:call) ? meta[:__proc__] : meta[:__proc__].to_proc
+          return type[proc.(pathname)]
+        end
         type[pathname]
       end
     end
