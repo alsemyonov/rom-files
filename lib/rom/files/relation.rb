@@ -70,6 +70,11 @@ module ROM
               :files, :directories,
               :at, :dig, :up
 
+      # @!method path
+      #   @return [Pathname]
+      #
+      #   @see Dataset#path
+      #
       # @!method mime_type
       #   @return [MIME::Type, nil]
       #
@@ -84,7 +89,7 @@ module ROM
       #   @return [Boolean]
       #
       #   @see Dataset#recursively?
-      def_instance_delegators :dataset, :mime_type, :recursive?, :pluck
+      def_instance_delegators :dataset, :path, :mime_type, :recursive?, :pluck
 
       # Project a relation with provided attribute names
       #
