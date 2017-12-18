@@ -13,7 +13,7 @@ require_relative 'dataset/exclude_patterns'
 require_relative 'dataset/file_type'
 require_relative 'dataset/include_patterns'
 require_relative 'dataset/mime_type'
-require_relative 'dataset/paths'
+require_relative 'dataset/data'
 require_relative 'dataset/sorting'
 
 module ROM
@@ -25,7 +25,7 @@ module ROM
       include FileType
       include IncludePatterns
       include MimeType
-      include Paths
+      include Data
       include Sorting
 
       include Dry::Equalizer(:path, :include_patterns, :exclude_patterns, :sorting, :ftype, :mime_type)
@@ -46,14 +46,17 @@ module ROM
       #   @return [Connection]
       option :path, Types::Coercible::Pathname, default: proc { connection.path }
 
+      # @return [new Dataset]
       def at(path)
         with(path: Pathname(path))
       end
 
+      # @return [new Dataset]
       def dig(path)
         with(path: self.path.join(path))
       end
 
+      # @return [new Dataset]
       def up(level = 1)
         path = self.path
         level.times { path = path.dirname }
@@ -61,32 +64,28 @@ module ROM
       end
 
       # @!method project(*names)
-      # Project a dataset
+      #   Project a dataset
       #
-      # @param names [Array<Symbol>] A list of attribute names
+      #   @param names [Array<Symbol>] A list of attribute names
+      #   @return [Dataset]
       #
-      # @return [Dataset]
-      #
-      # @api public
+      #   @api public
 
       # @!method join(*args)
+      #   Join with other datasets
       #
-      # Join with other datasets
+      #   @param args [Array<Dataset>] A list of dataset to join with
+      #   @return [Dataset]
       #
-      # @param args [Array<Dataset>] A list of dataset to join with
-      #
-      # @return [Dataset]
-      #
-      # @api public
+      #   @api public
 
       # @!method restrict(criteria = nil)
-      # Restrict a dataset
+      #   Restrict a dataset
       #
-      # @param criteria [Hash] A hash with conditions
+      #   @param criteria [Hash] A hash with conditions
+      #   @return [Dataset]
       #
-      # @return [Dataset]
-      #
-      # @api public
+      #   @api public
     end
   end
 end

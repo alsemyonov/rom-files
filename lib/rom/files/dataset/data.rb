@@ -6,7 +6,7 @@ require 'rom/files/constants'
 module ROM
   module Files
     class Dataset < Memory::Dataset
-      module Paths
+      module Data
         def self.included(other)
           super(other)
           other.extend ClassInterface
@@ -38,22 +38,20 @@ module ROM
         # Pluck values from a pathname property
         #
         # @overload pluck(field)
+        #   @example Usage with Symbol
+        #     users.pluck(:extname).uniq
+        #     # %w[.rb .rbw]
         #
-        # @example Usage with Symbol
-        #   users.pluck(:extname).uniq
-        #   # %w[.rb .rbw]
-        #
-        # @param [#to_proc, nil] field A name of the property for extracting values from pathname
+        #   @param [#to_proc, nil] field A name of the property for extracting values from pathname
         #
         # @overload pluck { |pathname| ... }
+        #   @example Usage with block
+        #     users.pluck { |pathname| pathname.basename.to_s }
+        #     # [1, 2, 3]
         #
-        # @example Usage with block
-        #   users.pluck { |pathname| pathname.basename.to_s }
-        #   # [1, 2, 3]
+        #   @return [Array]
         #
-        # @return [Array]
-        #
-        # @api public
+        #   @api public
         def pluck(field = nil, &block)
           block ||= field&.to_proc || row_proc
           paths.map(&block)
