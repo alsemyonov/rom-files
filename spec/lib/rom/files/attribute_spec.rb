@@ -16,6 +16,12 @@ RSpec.describe ROM::Files::Attribute do
   describe '#call' do
     subject(:call) { attribute.method(:call) }
 
+    context 'with relative:' do
+      let(:type) { Types::RelativePath }
+
+      its([Pathname(__FILE__), root: Pathname(__dir__)]) { is_expected.to eq Pathname('attribute_spec.rb') }
+    end
+
     context 'with DATA' do
       let(:type) { Types::String.meta(DATA: true) }
 

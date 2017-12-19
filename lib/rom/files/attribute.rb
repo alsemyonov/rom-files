@@ -9,7 +9,8 @@ module ROM
     class Attribute < ROM::Attribute
       # @param [Pathname] pathname
       # @return [Object]
-      def call(pathname)
+      def call(pathname, root: nil)
+        return type[pathname.relative_path_from(root)] if meta[:relative]
         return type[pathname.read] if meta[Files::DATA]
         return type[pathname.stat] if meta[:__stat__].is_a?(TrueClass)
         return type[pathname.stat.send(meta[:__stat__])] if meta[:__stat__]

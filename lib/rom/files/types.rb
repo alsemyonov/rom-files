@@ -10,6 +10,7 @@ module ROM
       include ROM::Types
 
       Path = Types::Pathname.meta(primary_key: true)
+      RelativePath = Types::Pathname.meta(primary_key: true, relative: true)
 
       FileStat = Dry::Types::Definition[File::Stat].new(File::Stat)
       FileType = Coercible::String.enum('file', 'directory', 'characterSpecial',

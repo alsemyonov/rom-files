@@ -49,6 +49,7 @@ Metrics/BlockLength:
 Metrics/CyclomaticComplexity:
   Exclude:
   - lib/pathname/extensions/pathmap.rb
+  - lib/rom/files/attribute.rb
 
 Metrics/LineLength:
   Max: 256

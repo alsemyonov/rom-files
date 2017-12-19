@@ -24,25 +24,22 @@ module ROM
       #
       # @api public
       def call(relation)
-        relation.new(
-          dataset_for(relation),
-          schema: self
-        )
+        relation.new(dataset_for(relation), schema: self)
       end
 
       # @param relation [ROM::Files::Relation]
       # @return [Dataset]
       def dataset_for(relation)
         dataset = relation.dataset
-        path = dataset.path
-        dataset.with(row_proc: ->(pathname) { load_attributes(path.join(pathname)) })
+        dataset.with(row_proc: ->(pathname) { load_attributes(pathname, root: dataset.path) })
       end
 
       # @param pathname [Pathname]
       # @return [Hash{Symbol => Object}]
-      def load_attributes(pathname)
+      def load_attributes(pathname, root:)
+        pathname = root.join(pathname)
         attributes.each_with_object({}) do |attribute, result|
-          result[attribute.name] = attribute.(pathname)
+          result[attribute.name] = attribute.(pathname, root: root)
           result
         end
       end
