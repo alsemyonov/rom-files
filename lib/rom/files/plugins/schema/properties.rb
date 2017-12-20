@@ -22,25 +22,22 @@ module ROM
         # @api public
         module Properties
           TYPE = Types::Pathname
-          MAP = Hash.new do |map, key|
-            map[key] = TYPE
-          end.merge(
+
+          MAP = Hash.new { |map, key| map[key] = TYPE }.merge(
             atime: Types::Time,
             # basename: Types::Pathname,
             birthtime: Types::Time,
             cleanpath: Types::Time,
-            ctime: Types::Time,
+            ctime: Types::Time
             # dirname: Types::Pathname,
             # extname: Types::Pathname
           )
 
-          class << self
-            # @api private
-            def apply(schema, properties: EMPTY_ARRAY, names: EMPTY_ARRAY)
-              properties += names.map { |name| MAP[name].meta(name: name, __proc__: name) }
-              attributes = properties.map { |property| property.meta(source: schema.name) }
-              schema.attributes.concat(schema.class.attributes(attributes, schema.attr_class))
-            end
+          # @api private
+          def self.apply(schema, properties: EMPTY_ARRAY, names: EMPTY_ARRAY)
+            properties += names.map { |name| MAP[name].meta(name: name, __proc__: name) }
+            attributes = properties.map { |property| property.meta(source: schema.name) }
+            schema.attributes.concat(schema.class.attributes(attributes, schema.attr_class))
           end
 
           # @api private
