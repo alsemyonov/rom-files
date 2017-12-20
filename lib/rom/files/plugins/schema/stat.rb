@@ -14,9 +14,9 @@ module ROM
         #     use :stat
         #   end
         #
-        # @example Specify another set of properties
+        # @example Specify set of properties
         #   schema do
-        #     use :stat, properties: %i[]
+        #     use :stat, properties: %i[atime birthtime ctime]
         #   end
         #
         # @api public
