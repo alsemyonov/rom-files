@@ -34,7 +34,7 @@ RSpec.example_group ROM::Files, 'usage with gem' do
       dataset { select '**/*.md' }
 
       schema 'text/markdown' do
-        # use :contents, type: Types::Markdown
+        # use :content, type: Types::Markdown
       end
     end
   end

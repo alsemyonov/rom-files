@@ -2,7 +2,7 @@
 
 require 'shared/rom/files/media_relation'
 
-RSpec.describe ROM::Files::Plugins::Schema::Contents do
+RSpec.describe ROM::Files::Plugins::Schema::Content do
   include_context 'media relation'
 
   subject(:schema) { schema_dsl.() }
@@ -23,8 +23,8 @@ RSpec.describe ROM::Files::Plugins::Schema::Contents do
   describe '.apply' do
     let(:type) { ROM::Types::Date }
 
-    context 'use :contents' do
-      before { schema_dsl.use :contents }
+    context 'use :content' do
+      before { schema_dsl.use :content }
       its([:DATA]) { is_expected.to eql build_attribute }
 
       context 'contents(name)' do
@@ -48,18 +48,18 @@ RSpec.describe ROM::Files::Plugins::Schema::Contents do
       end
     end
 
-    context 'use :contents, name:' do
-      before { schema_dsl.use :contents, name: :contents }
+    context 'use :content, name:' do
+      before { schema_dsl.use :content, name: :contents }
       its([:contents]) { is_expected.to eql build_attribute :contents }
     end
 
-    context 'use :contents, type:' do
-      before { schema_dsl.use :contents, type: type }
+    context 'use :content, type:' do
+      before { schema_dsl.use :content, type: type }
       its([:DATA]) { is_expected.to eql build_attribute type: type }
     end
 
-    context 'use :contents, name:, type:' do
-      before { schema_dsl.use :contents, name: :contents, type: type }
+    context 'use :content, name:, type:' do
+      before { schema_dsl.use :content, name: :contents, type: type }
       its([:contents]) { is_expected.to eql build_attribute :contents, type: type }
     end
   end

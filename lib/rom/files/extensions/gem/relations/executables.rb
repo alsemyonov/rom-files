@@ -10,7 +10,7 @@ module ROM
 
             schema '.', as: :executables, infer: true do
               use :shebang
-              use :contents, type: ROM::Files::Types::Ruby::ASTWithComments
+              use :content, type: ROM::Files::Types::Ruby::ASTWithComments
             end
           end
         end
