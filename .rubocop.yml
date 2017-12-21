@@ -58,6 +58,7 @@ Metrics/MethodLength:
   Exclude:
   - lib/pathname/extensions/pathmap.rb
   - lib/rom/files/connection.rb
+  - lib/rom/files/schema.rb
 
 Naming/FileName:
   Exclude:

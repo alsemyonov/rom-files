@@ -7,7 +7,7 @@ require_relative '../markup/attributes_inferrer'
 module ROM
   module Files
     module Types
-      YAMLRead = (Files::Types::Hash | Files::Types::Array).constructor do |value|
+      YAML = (Files::Types::Hash | Files::Types::Array).constructor do |value|
         if value.respond_to?(:to_hash)
           value.to_hash
         elsif value.respond_to?(:to_ary)
@@ -16,8 +16,6 @@ module ROM
           ::YAML.safe_load(value)
         end
       end
-
-      YAML = Files::Types::String.constructor(&:to_yaml).meta(read: YAMLRead)
     end
 
     module Extensions

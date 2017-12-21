@@ -31,17 +31,38 @@ module ROM
       # @return [Dataset]
       def dataset_for(relation)
         dataset = relation.dataset
-        dataset.with(row_proc: ->(pathname) { load_attributes(pathname, root: dataset.path) })
+        dataset.with(row_proc: ->(pathname) { fulfill(pathname, root: dataset.path) })
       end
 
       # @param pathname [Pathname]
       # @return [Hash{Symbol => Object}]
-      def load_attributes(pathname, root:)
+      def fulfill(pathname, root:, tuple: {})
         pathname = root.join(pathname)
-        attributes.each_with_object({}) do |attribute, result|
+        properties.each_with_object(tuple) do |attribute, result|
           result[attribute.name] = attribute.(pathname, root: root)
-          result
         end
+        if data_attribute
+          content = tuple[data_attribute.name]
+          contents.each_with_object(tuple) do |attribute, result|
+            result[attribute.name] = attribute.(content[attribute.name.to_s])
+          end
+        end
+        tuple
+      end
+
+      # @return [Attribute]
+      def data_attribute
+        attributes.detect(&:data?)
+      end
+
+      # @return [<Attribute>]
+      def contents
+        attributes.select(&:content?)
+      end
+
+      # @return [<Attribute>]
+      def properties
+        attributes.reject(&:content?)
       end
 
       # @param tuple [Hash]

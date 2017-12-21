@@ -9,7 +9,7 @@ module ROM
     class Attribute < ROM::Attribute
       # @param [Pathname] pathname
       # @return [Object]
-      def call(pathname, root: nil)
+      def call(pathname, root: nil, **)
         return type[pathname.relative_path_from(root)] if relative?
         return type[pathname.read] if data?
         return type[pathname.stat] if stat?

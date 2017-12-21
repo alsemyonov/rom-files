@@ -15,9 +15,9 @@ module ROM
 
           contents = DSL.new(relation, **options)
           contents.instance_eval(&schema)
-          attributes.concat(contents.attributes.map do |attr|
-            Files::Attribute.new(attr.type.meta(content: true))
-          end)
+          contents.attributes.map do |attr, type|
+            attributes[attr] = type.meta(content: true)
+          end
         end
       end
     end

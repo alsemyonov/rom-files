@@ -68,6 +68,7 @@ module ROM
       #   @return [Relation]
       forward :select, :select_append, :reject, :reject_append, :inside, :recursively,
               :sort,
+              :mime,
               :files, :directories,
               :at, :dig, :up
 
