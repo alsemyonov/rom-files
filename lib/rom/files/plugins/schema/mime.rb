@@ -12,16 +12,17 @@ module ROM
         #
         # @example Generic `mime_type` field
         #   schema do
-        #     use :mime_type
+        #     use :mime
         #   end
         #
         # @api public
         module Mime
-          PROC = ->(path) { MIME::Types.type_for(path.basename.to_s).first }
+          NAME = :mime_type
           TYPE = Types::MimeType.optional
+          PROC = ->(path) { MIME::Types.type_for(path.basename.to_s).first }
 
           # @api private
-          def self.apply(schema, name: :mime_type, type: TYPE)
+          def self.apply(schema, name: NAME, type: TYPE)
             mime_type = type.meta(
               name: name,
               __proc__: PROC,
