@@ -5,6 +5,7 @@ require 'rom/memory/relation'
 require_relative 'attribute'
 require_relative 'schema'
 require_relative 'schema/inferrer'
+require_relative 'schema/dsl'
 
 module ROM
   module Files
