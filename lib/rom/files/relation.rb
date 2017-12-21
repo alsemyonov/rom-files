@@ -16,6 +16,7 @@ module ROM
       adapter :files
       schema_attr_class Files::Attribute
       schema_class Files::Schema
+      schema_dsl Files::Schema::DSL
       schema_inferrer Files::Schema::Inferrer.new.freeze
 
       def initialize(*) # :nodoc:
