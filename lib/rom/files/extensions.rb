@@ -21,6 +21,10 @@ module ROM
       require_relative 'extensions/ruby/attributes_inferrer'
     end
 
+    register_extension :yaml do
+      require_relative 'extensions/yaml/attributes_inferrer'
+    end
+
     register_extension :gem do
       require 'pathname/extensions'
       Pathname.load_extensions :pathmap
