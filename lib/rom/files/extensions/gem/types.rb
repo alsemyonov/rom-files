@@ -8,8 +8,18 @@ module ROM
   module Files
     module Types
       module Gem
-        Version = Dry::Types::Definition[::Gem::Version].new(::Gem::Version).constructor do |value|
-          ::Gem::Version.create(value)
+        Name = Types::String
+        Version = Types.Definition(::Gem::Version, ::Gem::Version.method(:create))
+        Requirement = Types.Definition(::Gem::Requirement, ::Gem::Requirement.method(:create))
+        Requirements = Types::Array.of(Requirement).constructor do |value|
+          value = value.split(/,\s*/) if value.is_a?(String)
+          value
+        end
+        Dependency = Types::Array.constructor do |value|
+          name, requirements = value.split(' ', 2)
+          result = [Name[name]]
+          result += Requirements[requirements] if requirements
+          result
         end
       end
     end

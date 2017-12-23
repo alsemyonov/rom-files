@@ -33,6 +33,13 @@ module ROM
       def self.ForeignKey(relation, type = Types::Pathname, map: ->(pathname) { pathname })
         super(relation, type.meta(__proc__: map))
       end
+
+      def self.Definition(primitive, constructor = nil, &block)
+        definition = Dry::Types::Definition[primitive].new(primitive)
+        constructor ||= block
+        return definition unless constructor
+        definition.constructor(&constructor)
+      end
     end
   end
 end
