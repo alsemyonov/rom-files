@@ -36,16 +36,12 @@ module ROM
 
       # @param pathname [Pathname]
       # @return [Hash{Symbol => Object}]
-      def fulfill(pathname, root:, tuple: {})
+      def fulfill(pathname, root:, tuple: {}) # rubocop:disable Metrics/AbcSize
         pathname = root.join(pathname)
-        properties.each_with_object(tuple) do |attribute, result|
-          result[attribute.name] = attribute.(pathname, root: root)
-        end
+        properties.each { |attr| tuple[attr.name] = attr.(pathname, root: root) }
         if data_attribute
           content = tuple[data_attribute.name]
-          contents.each_with_object(tuple) do |attribute, result|
-            result[attribute.name] = attribute.(content[attribute.name.to_s])
-          end
+          contents.each { |attr| tuple[attr.name] = attr.(content[attr.name.to_s]) }
         end
         tuple
       end

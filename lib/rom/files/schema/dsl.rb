@@ -15,9 +15,7 @@ module ROM
 
           contents = DSL.new(relation, **options)
           contents.instance_eval(&schema)
-          contents.attributes.map do |attr, type|
-            attributes[attr] = type.meta(content: true)
-          end
+          contents.attributes.map { |attr, attr_type| attributes[attr] = attr_type.meta(content: true) }
         end
       end
     end
