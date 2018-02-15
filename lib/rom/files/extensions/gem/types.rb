@@ -3,6 +3,7 @@
 require 'rom/types'
 require 'rom/files/types'
 require 'rubygems/version'
+require 'rubygems/requirement'
 
 module ROM
   module Files
